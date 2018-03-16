@@ -1,0 +1,19 @@
+{
+    "DON_HANG_MOI" : "Đơn hàng mới",
+    "DON_HANG_HUY" : "Đơn hàng bị hủy",
+    "DON_HANG_NHAN" : "Đơn hàng được nhận",
+    "DON_HANG_DANG_GIAO" : "Đơn hàng đang giao",
+    "DON_HANG_HOAN_THANH" : "Đơn hàng hoàn thành",
+    "KEY" : "Shipper@~Manager!&",
+    "THANH_CONG" : "Xử lý thành công!",
+    "DA_TON_TAI" : "Đã tồn tại!",
+    "KHONG_THE_XOA" : "Không thể xóa!",
+    "QRCODE_KHONG_TON_TAI" : "Mã QRCode không tồn tại",
+    "QRCODE_KHONG_KHA_DUNG" : "Mã QRCode không khả dụng",
+    "KHONG_THANH_CONG" : "Không thành công!",
+    "KHONG_CO_DU_LIEU" : "Không có dữ liệu!",
+    "MA_TOKEN_KHONG_DUNG" : "Mã token không đúng!",
+    "CO_LOI_XAY_RA" : "Có lỗi xảy ra!. Vui lòng thử lại!",
+    "TEN_TK_MK_KHONG_DUNG" : "Tên tài khoản hoặc mật khẩu không đúng! Vui lòng kiểm tra lại",
+    "KEY_PUSH" : "key=AAAAd3PCmdY:APA91bHUbnBmnZ4FWsdotfx7yTl_ONXf9aIjlArHHQBdIvd28-5Lyeqm8w0tRWRwhDik8Trc6S1x4D8aAWkmS5Ngdx0gZGy-iw-1bA6t5yeV4D-sO4zkMZEMlrhsuYHxiGKGxwY7in8K"
+}
