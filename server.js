@@ -30,6 +30,12 @@ mongoose.connect(config.connectionString, (err) => {
   }
 })
 
+app.get('/home', (req, res) => {
+    // res.render('home');
+    res.sendFile(__dirname + '/public/home.html')
+
+});
+
 app.listen(configPort , () => {
   console.log(`App listen on ${configPort}`);
 })
