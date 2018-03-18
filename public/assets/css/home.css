@@ -749,7 +749,6 @@
 	.gallery {
 		padding: 1.8em;
 		position: relative;
-        height: 22em;
 		overflow: hidden;
 		min-height: 21em;
 	}
@@ -1226,6 +1225,7 @@
 				padding: 1em 0 0.1em 0;
 				padding-right: 1em;
 				padding-left: 1em;
+                font-size: 14px;
 			}
 
 		}
