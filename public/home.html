@@ -29,7 +29,7 @@
 
                 var options = {
                     title: 'Đơn vị (VNĐ)',
-                    hAxis: {title: 'Biểu đồ thống kê hoạt động',  titleTextStyle: {color: '#333'}},
+                    hAxis: {title: 'Biểu đồ thống kê hoạt động trong tháng',  titleTextStyle: {color: '#333'}},
                     vAxis: {minValue: 0}
                 };
 
@@ -37,6 +37,10 @@
                 chart.draw(data, options);
             }
 		</script>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</head>
 	<body>
 		<div class="page-wrap">
@@ -58,7 +62,39 @@
 						<section id="banner">
 							<div class="inner">
 								<h3>Hey, Shipper Manager</h3>
+							</div>
+							<div data-toggle="modal" data-target="#accountModal" style="position: absolute;top: 0px;height:55px;right: 15px;width: 25%;display: flex;justify-content: flex-end;align-items: center">
+								<img style="width: 40px;height: 40px;border-radius:25px " src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/25158130_2072313353013265_2222362076437431781_n.jpg?oh=5341067d1fc88197b52c5f30d563dd50&oe=5B3EC495"/>
+								<label style="margin-top: 10px;margin-left: 10px;margin-right: 10px">Hiếu Trần</label>
+								<!--<i class="fa fa-motorcycle fa-5x"></i>-->
+								<span >
+									<i class="fa fa-sort-desc" aria-hidden="true"></i>
+								</span>
 
+
+							</div>
+							<div class="modal fade" id="accountModal" role="dialog">
+								<div class="modal-dialog modal-sm">
+									<div class="modal-content">
+										<div style="align-items: center;flex-direction: row">
+											<h4 style="color: black;text-align: center">Thông tin tài khoản</h4>
+											<button type="button"  style="background-color:transparent;color:gray;position: absolute;top:0px;right: 0px" data-dismiss="modal">&times;</button>
+										</div>
+										<div class="modal-body">
+											<img style="width: 130px;height: 130px;border-radius:115px " src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/25158130_2072313353013265_2222362076437431781_n.jpg?oh=5341067d1fc88197b52c5f30d563dd50&oe=5B3EC495"/>
+											<h4 style="color: black;margin-top: 30px">Hieu Tran</h4>
+											<h6 style="color: gray;margin-top: 16px">Chức vụ: Quản lý</h6>
+											<h6 style="color: gray;margin-top: 16px">Ngày sinh: 16/05/1997</h6>
+											<h6 style="color: gray;margin-top: 16px">Thời gian sử dụng: 20/03/2025</h6>
+										</div>
+										<div class="modal-footer">
+											<!--<button type="button" class="btn btn-default" style="border: 2px solid #ff0033;" data-dismiss="modal">Đăng xuất</button>-->
+
+											<button type="button" class="btn btn-default" data-dismiss="modal">Đổi mật khẩu</button>
+											<button type="button" class="btn btn-default" style="color: #ff0033" data-dismiss="modal">Đăng xuất</button>
+										</div>
+									</div>
+								</div>
 							</div>
 						</section>
 
@@ -69,7 +105,8 @@
 							<div id="map"></div>
 							<!-- Báo cáo -->
 							<div class="gallery">
-							<div class="row">
+								<h4 style="margin-left: -10px">Trang chủ</h4>
+								<div class="row">
 								<div class="col-lg-3 col-md-6">
 									<div class="panel panel-primary">
 										<div class="panel-heading">
@@ -169,6 +206,7 @@
 						</section>
 					<!-- Footer -->
 						<footer id="footer">
+
 							<div class="copyright">
 								&copy; Design by: <a style="color: #fff" href="https://www.facebook.com/hanhieu97">Nhóm Công nghệ Web</a>
 

@@ -749,15 +749,16 @@
 	.gallery {
 		padding: 1.8em;
 		position: relative;
+        height: 22em;
 		overflow: hidden;
-		min-height: 20em;
+		min-height: 21em;
 	}
 
 		@media screen and (max-width: 980px) {
 
 			.gallery {
 				padding: 2em;
-				min-height: 20em;
+				min-height: 21em;
 			}
 
 				.gallery header h2 {
@@ -1487,7 +1488,7 @@
 			-webkit-transition-delay: 0.25s;
 			-ms-transition-delay: 0.25s;
 			transition-delay: 0.25s;
-			content: '';
+			/*content: '';*/
 			display: block;
 			background-color: #000;
 			height: 100%;
