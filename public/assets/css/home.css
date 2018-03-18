@@ -1219,13 +1219,14 @@
 
 		}
 
-		@media screen and (max-width: 480px) {
+		@media screen and (max-width: 620px) {
 
 			section .inner, article .inner {
 				padding: 1em 0 0.1em 0;
 				padding-right: 1em;
 				padding-left: 1em;
-                font-size: 14px;
+                font-size: 18px;
+                margin-left: -20%;
 			}
 
 		}
