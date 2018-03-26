@@ -30,7 +30,9 @@ Router.post('/', async (req, res) => {
             if (doc === null) {
                 res.send({ status : false, msg : config.KHONG_THANH_CONG});
             } else {
+                res.redirect('/home')
                 res.send({ status : true, msg : config.THANH_CONG});
+
             }
         //}
     }
@@ -86,11 +88,15 @@ Router.post('/login', async (req, res) => {
         let doc = await usersModel.selectUser(user);
         console.log(doc);
         if (doc === null) {
-            res.send({ status : false, msg : config.TEN_TK_MK_KHONG_DUNG, data : null, token : ""});
+            // res.send({ status : false, msg : config.TEN_TK_MK_KHONG_DUNG, data : null, token : ""});
+            res.redirect('/home')
+
         } else {
             let token = Utils.getToken(doc._id);
             let update = await usersModel.updateTokenFirebaseUser(doc._id, user.tokenfirebase);
-            res.send({ status : true, msg : config.THANH_CONG, data : doc, token : token});
+            // res.send({ status : true, msg : config.THANH_CONG, data : doc, token : token});
+            res.redirect('/home')
+
         }
     }
     catch(err)

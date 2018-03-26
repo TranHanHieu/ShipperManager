@@ -13,8 +13,8 @@ var app = express();
 
 app.use(bodyParser.json({ extended : true}));
 app.use(bodyParser.urlencoded({ extended : true}));
-// app.engine('handlebars', handlebars({defaultLayout: 'main'}));
-// app.set('view engine', 'handlebars');
+app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
 
 app.use('/api/user', userApi);
 app.use('/api/group', groupApi);
@@ -29,10 +29,21 @@ mongoose.connect(config.connectionString, (err) => {
     console.log('Connect to db success');
   }
 })
+app.get('/',(req,res)=>{
+    res.render('login',{layout:false});
 
+})
+app.get('/employeeList',(req,res)=>{
+    res.render('employeeList');
+
+})
+app.get('/orderList',(req,res)=>{
+    res.render('orderList');
+
+})
 app.get('/home', (req, res) => {
-    // res.render('home');
-    res.sendFile(__dirname + '/public/home.html')
+    res.render('home');
+    // res.sendFile(__dirname + '/public/home.html')
 
 });
 
