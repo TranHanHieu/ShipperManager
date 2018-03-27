@@ -58,7 +58,7 @@
                 </div>
 
                 <div class="text-right p-t-8 p-b-31">
-                    <input type="checkbox" name="vehicle" value="Bike"> Ghi nhớ mật khẩu<br>
+                    <input id="checkRemenberPass" type="checkbox" name="vehicle" value="Bike"> Ghi nhớ mật khẩu<br>
 
                     <!--<a href="#" style="font-family: normal">-->
                         <!--Quên mật khẩu?-->
@@ -108,6 +108,21 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
 
 <script>
+    var isRememberPass = false
+    $( document ).ready(function() {
+        var data = JSON.parse(localStorage.getItem("rememberpass"))
+        if(data){
+            $('#username').val(data.username)
+            $('#password').val(data.password)
+            $('#checkRemenberPass').prop('checked',true)
+
+        }
+
+    });
+    $('#checkRemenberPass').click(function () {
+        isRememberPass = !isRememberPass
+        $(this).prop('checked',isRememberPass)
+    })
     $('#btnLogin').click(function (event, err) {
         // alert('pppppppp'+err);
         if(!err) {
@@ -128,6 +143,9 @@
                     success: function (data) {
                         console.log(data);
                         if (data.status) {
+                            if(isRememberPass){
+                                localStorage.setItem('rememberpass', JSON.stringify({"username":username,"password":password}));
+                            }
                             localStorage.setItem('user', JSON.stringify(data.data));
                             window.location.href = "/"
                             // $(event.currentTarget).trigger('click', {'handle': true});
