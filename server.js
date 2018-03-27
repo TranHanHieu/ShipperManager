@@ -1,9 +1,11 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
 const configPort = process.env.PORT || 3000;
 const config = require('./config.json');
 const handlebars = require('express-handlebars');
+const cache = require('cache-control');
 
 const userApi = require('./modules/api/users/usersController');
 const groupApi = require('./modules/api/groups/groupsController');
@@ -20,7 +22,16 @@ app.use('/api/user', userApi);
 app.use('/api/group', groupApi);
 app.use('/api/order', orderApi);
 
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
+
+app.use(express.static(path.join(__dirname, "/public"), {
+    redirect: false,
+    etag: false
+}));
+
+app.use(cache({
+    '/**': 0 // Default to caching all items for 500
+}));
 
 mongoose.connect(config.connectionString, (err) => {
   if (err) {

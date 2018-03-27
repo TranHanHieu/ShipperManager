@@ -86,16 +86,30 @@ Router.post('/login', async (req, res) => {
         }
 
         let doc = await usersModel.selectUser(user);
-        console.log(doc);
+        // let doc = { _id: '5ab8aabbcdfc930c95b70ccb',
+        //     username: 'hieuth',
+        //     password: 'ngon',
+        //     status: true,
+        //     group:
+        //         { _id: '5a6fe111734d1d63031a767a',
+        //             groupname: 'Chủ cửa hàng',
+        //             isadmin: true },
+        //     createdAt: '2018-03-26T08:09:31.532Z',
+        // updatedAt: '2018-03-26T08:09:31.532Z',
+        // __v: 0 }
+
         if (doc === null) {
-            // res.send({ status : false, msg : config.TEN_TK_MK_KHONG_DUNG, data : null, token : ""});
-            res.redirect('/home')
+            res.send({ status : true, msg : config.TEN_TK_MK_KHONG_DUNG, data : null, token : ""});
+            // res.redirect('/')
 
         } else {
+            console.log('ooo'+doc);
+
             let token = Utils.getToken(doc._id);
-            let update = await usersModel.updateTokenFirebaseUser(doc._id, user.tokenfirebase);
-            // res.send({ status : true, msg : config.THANH_CONG, data : doc, token : token});
-            res.redirect('/home')
+            // let update = await usersModel.updateTokenFirebaseUser(doc._id, user.tokenfirebase);
+
+            res.send({ status : true, msg : config.THANH_CONG, data : doc, token : ""});
+            // res.redirect('/home')
 
         }
     }

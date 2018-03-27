@@ -55,7 +55,7 @@ const selectUser = async(user) => {
     catch(err)
     {
         // console.log(err);
-        return null;
+        return err;
     }
 }
 
