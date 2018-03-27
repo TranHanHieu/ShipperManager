@@ -39,7 +39,15 @@ app.use(express.static(path.join(__dirname, "/public"), {
 app.use(cache({
     '/**': 0 // Default to caching all items for 500
 }));
-
+app.use(function (req, res, next) {
+    req.headers['if-none-match'] = '';
+    req.headers['if-modified-since'] = '';
+    if (!req.session.token && req.url !== '/' && req.url.indexOf(".") === -1 && req.url.indexOf("/api/") === -1) {
+        res.redirect('/')
+    } else {
+        next();
+    }
+});
 mongoose.connect(config.connectionString, (err) => {
   if (err) {
     console.log(err);

@@ -127,15 +127,12 @@
                     dataType: "json",
                     success: function (data) {
                         console.log(data);
-                        if (data.status && data.data.group.isadmin) {
-                            localStorage.setItem('user', data._id);
-
+                        if (data.status) {
+                            localStorage.setItem('user', JSON.stringify(data.data));
                             window.location.href = "/"
                             // $(event.currentTarget).trigger('click', {'handle': true});
-                        } else if (data.data.isadmin) {
-                            alert('Tên tài khoản hoặc mật khẩu không đúng!')
                         } else {
-                            alert('Bạn không phải là Admin, không có quyền truy cập!')
+                            alert(data.msg)
 
                         }
                     },

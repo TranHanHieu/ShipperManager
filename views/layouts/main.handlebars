@@ -25,7 +25,7 @@
     <!-- Nav -->
     <nav id="nav">
         <ul>
-            <li><a href="home" class="active"><span class="icon fa-home"></span></a></li>
+            <li><a href="/" class="active"><span class="icon fa-home"></span></a></li>
             <li><a href="orderList"><span class="icon fa-camera-retro"></span></a></li>
             <li><a href="employeeList"><span class="fa fa-users"></span></a></li>
             <!--<li><a href="account.html"><span class="icon fa-user-circle-o" ></span></a></li>-->
@@ -44,8 +44,8 @@
                 <h3 class="inner">Hey, Shipper Manager</h3>
             </div>
             <div data-toggle="modal" data-target="#accountModal" style="position: absolute;z-index: 4;top: 0px;height:55px;right: 0px;width: 25%;display: flex;justify-content: flex-end;align-items: center">
-                <img style="width: 40px;height: 40px;border-radius:25px " src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/25158130_2072313353013265_2222362076437431781_n.jpg?oh=5341067d1fc88197b52c5f30d563dd50&oe=5B3EC495"/>
-                <label style="margin-top: 10px;margin-left: 10px;margin-right: 10px">Hiếu Trần</label>
+                <img id="avatarUser" style="width: 40px;height: 40px;border-radius:25px " src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/25158130_2072313353013265_2222362076437431781_n.jpg?oh=5341067d1fc88197b52c5f30d563dd50&oe=5B3EC495"/>
+                <label id="userNameLb" style="margin-top: 10px;margin-left: 10px;margin-right: 10px">Hiếu Trần</label>
                 <!--<i class="fa fa-motorcycle fa-5x"></i>-->
                 <span style="padding-right: 15px" >
 									<i class="fa fa-sort-desc" aria-hidden="true"></i>
@@ -61,11 +61,11 @@
                             <button type="button"  style="background-color:transparent;color:gray;position: absolute;top:0px;right: 0px" data-dismiss="modal">&times;</button>
                         </div>
                         <div class="modal-body">
-                            <img style="width: 130px;height: 130px;border-radius:115px " src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/25158130_2072313353013265_2222362076437431781_n.jpg?oh=5341067d1fc88197b52c5f30d563dd50&oe=5B3EC495"/>
-                            <h4 style="color: black;margin-top: 30px">Hieu Tran</h4>
-                            <h6 style="color: gray;margin-top: 16px">Chức vụ: Quản lý</h6>
-                            <h6 style="color: gray;margin-top: 16px">Ngày sinh: 16/05/1997</h6>
-                            <h6 style="color: gray;margin-top: 16px">Thời gian sử dụng: 20/03/2025</h6>
+                            <img id="avatar" style="width: 130px;height: 130px;border-radius:115px " src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/25158130_2072313353013265_2222362076437431781_n.jpg?oh=5341067d1fc88197b52c5f30d563dd50&oe=5B3EC495"/>
+                            <h4 id="fullname" style="color: black;margin-top: 30px">Hieu Tran</h4>
+                            <h6 id="chucvu" style="color: gray;margin-top: 16px">Chức vụ: Quản lý</h6>
+                            <h6 id="ngaysinh" style="color: gray;margin-top: 16px">Ngày sinh: 16/05/1997</h6>
+                            <h6 id="email" style="color: gray;margin-top: 16px">Email: 20/03/2025</h6>
                         </div>
                         <div class="modal-footer">
                             <!--<button type="button" class="btn btn-default" style="border: 2px solid #ff0033;" data-dismiss="modal">Đăng xuất</button>-->
@@ -111,6 +111,21 @@
         window.location.href = '/changepass'
     })
 </script>
+<script>
+    if (typeof(Storage) !== "undefined") {
+        var user = JSON.parse(localStorage.getItem("user"))
+        console.log(user)
+        document.getElementById("userNameLb").innerHTML = user.fullname;
+        document.getElementById("fullname").innerHTML = user.fullname;
+        document.getElementById("email").innerHTML = 'Email: '+ user.email;
+        document.getElementById("chucvu").innerHTML = 'Chức vụ: '+ user.group.groupname;
+        document.getElementById("avatarUser").src = user.avatar
+        document.getElementById("avatar").src = user.avatar
+    } else {
+        alert('Lỗi! Trình duyệt của bạn không hỗ trợ Web Storage')
+    }
+</script>
+
  Scripts
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.poptrox.min.js"></script>

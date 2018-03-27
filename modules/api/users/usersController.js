@@ -30,7 +30,6 @@ Router.post('/', async (req, res) => {
             if (doc === null) {
                 res.send({ status : false, msg : config.KHONG_THANH_CONG});
             } else {
-                res.redirect('/home')
                 res.send({ status : true, msg : config.THANH_CONG});
 
             }
@@ -100,7 +99,7 @@ Router.post('/login', async (req, res) => {
 
         if (doc === null) {
 
-            res.send({ status : true, msg : config.TEN_TK_MK_KHONG_DUNG, data : null, token : ""});
+            res.send({ status : false, msg : config.TEN_TK_MK_KHONG_DUNG, data : null, token : ""});
             // res.redirect('/')
 
         } else {
@@ -114,7 +113,7 @@ Router.post('/login', async (req, res) => {
             });
 
             res.send({ status : true, msg : config.THANH_CONG, data : doc, token : token});
-            // res.redirect('/home')
+            // res.redirect('/',{user:doc})
 
         }
     }
@@ -159,12 +158,12 @@ Router.post('/changepassword', async (req, res) => {
             newpassword : req.body.newpassword
         }
 
-        if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
-        {
-            res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-        }
-        else
-        {
+        // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
             let result = await usersModel.changePassword(user);
             if(result === 0)
                 res.send({status : false, msg : config.TEN_TK_HOAC_MK_SAI});
@@ -172,7 +171,7 @@ Router.post('/changepassword', async (req, res) => {
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
             else 
                 res.send({ status : true, msg : config.THANH_CONG});
-        }
+        // }
     }
     catch(err)
     {
