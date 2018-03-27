@@ -6,6 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/home.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <style>
         #map {
             height: 400px;
@@ -32,10 +34,13 @@
 
     <!-- Main -->
     <section id="main">
+        <!--<img src="images/logo.png" style="width: 100px;height: 50px;float: left">-->
 
         <!-- Banner -->
         <section id="banner">
+
             <div class="inner">
+
                 <h3 class="inner">Hey, Shipper Manager</h3>
             </div>
             <div data-toggle="modal" data-target="#accountModal" style="position: absolute;z-index: 4;top: 0px;height:55px;right: 0px;width: 25%;display: flex;justify-content: flex-end;align-items: center">
@@ -65,8 +70,8 @@
                         <div class="modal-footer">
                             <!--<button type="button" class="btn btn-default" style="border: 2px solid #ff0033;" data-dismiss="modal">Đăng xuất</button>-->
 
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Đổi mật khẩu</button>
-                            <button type="button" class="btn btn-default" style="color: #ff0033" data-dismiss="modal">Đăng xuất</button>
+                            <button href="/changepass" id="btnChangePass" type="button" class="btn btn-default" data-dismiss="modal">Đổi mật khẩu</button>
+                            <button href="/logout" id="btnLogOut" type="button" class="btn btn-default" style="color: #ff0033" data-dismiss="modal">Đăng xuất</button>
                         </div>
                     </div>
                 </div>
@@ -95,8 +100,18 @@
         </footer>
     </section>
 </div>
-
-<!-- Scripts -->
+<script>
+    $('#btnLogOut').click(function () {
+        window.location.href = '/logout'
+    })
+</script>
+ Scripts
+<script>
+    $('#btnChangePass').click(function () {
+        window.location.href = '/changepass'
+    })
+</script>
+ Scripts
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.poptrox.min.js"></script>
 <script src="assets/js/jquery.scrolly.min.js"></script>
