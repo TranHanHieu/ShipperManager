@@ -2,10 +2,11 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
-const configPort = process.env.PORT || 3000;
+const configPort = process.env.PORT || 3001;
 const config = require('./config.json');
 const handlebars = require('express-handlebars');
 const cache = require('cache-control');
+const session = require('express-session');
 
 const userApi = require('./modules/api/users/usersController');
 const groupApi = require('./modules/api/groups/groupsController');
@@ -13,6 +14,12 @@ const orderApi = require('./modules/api/orders/ordersController');
 
 var app = express();
 
+app.use(session({
+    secret: '%^&@%&#@!',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {secure: false}
+}));
 app.use(bodyParser.json({ extended : true}));
 app.use(bodyParser.urlencoded({ extended : true}));
 app.engine('handlebars', handlebars({defaultLayout: 'main'}));
@@ -41,9 +48,21 @@ mongoose.connect(config.connectionString, (err) => {
   }
 })
 app.get('/',(req,res)=>{
-    res.render('login',{layout:false});
+    if (req.session.token) {
+        res.render('home')
+    }else {
+        res.render('login', {layout: false});
+    }
 
 })
+app.get('/logout', (req, res) => {
+    req.session.token = null;
+    res.redirect('/');
+})
+app.get('/changepass', (req, res) => {
+    res.render('changePass');
+})
+
 app.get('/employeeList',(req,res)=>{
     res.render('employeeList');
 

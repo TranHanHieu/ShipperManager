@@ -70,8 +70,8 @@
                         <div class="modal-footer">
                             <!--<button type="button" class="btn btn-default" style="border: 2px solid #ff0033;" data-dismiss="modal">Đăng xuất</button>-->
 
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Đổi mật khẩu</button>
-                            <button type="button" class="btn btn-default" style="color: #ff0033" data-dismiss="modal">Đăng xuất</button>
+                            <button href="/changepass" id="btnChangePass" type="button" class="btn btn-default" data-dismiss="modal">Đổi mật khẩu</button>
+                            <button href="/logout" id="btnLogOut" type="button" class="btn btn-default" style="color: #ff0033" data-dismiss="modal">Đăng xuất</button>
                         </div>
                     </div>
                 </div>
@@ -100,8 +100,18 @@
         </footer>
     </section>
 </div>
-
-<!-- Scripts -->
+<script>
+    $('#btnLogOut').click(function () {
+        window.location.href = '/logout'
+    })
+</script>
+ Scripts
+<script>
+    $('#btnChangePass').click(function () {
+        window.location.href = '/changepass'
+    })
+</script>
+ Scripts
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.poptrox.min.js"></script>
 <script src="assets/js/jquery.scrolly.min.js"></script>

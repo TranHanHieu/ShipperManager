@@ -110,7 +110,8 @@
 <script>
     $('#btnLogin').click(function (event, err) {
         // alert('pppppppp'+err);
-           event.preventDefault();
+        if(!err) {
+            event.preventDefault();
             let username = $('#username').val();
             let password = $('#password').val();
             let tokenfirebase = ""
@@ -127,25 +128,28 @@
                     success: function (data) {
                         console.log(data);
                         if (data.status && data.data.group.isadmin) {
+                            localStorage.setItem('user', data._id);
 
-                            window.location.href="/home"
+                            window.location.href = "/"
                             // $(event.currentTarget).trigger('click', {'handle': true});
-                        } else
-                            if(data.data.isadmin){
-                                alert('Tên tài khoản hoặc mật khẩu không đúng!')
-                            }else {
-                                alert('Bạn không phải là Admin, không có quyền truy cập!')
+                        } else if (data.data.isadmin) {
+                            alert('Tên tài khoản hoặc mật khẩu không đúng!')
+                        } else {
+                            alert('Bạn không phải là Admin, không có quyền truy cập!')
 
-                            }
+                        }
                     },
                     error: function (err) {
                         console.log(err)
-                        window.location.href = "/home"
+                        window.location.href = "/"
 
-                        alert('Lỗi! Không có kết nối, vui lòng thử lại sau.'+ err)
+                        alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
                     }
                 });
             }
+        }else {
+            return
+        }
 
     })
 

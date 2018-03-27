@@ -99,6 +99,7 @@ Router.post('/login', async (req, res) => {
         // __v: 0 }
 
         if (doc === null) {
+
             res.send({ status : true, msg : config.TEN_TK_MK_KHONG_DUNG, data : null, token : ""});
             // res.redirect('/')
 
@@ -106,9 +107,13 @@ Router.post('/login', async (req, res) => {
             console.log('ooo'+doc);
 
             let token = Utils.getToken(doc._id);
-            // let update = await usersModel.updateTokenFirebaseUser(doc._id, user.tokenfirebase);
+            let update = await usersModel.updateTokenFirebaseUser(doc._id, user.tokenfirebase);
+            req.session.token = doc._id;
+            req.session.save(err => {
+                console.log("errr", err)
+            });
 
-            res.send({ status : true, msg : config.THANH_CONG, data : doc, token : ""});
+            res.send({ status : true, msg : config.THANH_CONG, data : doc, token : token});
             // res.redirect('/home')
 
         }
