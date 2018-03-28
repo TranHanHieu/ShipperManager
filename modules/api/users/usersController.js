@@ -4,6 +4,7 @@ const usersModel = require('./usersModel');
 const config = require('../../../configString.json');
 const Utils = require('../../../utils/Utils');
 
+//Tạo tài khoản mới mặc định là tài khoản nhân viên
 Router.post('/', async (req, res) => {
     try
     {
@@ -41,6 +42,7 @@ Router.post('/', async (req, res) => {
     }
 });
 
+//Chỉnh sửa thông tin tài khoản
 Router.put('/', async (req, res) => {
     try
     {
@@ -74,6 +76,8 @@ Router.put('/', async (req, res) => {
         res.send({status : false, msg : config.CO_LOI_XAY_RA});
     }
 });
+
+//API Đăng nhập cho app vào web
 
 Router.post('/login', async (req, res) => {
     try
@@ -124,6 +128,7 @@ Router.post('/login', async (req, res) => {
     }
 });
 
+//API Logout cho App
 Router.get('/logout', async (req, res) => {
     try
     {
@@ -149,6 +154,7 @@ Router.get('/logout', async (req, res) => {
     }
 });
 
+//Đổi mật khẩu tài khoản
 Router.post('/changepassword', async (req, res) => {
     try
     {
