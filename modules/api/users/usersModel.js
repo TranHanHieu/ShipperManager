@@ -122,6 +122,16 @@ const selectAllUser = async() => {
         return err;
     }
 }
+
+const getAllUser = (callback) => {
+    usersModel.find({}).populate({
+        path: 'group',
+        model: groupsModel
+    }).exec(function (err, users) {
+
+        callback(users, err);
+    });
+};
 module.exports = {
-    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser
+    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser
 }
