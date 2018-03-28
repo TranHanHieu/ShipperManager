@@ -154,6 +154,25 @@ Router.get('/logout', async (req, res) => {
     }
 });
 
+//Link lấy danh sách nhân viên
+Router.get('/', async (req, res) => {
+    try
+    {
+        let result = await usersModel.selectAllUser();
+        if (result === null) {
+            res.send({ status : false, msg : config.KHONG_THANH_CONG, data : null});
+        } else {
+            res.send({ status : true, msg : config.THANH_CONG, data : result});
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
+    }
+});
+
+
 //Đổi mật khẩu tài khoản
 Router.post('/changepassword', async (req, res) => {
     try

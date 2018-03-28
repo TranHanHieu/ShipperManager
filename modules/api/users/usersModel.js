@@ -108,6 +108,20 @@ const changePassword = async(user) => {
         return -1;
     }
 }
+
+const selectAllUser = async() => {
+    try
+    {
+        return await usersModel.find({}).populate({
+            path: 'group',
+            model: groupsModel 
+          }).exec();
+    }
+    catch(err)
+    {
+        return err;
+    }
+}
 module.exports = {
-    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme
+    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser
 }
