@@ -41,7 +41,7 @@
         <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="background: #ffffffd9">
             <form class="login100-form validate-form">
 					<span class="login100-form-title p-b-49">
-                        <img src="images/logo.png" style="width: 85%;height: 160px;margin-bottom:20px;margin-left: -15%">
+                        <img src="images/logo_chu.png" style="width: 90%;height: 70px;margin-bottom:20px">
                         <h3>Đăng nhập</h3>
 					</span>
 
@@ -76,12 +76,111 @@
                 <div style="margin-top: 5%;margin-left: 5%;margin-right: 5%;margin-bottom: -5%">
                     <p style="font-style: italic;font-family: normal; text-align: center">Bằng click vào đăng nhập, bạn đã chấp nhận những điều khoản của chúng tôi</p>
                 </div>
+
+                <!-- <div class="flex-c-m">
+                    <a href="#" class="login100-social-item bg1">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+
+                    <a href="#" class="login100-social-item bg2">
+                        <i class="fa fa-twitter"></i>
+                    </a>
+
+                    <a href="#" class="login100-social-item bg3">
+                        <i class="fa fa-google"></i>
+                    </a>
+                </div> -->
+
+                <!-- <div class="flex-col-c p-t-155">
+                    <span class="txt1 p-b-17">
+                        Or Sign Up Using
+                    </span>
+
+                    <a href="#" class="txt2">
+                        Sign Up
+                    </a>
+                </div> -->
             </form>
         </div>
     </div>
 </div>
 </form>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.3/TweenMax.min.js'></script>
+
+<script>
+    var isRememberPass = false
+    $( document ).ready(function() {
+        var data = JSON.parse(localStorage.getItem("rememberpass"))
+        if(data){
+            $('#username').val(data.username)
+            $('#password').val(data.password)
+            $('#checkRemenberPass').prop('checked',true)
+
+        }
+
+    });
+    $('#checkRemenberPass').click(function () {
+        isRememberPass = !isRememberPass
+        $(this).prop('checked',isRememberPass)
+    })
+    $('#btnLogin').click(function (event, err) {
+        // alert('pppppppp'+err);
+        if(!err) {
+            event.preventDefault();
+            let username = $('#username').val();
+            let password = $('#password').val();
+            let tokenfirebase = ""
+            if (!username || !password) {
+                alert('Vui lòng nhập tài khoản hoặc mật khẩu!')
+            } else {
+
+                $.ajax('/api/user/login', {
+                    type: "POST",
+                    data: {
+                        username, password
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.status) {
+                            if(isRememberPass){
+                                localStorage.setItem('rememberpass', JSON.stringify({"username":username,"password":password}));
+                            }else {
+                                localStorage.removeItem('rememberpass');
+                            }
+                            localStorage.setItem('user', JSON.stringify(data.data));
+                            window.location.href = "/"
+                            // $(event.currentTarget).trigger('click', {'handle': true});
+                        } else {
+                            alert(data.msg)
+
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err)
+                        window.location.href = "/"
+
+                        alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
+                    }
+                });
+            }
+        }else {
+            return
+        }
+
+    })
+
+</script>
+
+<!-- <div id="dropDownSelect1"></div>
+ -->
+<!--<div class="popup" data-popup="popup-1">-->
+    <!--<div class="popup-inner">-->
+        <!--<h2 style="text-align: center; font-family: Arial, Helvetica, sans-serif;">Đăng nhập</h2>-->
+        <!--<p class="label-input100" style="text-align: center; margin: 10px;">Tên tài khoản hoặc mật khẩu không đúng!</p>-->
+        <!--<a class="popup-close" data-popup-close="popup-1" href="#">x</a>-->
+    <!--</div>-->
+<!--</div>-->
 <!--===============================================================================================-->
 <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
 <!--===============================================================================================-->
@@ -98,6 +197,6 @@
 <script src="vendor/countdowntime/countdowntime.js"></script>
 <!--===============================================================================================-->
 <!--<script src="js/main.js"></script>-->
-<script src = "js/login.js"></script>
+<!--<script src = "js/index.js"></script>-->
 </body>
 </html>

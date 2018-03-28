@@ -11,7 +11,7 @@ const session = require('express-session');
 const userApi = require('./modules/api/users/usersController');
 const groupApi = require('./modules/api/groups/groupsController');
 const orderApi = require('./modules/api/orders/ordersController');
-
+const {getAllUser} = require('./modules/api/users/usersModel')
 var app = express();
 
 app.use(session({
@@ -22,7 +22,52 @@ app.use(session({
 }));
 app.use(bodyParser.json({ extended : true}));
 app.use(bodyParser.urlencoded({ extended : true}));
-app.engine('handlebars', handlebars({defaultLayout: 'main'}));
+app.engine('handlebars', handlebars({
+    defaultLayout: 'main',
+    helpers: {
+        getBGColor: (fullname) => {
+            const userName = fullname || '';
+
+            let sumChars = 0;
+            for (let i = 0; i < userName.length; i += 1) {
+                sumChars += userName.charCodeAt(i);
+            }
+            let colors = {
+                carrot: '#e67e22',
+                emerald: '#2ecc71',
+                peterRiver: '#3498db',
+                wisteria: '#8e44ad',
+                alizarin: '#e74c3c',
+                turquoise: '#1abc9c',
+                midnightBlue: '#2c3e50'
+            };
+            colors = Object.values(colors);
+            return colors[sumChars % colors.length];
+        },
+        getSortName: (fullname) => {
+            const userName = fullname || '';
+            userName.trim();
+            let name = userName.toUpperCase().split(' ');
+            let avatarName = "";
+            if (name.length === 1) {
+                avatarName = ` ${name[0].charAt(0)}`;
+            } else if (name.length > 1) {
+                name = name.filter((item) => {
+                    return item;
+                })
+                avatarName = `${name[0].charAt(0)}${name[name.length - 1].charAt(0)}`;
+            }
+            return avatarName;
+        },
+        formatMoney: (money) => {
+            let result = (+money).toFixed(0).replace(/./g, function (c, i, a) {
+                return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
+            });
+            return `${result} đ`
+
+        }
+    }
+}));
 app.set('view engine', 'handlebars');
 
 app.use('/api/user', userApi);
@@ -72,7 +117,11 @@ app.get('/changepass', (req, res) => {
 })
 
 app.get('/employeeList',(req,res)=>{
-    res.render('employeeList');
+    getAllUser((users,err)=>{
+        console.log('lllllllll',users)
+        res.render('employeeList',{users});
+
+    })
 
 })
 app.get('/orderList',(req,res)=>{
