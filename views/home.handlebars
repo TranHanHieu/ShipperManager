@@ -156,15 +156,40 @@
 <script src="assets/js/main.js"></script>
 <script>
     function initMap() {
-        var uluru = {lat: 21.0078319, lng: 105.8221878};
+        var locations = [
+            ['Stadtbibliothek dieMediathek', 21.00975, 105.83116, 2],
+            ['Stadtbibliothek Gösting', 21.00999, 105.85648, 3],
+            ['Stadtbibliothek Gösting', 21.00899, 105.75648, 2],
+            ['Stadtbibliothek Gösting', 21.0227378,105.8369637,14],
+            ['Stadtbibliothek Graz West', 21.00993, 105.80727, 4],
+            ['Stadtbibliothek Graz West', 21.0063681,105.7847962, 5],
+            ['Stadtbibliothek Graz West', 20.9838897,105.8199477,15],
+        ];
+
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            center: uluru
+            zoom: 13,
+            center: new google.maps.LatLng(21.0078319, 105.8221878),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         });
-        var marker = new google.maps.Marker({
-            position: uluru,
-            map: map
-        });
+
+        var infowindow = new google.maps.InfoWindow();
+
+        var marker, i;
+
+        for (i = 0; i < locations.length; i++) {
+            marker = new google.maps.Marker({
+                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                map: map,
+                icon: 'images/shipper_icon.png'
+            });
+
+            google.maps.event.addListener(marker, 'click', (function (marker, i) {
+                return function () {
+                    infowindow.setContent(locations[i][0]);
+                    infowindow.open(map, marker);
+                }
+            })(marker, i));
+        }
     }
 </script>
 <script async defer

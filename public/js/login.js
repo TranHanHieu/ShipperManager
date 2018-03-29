@@ -34,6 +34,8 @@ $('#btnLogin').click(function (event, err) {
                     if (data.status) {
                         if(isRememberPass){
                             localStorage.setItem('rememberpass', JSON.stringify({"username":username,"password":password}));
+                        }else {
+                            localStorage.removeItem('rememberpass')
                         }
                         localStorage.setItem('user', JSON.stringify(data.data));
                         window.location.href = "/"
