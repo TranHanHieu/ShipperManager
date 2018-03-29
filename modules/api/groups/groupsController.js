@@ -4,6 +4,8 @@ const groupsModel = require('../groups/groupsModel');
 const config = require('../../../configString.json');
 const Utils = require('../../../utils/Utils');
 
+
+//Lấy danh sách quyền của tài khoản
 Router.get('/', async(req, res) => {
     try
     {
