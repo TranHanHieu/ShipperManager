@@ -6,6 +6,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="assets/css/home.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <style>
         #map {
             height: 400px;
@@ -155,16 +158,51 @@
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
 <script>
+    var listLocationUser = [];
+    $( document ).ready(function() {
+        $.ajax('/api/user/', {
+            type: "GET",
+            success: function (data) {
+                console.log(data.data);
+                if (data.status) {
+                    let users = data.data
+                    for(let i = 0; i<users.length;i++){
+                        listLocationUser.push([users[i].fullname,users[i].longitude,users[i].latitude,users[i].acc])
+                    }
+                    // if(isRememberPass){
+                    //     localStorage.setItem('rememberpass', JSON.stringify({"username":username,"password":password}));
+                    // }else {
+                    //     localStorage.removeItem('rememberpass')
+                    // }
+                    // localStorage.setItem('user', JSON.stringify(data.data));
+                    // window.location.href = "/"
+                } else {
+                    alert(data.msg)
+
+                }
+            },
+            error: function (err) {
+                console.log(err)
+                // window.location.href = "/"
+
+                alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
+            }
+        });
+    })
+
+    <!--var listUsers = {{users}}-->
+            <!--console.log(listUsers)-->
     function initMap() {
-        var locations = [
-            ['Stadtbibliothek dieMediathek', 21.00975, 105.83116, 2],
-            ['Stadtbibliothek Gösting', 21.00999, 105.85648, 3],
-            ['Stadtbibliothek Gösting', 21.00899, 105.75648, 2],
-            ['Stadtbibliothek Gösting', 21.0227378,105.8369637,14],
-            ['Stadtbibliothek Graz West', 21.00993, 105.80727, 4],
-            ['Stadtbibliothek Graz West', 21.0063681,105.7847962, 5],
-            ['Stadtbibliothek Graz West', 20.9838897,105.8199477,15],
-        ];
+
+        // var locations = [
+        //     ['Stadtbibliothek dieMediathek', 21.00975, 105.83116, 2],
+        //     ['Stadtbibliothek Gösting', 21.00999, 105.85648, 3],
+        //     ['Stadtbibliothek Gösting', 21.00899, 105.75648, 2],
+        //     ['Stadtbibliothek Gösting', 21.0227378,105.8369637,14],
+        //     ['Stadtbibliothek Graz West', 21.00993, 105.80727, 4],
+        //     ['Stadtbibliothek Graz West', 21.0063681,105.7847962, 5],
+        //     ['Stadtbibliothek Graz West', 20.9838897,105.8199477,15],
+        // ];
 
         var map = new google.maps.Map(document.getElementById('map'), {
             zoom: 13,
@@ -176,16 +214,16 @@
 
         var marker, i;
 
-        for (i = 0; i < locations.length; i++) {
+        for (i = 0; i < listLocationUser.length; i++) {
             marker = new google.maps.Marker({
-                position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+                position: new google.maps.LatLng(listLocationUser[i][1], listLocationUser[i][2]),
                 map: map,
                 icon: 'images/shipper_icon.png'
             });
 
             google.maps.event.addListener(marker, 'click', (function (marker, i) {
                 return function () {
-                    infowindow.setContent(locations[i][0]);
+                    infowindow.setContent(listLocationUser[i][0]);
                     infowindow.open(map, marker);
                 }
             })(marker, i));
