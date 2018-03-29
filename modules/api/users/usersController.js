@@ -17,6 +17,10 @@ Router.post('/', async (req, res) => {
             tokenfirebase : req.body.tokenfirebase,
             fullname: req.body.fullname,
             dateofbirth: req.body.dateofbirth,
+            longitude:req.body.longitude,
+            latitude:req.body.latitude,
+            acc:req.body.acc,
+            trangthai:req.body.trangthai,
             status : true,
             group :"5a6fe111734d1d63031a767a"
         };
