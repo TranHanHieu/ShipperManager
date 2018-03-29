@@ -14,7 +14,6 @@ $('#checkRemenberPass').click(function () {
     $(this).prop('checked',isRememberPass)
 })
 $('#btnLogin').click(function (event, err) {
-    // alert('pppppppp'+err);
     if(!err) {
         event.preventDefault();
         let username = $('#username').val();
@@ -38,7 +37,6 @@ $('#btnLogin').click(function (event, err) {
                         }
                         localStorage.setItem('user', JSON.stringify(data.data));
                         window.location.href = "/"
-                        // $(event.currentTarget).trigger('click', {'handle': true});
                     } else {
                         alert(data.msg)
 
