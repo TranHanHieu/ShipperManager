@@ -3,6 +3,7 @@ const order_userSchema = require('./order_userSchema');
 let order_userModel = mongoose.model('order_user', order_userSchema, 'order_user');
 
 const ordersModel = require('../orders/ordersModel');
+const userModel = require('../users/usersModel');
 const ship_historyModel = require('../ship_history/ship_historyModel');
 //status : 
 // -1: Đơn bị hủy
@@ -56,7 +57,14 @@ const receiveOrder = async (order_user, status, longtitude, latitude) => {
     }
 }
 
+const selectByIdUser = async(idUser) => {
+    return await order_userModel.find({user : idUser}).populate({
+        path: 'order',
+        model: ordersModel
+    })
+    .exec();
+}
 
 module.exports = {
-    receiveOrder
+    receiveOrder, selectByIdUser
 }

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const ordersSchema = require('./ordersSchema');
-let ordersModel = mongoose.model('orders', ordersSchema);
-
+let ordersModel = mongoose.model('orders', ordersSchema, 'orders');
+const order_userModel = require('../order_user/order_userModel');
 //status : 
 // -1: Đơn bị hủy
 // 0: Đơn hàng mới
@@ -41,6 +41,27 @@ const updateStatusOrder = async(idorder, status) => {
         return null;
     }
 }
+
+//Lấy danh sách đơn hàng này
+
+const selectAllOrder = async(idUser, isAdmin) => {
+    try
+    {
+        if(isAdmin === 'true')
+        {
+            return await ordersModel.find({}).exec();
+        }
+        else
+        {
+            return await order_userModel.selectByIdUser(idUser);
+        }
+    }
+    catch(err)
+    {
+        return null;
+    }
+};
+
 module.exports = {
-    selectOrderNew, updateStatusOrder
+    selectOrderNew, updateStatusOrder, selectAllOrder
 }
