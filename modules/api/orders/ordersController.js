@@ -192,7 +192,7 @@ Router.get('/deleteOrder', async(req, res) => {
         // }
         // else
         // {
-            let result = await ordersModel.deleteOrder(req.query.idOrder);
+            let result = await ordersModel.deleteOrder(req.query.idOrder, parseInt(req.query.status));
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
             else 
@@ -205,6 +205,32 @@ Router.get('/deleteOrder', async(req, res) => {
     }
 });
 
-
+Router.post('/addOrder', async(req, res)=> {
+    try
+    {
+        let newOrder = {
+            order_name : req.body.order_name,
+            from : req.body.from,
+            to : req.body.to,
+            price : req.body.price,
+            price_ship : req.body.price_ship,
+            longtitude_from : req.body.longtitude_from,
+            latitude_from : req.body.latitude_from,
+            longtitude_to : req.body.longtitude_to,
+            latitude_to : req.body.latitude_to
+        };
+    
+        let result = await ordersModel.createOrder(newOrder);
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA});
+        else 
+            res.send({ status : true, msg : config.THANH_CONG});
+    }
+    catch(err)
+    {
+        res.send({status : false, msg : config.CO_LOI_XAY_RA});
+    }
+    
+});
 
 module.exports = Router;

@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const ordersSchema = require('./ordersSchema');
 let ordersModel = mongoose.model('orders', ordersSchema, 'orders');
 const order_userModel = require('../order_user/order_userModel');
+const userSchema = require('../users/usersSchema');
+let userModel = mongoose.model('users', userSchema);
 const config = require('../../../configString.json');
+const moment = require('moment-timezone');
 //status : 
 // -1: Đơn bị hủy
 // 0: Đơn hàng mới
@@ -17,6 +20,7 @@ const createOrder = async(order) => {
     }
     catch(err)
     {
+        console.log(err);
         return null;
     }
 }
@@ -25,6 +29,17 @@ const selectOrderNew = async ({}) => {
     try
     {
         return await ordersModel.find({status : 0}).exec();
+    }
+    catch(err)
+    {
+        return null;
+    }
+}
+
+const selectOrderById = async (id) => {
+    try
+    {
+        return await ordersModel.findOne({_id : id}).exec();
     }
     catch(err)
     {
@@ -43,6 +58,17 @@ const updateStatusOrder = async(idorder, status) => {
     }
 }
 
+const updateUserInOrder = async(idOrder, idUser) => {
+    try
+    {
+        return await ordersModel.findOneAndUpdate(idOrder, {user : idUser}).exec();
+    }
+    catch(err)
+    {
+        return null;
+    }
+}
+
 //Lấy danh sách đơn hàng này
 
 const selectAllOrder = async(idUser, isAdmin) => {
@@ -50,39 +76,53 @@ const selectAllOrder = async(idUser, isAdmin) => {
     {
         if(isAdmin === 'true')
         {
-            return await ordersModel.find({}).exec();
+            let result = await ordersModel.find({}).populate({
+                path: 'user',
+                model: userModel 
+            }).exec();
+
+            // return await result.forEach(async(i, idx, array) => {
+            //     let date = moment(i.createdAt);
+            //     i.createAt = date.tz('Asia/Ho_Chi_Minh').format('dd/MM/yyyy');
+            // });
+
+            return result;
         }
         else
         {
-            return await order_userModel.selectByIdUser(idUser);
+            return await ordersModel.find({user : idUser}).populate({
+                path: 'user',
+                model: userModel 
+            }).exec();
         }
     }
     catch(err)
     {
+        console.log(err);
         return null;
     }
 };
 
-const deleteOrder = async(idOrder) => {
+const deleteOrder = async(idOrder, status) => {
     try
     {
-        let result = await order_userModel.selectByIdOrder(idOrder);
-        if(result.length > 0)
+        if(status !== 0)
         {
             return config.KHONG_THE_XOA_DON_HANG;
         }
         else
         {
-            await ordersModel.remove({_id : idOrder}).exec();
+            await ordersModel.findOneAndUpdate(idOrder, {status : -1}).exec();
             return config.THANH_CONG;
         }
     }
     catch(err)
     {
+        console.log(err);
         return config.KHONG_THANH_CONG;
     }
 }
 
 module.exports = {
-    selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder
+    selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder, updateUserInOrder, createOrder, selectOrderById
 }

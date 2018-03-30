@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const order_userSchema = require('./order_userSchema');
-let order_userModel = mongoose.model('order_user', order_userSchema, 'order_user');
+// const order_userSchema = require('./order_userSchema');
+// let order_userModel = mongoose.model('order_user', order_userSchema, 'order_user');
 
 const ordersModel = require('../orders/ordersModel');
 const userModel = require('../users/usersModel');
@@ -26,7 +26,7 @@ const receiveOrder = async (order_user, status, longtitude, latitude) => {
         //Nhận đơn
         if(status === 1)
         {
-            let result = await order_userModel.create(order_user);
+            await ordersModel.updateUserInOrder(order_user.order, order_user.user);
             if(result != null && result != {})
             {
                 return await ordersModel.updateStatusOrder(order_user.order, 1);
@@ -57,18 +57,18 @@ const receiveOrder = async (order_user, status, longtitude, latitude) => {
     }
 }
 
-const selectByIdUser = async(idUser) => {
-    return await order_userModel.find({user : idUser}).populate({
-        path: 'order',
-        model: ordersModel
-    })
-    .exec();
-}
+// const selectByIdUser = async(idUser) => {
+//     return await order_userModel.find({user : idUser}).populate({
+//         path: 'order',
+//         model: ordersModel
+//     })
+//     .exec();
+// }
 
-const selectByIdOrder = async(idOrder) => {
-    return await order_userModel.find({order : idOrder}).exec();
-}
+// const selectByIdOrder = async(idOrder) => {
+//     return await order_userModel.find({order : idOrder}).exec();
+// }
 
 module.exports = {
-    receiveOrder, selectByIdUser, selectByIdOrder
+    receiveOrder
 }
