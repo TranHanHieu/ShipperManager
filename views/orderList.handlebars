@@ -1,0 +1,58 @@
+<div class="row" style="background: white;padding: 50px">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-title">
+                <h4>Danh sách đơn hàng </h4>
+                {{!-- <button class="btn btn-success" id="btnAddNewOrder" style="float: right">Thêm</button> --}}
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Tên đơn hàng</th>
+                            <th>Ship từ</th>
+                            <th>Ship đến</th>
+                            <th>Tiền hàng</th>
+                            <th>Tiền ship</th>
+                            <th>Trạng thái</th>
+                            <th id="clEdit" style="display:none">Sửa</th>
+                            <th id="clDelete" style="display:none">Xóa</th>
+
+                        </tr>
+                        </thead>
+                        <tbody id="bodyOrderList">
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Popup của boostrap -->
+<div id="modalDelete" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Thông báo</h4>
+      </div>
+      <div class="modal-body">
+        <p>Bạn có chắc chắn muốn xóa đơn hàng này?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="btnAcceptDelete" type="button" class="btn btn-primary" data-dismiss="modal">Đồng ý</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+        
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src = "js/orderList.js"></script>
