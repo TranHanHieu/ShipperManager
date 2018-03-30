@@ -51,11 +51,11 @@ $( document ).ready(function() {
                         {
                             html +=
                             '<td>' +
-                                '<a onclick="editOrder">' +
+                                '<a onclick="editOrder(' + value._id + ')">' +
                                     '<img height="16" width="16" src="images/edit.png">' +
                                 '</a>' +
                             '</td>' +
-                            '<td><a onclick="deleteOrder"><img ' +
+                            '<td><a onclick="deleteOrder(' + value._id + ')" data-toggle="modal" data-target="#modalDelete"><img ' +
                                     'height="16" width="16" src="images/delete.png"></a></td>' +
                             '</tr>'
                         }
@@ -75,6 +75,12 @@ $( document ).ready(function() {
         // setInterval(function(){
         //     loadDataOrder();
         // }, 5000);
+
+        function deleteOrder(id)
+        {
+            
+        }
+
     }
 });
 

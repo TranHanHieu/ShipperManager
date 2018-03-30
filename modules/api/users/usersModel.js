@@ -115,7 +115,7 @@ const changePassword = async(user) => {
 const selectAllUser = async() => {
     try
     {
-        return await usersModel.find({}).populate({
+        return await usersModel.find({status : true}).populate({
             path: 'group',
             model: groupsModel 
           }).exec();
@@ -127,7 +127,7 @@ const selectAllUser = async() => {
 }
 
 const getAllUser = (callback) => {
-    usersModel.find({}).populate({
+    usersModel.find({status : true}).populate({
         path: 'group',
         model: groupsModel
     }).exec(function (err, users) {
@@ -135,6 +135,11 @@ const getAllUser = (callback) => {
         callback(users, err);
     });
 };
+
+const deleteUser = async(idUser) => {
+    return usersModel.findOneAndUpdate({_id : idUser}, {status : false}).exec();
+}
+
 module.exports = {
-    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser
+    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteUser
 }
