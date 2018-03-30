@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
+const config = require('../../../configString')
 
 
 const usersSchema = new Schema(
@@ -13,6 +14,10 @@ const usersSchema = new Schema(
         group : {type : ObjectId},
         avatar : {type: String},
         email : {type : String},
+        longitude: {type:Number,default:0.0},
+        latitude: {type:Number,default:0.0},
+        acc: {type:Number,default:0.0},
+        trangthai:{type:String,default:config.MAT_TIN_HIEU},
         status : {type : Boolean}
     }, {timestamps : {createAt : 'created_at', updateAt : 'updated_at'}}
 );

@@ -28,6 +28,9 @@ const updateUser = async(user) => {
             avatar : user.avatar,
             password : user.password,
             email : user.email,
+            longitude: user.longitude,
+            latitude: user.latitude,
+            acc: user.acc,
             group : user.group
         }
     
