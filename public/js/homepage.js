@@ -42,8 +42,14 @@ $(document).ready(function () {
 })
 
 function setPosition(position) {
+
     longitude = position.coords.longitude;
     latitude = position.coords.latitude;
+    //nếu không lấy được vị trí 
+    if (latitude == "") {
+        longitude = 21.00993
+        latitude = 105.80727
+    }
 }
 
 function initMap() {
