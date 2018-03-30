@@ -45,10 +45,10 @@ function setPosition(position) {
 
     longitude = position.coords.longitude;
     latitude = position.coords.latitude;
-    //nếu không lấy được vị trí 
+    //nếu không lấy được vị trí
     if (latitude == "") {
-        longitude = 21.00993
-        latitude = 105.80727
+        latitude = 21.00993
+        longitude = 105.80727
     }
 }
 
