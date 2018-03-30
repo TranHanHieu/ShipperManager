@@ -18,6 +18,7 @@ const usersSchema = new Schema(
         latitude: {type:Number,default:0.0},
         acc: {type:Number,default:0.0},
         trangthai:{type:String,default:config.MAT_TIN_HIEU},
+        mamautrangthai:{type:String,default:'red'},
         status : {type : Boolean}
     }, {timestamps : {createAt : 'created_at', updateAt : 'updated_at'}}
 );

@@ -27,30 +27,38 @@
                                 <td><span>{{@index}}</span></td>
                                 <td>
 
-                                            {{#if avatar}}
-                                                <img style="width: 40px;height: 40px;border-radius: 30px" src={{avatar}}>
-                                            {{else}}
-                                                <div class="text-14" style="
-                                                        background:{{getBGColor fullname}} ;
-                                                        width: 40px;
-                                                        height: 40px;
-                                                        border-radius: 50%;
-                                                        color: #fff;
-                                                        padding: 10px;
-                                                        text-align: center">{{getSortName fullname}}</div>
-                                            {{/if}}
+                                    {{#if avatar}}
+                                        <img style="width: 40px;height: 40px;border-radius: 30px" src={{avatar}}>
+                                    {{else}}
+                                        <div class="text-14" style="
+                                                background:{{getBGColor fullname}} ;
+                                                width: 40px;
+                                                height: 40px;
+                                                border-radius: 50%;
+                                                color: #fff;
+                                                padding: 10px;
+                                                text-align: center">{{getSortName fullname}}</div>
+                                    {{/if}}
 
                                 </td>
                                 <td>{{fullname}}</td>
                                 <td><span style="text-decoration: underline">{{group.groupname}}</span></td>
-                                <td><span class="text-14 badge badge-success">{{username}}</span>
+                                <td>
+
+                                    <!--{{#if  trangthai}}-->
+                                        <span id="trangthai" style="background: {{mamautrangthai}}" class="text-14 badge badge-success">{{trangthai}}</span>
+                                    <!--{{else}}-->
+                                        <!--<span id="trangthai" class="text-14 badge badge-success">{{trangthai}}</span>-->
+                                    <!--{{/if }}-->
                                 </td>
+
+
                                 <td>
                                     <a href="edit?id={{_id}}">
                                         <img height="16" width="16" src="images/edit.png">
                                     </a>
                                 </td>
-                                <td><a><img
+                                <td><a href="javascript:deleteEmployee('{{_id}}','{{fullname}}')"><img
                                         height="16" width="16" src="images/delete.png"></a></td>
                             </tr>
                         {{/each}}
@@ -65,7 +73,15 @@
 
 <script>
     document.title = "Danh sách nhân viên - ShipperManager"
-    $("#btaddemploye").click(function (e) {
+    $("#btnAddEmploye").click(function (e) {
         window.location.href = '/addEmployee'
     })
+
+    function deleteEmployee(id, name) {
+        console.log(id, name);
+        let result = confirm(`Bạn có muốn xóa ${name}? `)
+        if (result) {
+            window.location.href = `/delete?id=${id}`
+        }
+    }
 </script>

@@ -64,7 +64,7 @@
                             <img id="avatar" style="width: 130px;height: 130px;border-radius:115px " src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p160x160/25158130_2072313353013265_2222362076437431781_n.jpg?oh=5341067d1fc88197b52c5f30d563dd50&oe=5B3EC495"/>
                             <h4 id="fullname" style="color: black;margin-top: 30px">Hieu Tran</h4>
                             <h6 id="chucvu" style="color: gray;margin-top: 16px">Chức vụ: Quản lý</h6>
-                            <h6 id="ngaysinh" style="color: gray;margin-top: 16px">Ngày sinh: 16/05/1997</h6>
+                            <h6 id="ngaysinh" style="color: gray;margin-top: 16px">Ngày sinh: 16/05/97</h6>
                             <h6 id="email" style="color: gray;margin-top: 16px">Email: 20/03/2025</h6>
                         </div>
                         <div class="modal-footer">
@@ -121,6 +121,7 @@
         document.getElementById("chucvu").innerHTML = 'Chức vụ: '+ user.group.groupname;
         document.getElementById("avatarUser").src = user.avatar
         document.getElementById("avatar").src = user.avatar
+        document.getElementById("ngaysinh").innerHTML = 'Ngày sinh: '+ user.dateofbirth
     } else {
         alert('Lỗi! Trình duyệt của bạn không hỗ trợ Web Storage')
     }
