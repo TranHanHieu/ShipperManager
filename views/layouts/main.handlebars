@@ -101,38 +101,12 @@
         </footer>
     </section>
 </div>
-<script>
-    $('#btnLogOut').click(function () {
-        window.location.href = '/logout'
-    })
-</script>
-<script>
-    $('#btnChangePass').click(function () {
-        window.location.href = '/changepass'
-    })
-</script>
-<script>
-    if (typeof(Storage) !== "undefined") {
-        var user = JSON.parse(localStorage.getItem("user"))
-        console.log(user)
-        document.getElementById("userNameLb").innerHTML = user.fullname;
-        document.getElementById("fullname").innerHTML = user.fullname;
-        document.getElementById("email").innerHTML = 'Email: '+ user.email;
-        document.getElementById("chucvu").innerHTML = 'Chức vụ: '+ user.group.groupname;
-        document.getElementById("avatarUser").src = user.avatar
-        document.getElementById("avatar").src = user.avatar
-        document.getElementById("ngaysinh").innerHTML = 'Ngày sinh: '+ user.dateofbirth
-    } else {
-        alert('Lỗi! Trình duyệt của bạn không hỗ trợ Web Storage')
-    }
-</script>
-
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/jquery.poptrox.min.js"></script>
 <script src="assets/js/jquery.scrolly.min.js"></script>
 <script src="assets/js/skel.min.js"></script>
 <script src="assets/js/util.js"></script>
-<script src="assets/js/main.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>
