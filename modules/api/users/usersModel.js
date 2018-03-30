@@ -136,10 +136,20 @@ const getAllUser = (callback) => {
     });
 };
 
+const getUserById = (id,callback) => {
+    usersModel.findOne({_id : id}).populate({
+        path: 'group',
+        model: groupsModel
+    }).exec(function (err, user) {
+
+        callback(user, err);
+    });
+};
+
 const deleteEmployee = async(idUser) => {
     return usersModel.findOneAndUpdate({_id : idUser}, {status : false}).exec();
 }
 
 module.exports = {
-    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteEmployee
+    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteEmployee, getUserById
 }
