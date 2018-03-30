@@ -8,7 +8,7 @@ const ship_historyModel = mongoose.model('ship_history', ship_historySchema, 'sh
 const selectHistory = async (idOrder) => {
     try
     {
-        return await ship_historyModel.find({}).exec();
+        return await ship_historyModel.find({order : idOrder}).exec();
     }
     catch(err)
     {
