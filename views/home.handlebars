@@ -169,7 +169,7 @@
                 if (data.status) {
                     let users = data.data
                     for (let i = 0; i < users.length; i++) {
-                        var customMarket = '<div><div><img id="avatar" style="width: 40px;float:left;height: 40px;border-radius:25px " src="https://beebom-redkapmedia.netdna-ssl.com/wp-content/uploads/2016/01/Reverse-Image-Search-Engines-Apps-And-Its-Uses-2016.jpg"/><h4 style="text-align: center;float: left;margin: 10px">' + users[i].fullname + '</h4></div><h5 style="text-align: center">' + users[i].group.groupname + '</h5><div style="margin: auto;display: table"><img style="float: left;width: 30px;height: 30px;border-radius:20px " src="images/shipper_icon.png"/><h5 style="margin: 10px;float: left">' + users[i].trangthai + '</h5></div></div>'
+                        var customMarket = '<div><div><img id="avatar" style="width: 40px;float:left;height: 40px;border-radius:25px " src="'+users[i].avatar+'"/><h4 style="text-align: center;float: left;margin: 10px">' + users[i].fullname + '</h4></div><h5 style="text-align: center">' + users[i].group.groupname + '</h5><div style="margin: auto;display: table"><img style="float: left;width: 30px;height: 30px;border-radius:20px " src="images/shipper_icon.png"/><h5 style="margin: 10px;float: left">' + users[i].trangthai + '</h5></div></div>'
 
                         listLocationUser.push([customMarket,
                             users[i].longitude, users[i].latitude, users[i].acc])
@@ -187,6 +187,9 @@
                 alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
             }
         });
+        navigator.permissions.query({'name': 'geolocation'})
+                .then( permission => console.log(permission) )
+
         // Lấy vị trí hiện tại khi người dùng đăng nhập
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(setPosition);
@@ -203,19 +206,19 @@
     }
 
     function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: new google.maps.LatLng(latitude, longitude),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
         // Hiển thị vị trí đăng nhập của người dùng web
         var locationCurrent = {lat: latitude, lng: longitude};
         var marker1 = new google.maps.Marker({
             position: locationCurrent,
             map: map
         });
-
         // Hiển thị vị trí, trạng thái của tất cả nhân viên
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
-            center: new google.maps.LatLng(latitude, longitude),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
         var infowindow = new google.maps.InfoWindow();
 
         var marker, i;
