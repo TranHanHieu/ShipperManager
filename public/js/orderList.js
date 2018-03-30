@@ -1,15 +1,16 @@
 document.title = "Danh sách đơn hàng - ShipperManager"
-function deleteOrder(id)
+var load = null;
+function deleteOrder(id, status)
 {
-    console.log(id);
+    console.log(id + "status" + status);
     if(confirm("Bạn có chắc chắn muốn xóa đơn hàng này?"))
     {
-        $.ajax('/api/order/deleteOrder?idOrder=' + id, {
+        $.ajax('/api/order/deleteOrder?idOrder=' + id + "&status=" + status, {
             type: "GET",
             dataType: "json",
             success: function (data) {
                 alert(data.msg);
-                loadDataOrder();
+                load();
             },
             error: function (err) {
                 console.log(err);
@@ -22,24 +23,16 @@ function deleteOrder(id)
 }
 
 $( document ).ready(function() {
+    var user = JSON.parse(localStorage.getItem("user"));
 
-    function initMap() {
-        var user = JSON.parse(localStorage.getItem("user"));
-
-        var map = new google.maps.Map(document.getElementById('map2'), {
-            zoom: 13,
-            center: new google.maps.LatLng(user.latitude, user.longitude),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-    }
-    
     if(user){
 
-        function loadDataOrder(){
+        load = function loadDataOrder(){
             $.ajax('/api/order/all?idlogin=' + user._id + "&isadmin=" + user.group.isadmin, {
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
+                    console.log(data);
                     if(user.group.isadmin)
                     {
                         $("#clEdit").css('display', '');
@@ -58,7 +51,11 @@ $( document ).ready(function() {
                         '<td><span>'+ value.to +'</span></td>' +
                         '<td><span>'+ value.price +'</span></td>' +
                         '<td><span>'+ value.price_ship +'</span></td>';
-
+                        
+                        if(value.status == 0 || value.status == -1)
+                            html += '<td><span>Chưa nhận đơn</span></td>';
+                        else
+                            html += '<td><span>'+ value.user.fullname +'</span></td>';
                         //status : 
                         // -1: Đơn bị hủy
                         // 0: Đơn hàng mới
@@ -75,29 +72,40 @@ $( document ).ready(function() {
                         if(value.status === 1)
                             html += '<td><span>Shipper nhận đơn</span></td>';
 
-                        if(value.status === 2)
-                            html += '<td><span>Bắt đầu giao</span></td>';
+                        if(value.status === 2 || value.status === 4)
+                            html += '<td><span>Đang giao</span></td>';
 
                         if(value.status === 3)
                             html += '<td><span>Hoàn thành</span></td>';
+
+                        html += '<td><span>'+ value.createdAt +'</span></td>';
+
+                        html += '<td>' +
+                                    '<a href="/orderDetail?idOrder='+ value._id +'">' +
+                                        '<img height="16" width="16" src="images/detail.png">' +
+                                    '</a>' +
+                                '</td>';
 
                         if(user.group.isadmin)
                         {
                             html +=
                             '<td>' +
-                                '<a onclick=editOrder(' + value._id + ')>' +
+                                '<a href="/editOrder?idOrder='+ value._id +'">' +
                                     '<img height="16" width="16" src="images/edit.png">' +
                                 '</a>' +
                             '</td>' +
-                            '<td><a onclick="deleteOrder(\'' + value._id + '\')"><img ' +
+                            '<td><a onclick="deleteOrder(\'' + value._id + '\', \'' + value.status + '\')"><img ' +
                                     'height="16" width="16" src="images/delete.png"></a></td>' +
                             '</tr>'
                         }
+                        
+                        
 
                         $("#bodyOrderList").append(html);
                       });
                 },
                 error: function (err) {
+                    console.log(err);
                     window.location.href = "/orderList"
 
                     alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
@@ -108,8 +116,7 @@ $( document ).ready(function() {
        
 
         
-        loadDataOrder();
-        initMap();
+        load();
         // setInterval(function(){
         //     loadDataOrder();
         // }, 5000);

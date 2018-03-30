@@ -158,6 +158,15 @@ app.get('/addOrder',(req,res)=>{
 
 })
 
+app.get('/editOrder',(req,res)=>{
+    res.render('editOrder');
+})
+
+app.get('/orderDetail',(req,res)=>{
+    res.render('orderDetail');
+})
+
+
 app.get('/home', (req, res) => {
     res.render('home');
     // res.sendFile(__dirname + '/public/home.html')
