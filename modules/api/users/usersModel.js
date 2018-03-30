@@ -136,10 +136,10 @@ const getAllUser = (callback) => {
     });
 };
 
-const deleteUser = async(idUser) => {
+const deleteEmployee = async(idUser) => {
     return usersModel.findOneAndUpdate({_id : idUser}, {status : false}).exec();
 }
 
 module.exports = {
-    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteUser
+    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteEmployee
 }
