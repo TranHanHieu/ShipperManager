@@ -25,14 +25,6 @@ function deleteOrder(id, status)
 $( document ).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
 
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map2'), {
-            zoom: 13,
-            center: new google.maps.LatLng(user.latitude, user.longitude),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-    }
-    
     if(user){
 
         load = function loadDataOrder(){
@@ -80,7 +72,7 @@ $( document ).ready(function() {
                         if(value.status === 1)
                             html += '<td><span>Shipper nhận đơn</span></td>';
 
-                        if(value.status === 2)
+                        if(value.status === 2 || value.status === 4)
                             html += '<td><span>Đang giao</span></td>';
 
                         if(value.status === 3)
@@ -88,11 +80,17 @@ $( document ).ready(function() {
 
                         html += '<td><span>'+ value.createdAt +'</span></td>';
 
+                        html += '<td>' +
+                                    '<a href="/orderDetail?idOrder='+ value._id +'">' +
+                                        '<img height="16" width="16" src="images/detail.png">' +
+                                    '</a>' +
+                                '</td>';
+
                         if(user.group.isadmin)
                         {
                             html +=
                             '<td>' +
-                                '<a onclick=editOrder(' + value._id + ')>' +
+                                '<a href="/editOrder?idOrder='+ value._id +'">' +
                                     '<img height="16" width="16" src="images/edit.png">' +
                                 '</a>' +
                             '</td>' +
@@ -119,7 +117,6 @@ $( document ).ready(function() {
 
         
         load();
-        initMap();
         // setInterval(function(){
         //     loadDataOrder();
         // }, 5000);
