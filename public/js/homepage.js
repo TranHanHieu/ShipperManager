@@ -1,6 +1,7 @@
 var listLocationUser = [];
-var longitude = '';
-var latitude = '';
+var latitude = 21.00993
+var longitude = 105.80727
+
 $(document).ready(function () {
     $.ajax('/api/user/', {
         type: "GET",
@@ -35,6 +36,9 @@ $(document).ready(function () {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(setPosition);
     } else {
+        latitude = 21.00993
+        longitude = 105.80727
+
         alert("GPS không được trình duyệt hỗ trợ.")
     }
 
@@ -45,11 +49,6 @@ function setPosition(position) {
 
     longitude = position.coords.longitude;
     latitude = position.coords.latitude;
-    //nếu không lấy được vị trí
-    if (latitude == "") {
-        latitude = 21.00993
-        longitude = 105.80727
-    }
 }
 
 function initMap() {
