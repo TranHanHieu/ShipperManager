@@ -69,6 +69,31 @@ const updateUserInOrder = async(idOrder, idUser) => {
     }
 }
 
+//Update Order
+const updateOrder = async(order) => {
+    try
+    {
+        let idOrder = order.idOrder;
+        let queryUpdate = {
+            order_name : order.order_name,
+            from : order.from,
+            to : order.to,
+            price : order.price,
+            price_ship : order.price_ship,
+            longtitude_from : order.longtitude_from,
+            latitude_from : order.latitude_from,
+            longtitude_to : order.longtitude_to,
+            latitude_to : order.latitude_to
+        }
+
+        return await ordersModel.findOneAndUpdate(idOrder, queryUpdate).exec();
+    }
+    catch(err)
+    {
+        return null;
+    }
+}
+
 //Lấy danh sách đơn hàng này
 
 const selectAllOrder = async(idUser, isAdmin) => {
@@ -79,7 +104,7 @@ const selectAllOrder = async(idUser, isAdmin) => {
             let result = await ordersModel.find({}).populate({
                 path: 'user',
                 model: userModel 
-            }).exec();
+            }).sort({createAt: 'desc'}).exec();
 
             // return await result.forEach(async(i, idx, array) => {
             //     let date = moment(i.createdAt);
@@ -93,7 +118,7 @@ const selectAllOrder = async(idUser, isAdmin) => {
             return await ordersModel.find({user : idUser}).populate({
                 path: 'user',
                 model: userModel 
-            }).exec();
+            }).sort({createAt: 'desc'}).exec();
         }
     }
     catch(err)
@@ -124,5 +149,5 @@ const deleteOrder = async(idOrder, status) => {
 }
 
 module.exports = {
-    selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder, updateUserInOrder, createOrder, selectOrderById
+    selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder, updateUserInOrder, createOrder, selectOrderById, updateOrder
 }

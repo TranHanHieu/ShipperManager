@@ -1,6 +1,7 @@
 const express = require('express');
 const Router = express.Router();
 const ordersModel = require('../orders/ordersModel');
+const orderHistoryModel = require('../ship_history/ship_historyModel');
 const order_userModel = require('../order_user/order_userModel');
 const config = require('../../../configString.json');
 const Utils = require('../../../utils/Utils');
@@ -28,6 +29,29 @@ Router.get('/', async(req, res) => {
     }
 });
 
+//Lấy đơn hàng theo ID
+Router.get('/select', async(req, res) => {
+    try
+    {
+        // if(!Utils.verifyLogin(req.query.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
+            let result = await ordersModel.selectOrderById(req.query.idOrder);
+            if(result === null)
+                res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
+            else 
+                res.send({ status : true, msg : config.THANH_CONG, data : result});
+        //}
+    }
+    catch(err)
+    {
+        res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
+    }
+});
+
 //Nhận đơn hàng.
 Router.post('/receive', async(req, res) => {
     try
@@ -43,7 +67,7 @@ Router.post('/receive', async(req, res) => {
                 user : req.body.idlogin
             }
 
-            let result = await order_userModel.receiveOrder(order_user, 1, 0, 0);
+            let result = await order_userModel.receiveOrder(order_user, 1, 0, 0, "");
 
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
@@ -77,7 +101,7 @@ Router.post('/start', async(req, res) => {
                 user : req.body.idlogin
             }
 
-            let result = await order_userModel.receiveOrder(order_user, 2, req.body.longtitude, req.body.latitude);
+            let result = await order_userModel.receiveOrder(order_user, 2, req.body.longtitude, req.body.latitude, req.body.address);
 
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
@@ -111,7 +135,7 @@ Router.post('/shipping', async(req, res) => {
                 user : req.body.idlogin
             }
 
-            let result = await order_userModel.receiveOrder(order_user, 4, req.body.longtitude, req.body.latitude);
+            let result = await order_userModel.receiveOrder(order_user, 4, req.body.longtitude, req.body.latitude, req.body.address);
 
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
@@ -145,7 +169,7 @@ Router.post('/complete', async(req, res) => {
                 user : req.body.idlogin
             }
 
-            let result = await order_userModel.receiveOrder(order_user, 3, req.body.longtitude, req.body.latitude);
+            let result = await order_userModel.receiveOrder(order_user, 3, req.body.longtitude, req.body.latitude, req.body.address);
 
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
@@ -231,6 +255,57 @@ Router.post('/addOrder', async(req, res)=> {
         res.send({status : false, msg : config.CO_LOI_XAY_RA});
     }
     
+});
+
+Router.put('/editOrder', async(req, res)=> {
+    try
+    {
+        let order = {
+            idOrder : req.body.idOrder,
+            order_name : req.body.order_name,
+            from : req.body.from,
+            to : req.body.to,
+            price : req.body.price,
+            price_ship : req.body.price_ship,
+            longtitude_from : req.body.longtitude_from,
+            latitude_from : req.body.latitude_from,
+            longtitude_to : req.body.longtitude_to,
+            latitude_to : req.body.latitude_to
+        };
+    
+        let result = await ordersModel.updateOrder(order);
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA});
+        else 
+            res.send({ status : true, msg : config.THANH_CONG});
+    }
+    catch(err)
+    {
+        res.send({status : false, msg : config.CO_LOI_XAY_RA});
+    }
+    
+});
+
+Router.get('/history', async(req, res) => {
+    try
+    {
+        // if(!Utils.verifyLogin(req.query.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
+            let result = await orderHistoryModel.selectHistory(req.query.idOrder);
+            if(result === null)
+                res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
+            else 
+                res.send({ status : true, msg : config.THANH_CONG, data : result});
+        //}
+    }
+    catch(err)
+    {
+        res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
+    }
 });
 
 module.exports = Router;

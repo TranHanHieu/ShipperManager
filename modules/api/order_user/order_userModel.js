@@ -13,11 +13,12 @@ const ship_historyModel = require('../ship_history/ship_historyModel');
 // 3: Hoàn thành
 
 //Xử lý đơn hàng
-const receiveOrder = async (order_user, status, longtitude, latitude) => {
+const receiveOrder = async (order_user, status, longtitude, latitude, address) => {
     try
     {
         var history = {
             order : order_user.order,
+            address : address,
             longtitude : longtitude,
             latitude : latitude
         }
