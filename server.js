@@ -128,6 +128,12 @@ app.get('/orderList',(req,res)=>{
     res.render('orderList');
 
 })
+
+app.get('/addOrder',(req,res)=>{
+    res.render('addOrder');
+
+})
+
 app.get('/home', (req, res) => {
     res.render('home');
     // res.sendFile(__dirname + '/public/home.html')

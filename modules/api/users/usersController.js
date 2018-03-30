@@ -22,7 +22,7 @@ Router.post('/', async (req, res) => {
             acc:req.body.acc,
             trangthai:req.body.trangthai,
             status : true,
-            group :"5a6fe111734d1d63031a767a"
+            group : req.body.group
         };
     
         // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))

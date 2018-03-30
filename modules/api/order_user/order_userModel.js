@@ -65,6 +65,10 @@ const selectByIdUser = async(idUser) => {
     .exec();
 }
 
+const selectByIdOrder = async(idOrder) => {
+    return await order_userModel.find({order : idOrder}).exec();
+}
+
 module.exports = {
-    receiveOrder, selectByIdUser
+    receiveOrder, selectByIdUser, selectByIdOrder
 }

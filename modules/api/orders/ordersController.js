@@ -182,5 +182,29 @@ Router.get('/all', async(req, res) => {
     }
 });
 
+//Link Xóa đơn hàng
+Router.get('/deleteOrder', async(req, res) => {
+    try
+    {
+        // if(!Utils.verifyLogin(req.query.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
+            let result = await ordersModel.deleteOrder(req.query.idOrder);
+            if(result === null)
+                res.send({status : false, msg : config.CO_LOI_XAY_RA});
+            else 
+                res.send({ status : true, msg : result});
+        //}
+    }
+    catch(err)
+    {
+        res.send({status : false, msg : config.CO_LOI_XAY_RA});
+    }
+});
+
+
 
 module.exports = Router;

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const ordersSchema = require('./ordersSchema');
 let ordersModel = mongoose.model('orders', ordersSchema, 'orders');
 const order_userModel = require('../order_user/order_userModel');
+const config = require('../../../configString.json');
 //status : 
 // -1: Đơn bị hủy
 // 0: Đơn hàng mới
@@ -62,6 +63,26 @@ const selectAllOrder = async(idUser, isAdmin) => {
     }
 };
 
+const deleteOrder = async(idOrder) => {
+    try
+    {
+        let result = await order_userModel.selectByIdOrder(idOrder);
+        if(result.length > 0)
+        {
+            return config.KHONG_THE_XOA_DON_HANG;
+        }
+        else
+        {
+            await ordersModel.remove({_id : idOrder}).exec();
+            return config.THANH_CONG;
+        }
+    }
+    catch(err)
+    {
+        return config.KHONG_THANH_CONG;
+    }
+}
+
 module.exports = {
-    selectOrderNew, updateStatusOrder, selectAllOrder
+    selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder
 }

@@ -8,6 +8,7 @@
     "THANH_CONG" : "Xử lý thành công!",
     "DA_TON_TAI" : "Đã tồn tại!",
     "KHONG_THE_XOA" : "Không thể xóa!",
+    "KHONG_THE_XOA_DON_HANG" : "Không thể xóa đơn hàng trong trạng thái vận đơn!",
     "QRCODE_KHONG_TON_TAI" : "Mã QRCode không tồn tại",
     "QRCODE_KHONG_KHA_DUNG" : "Mã QRCode không khả dụng",
     "KHONG_THANH_CONG" : "Không thành công!",
