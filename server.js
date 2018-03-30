@@ -126,6 +126,12 @@ app.get('/employeeList',(req,res)=>{
 
 })
 // Xóa nhân viên
+app.get('/detailEmployee', (req, res) => {
+    let id = req.query.id;
+    getUserById(id, (user, err) => {
+        res.render('detailEmployee',{user})
+    })
+});
 app.get('/delete', (req, res) => {
     let id = req.query.id;
     deleteEmployee(id).then(() => {

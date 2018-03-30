@@ -1,0 +1,153 @@
+<form action="/api/user/" method="post">
+    <div class="container" style="width:100%;background: white;padding: 50px">
+
+        <div class="card-body">
+
+            <div class="form-body">
+                <div>
+                    <h3 class="card-title m-t-15">Thông tin nhân viên</h3>
+                    <hr>
+
+                    <div class="form-group has-danger">
+                        <!--<form id="form1" runat="server">-->
+                        <h4 style="text-align: center">Ảnh đại diện</h4>
+                        <img style="margin: auto;width: 130px;height: 130px;border-radius: 130px;display:block "
+                             id="avatarnv" src="{{user.avatar}}"/>
+
+
+                    </div>
+                    <div class="row p-t-20">
+                        <div class="col-md-6">
+                            <div class="form-group has-danger">
+                                <label class="control-label">Tên nhân viên</label>
+                                <input name="fullname" type="text" id="fullnamenv" value="{{user.fullname}}"
+                                       class="form-control form-control-danger" placeholder="Tên nhân viên">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-success">
+                                <label class="control-label">Chức vụ</label>
+                                <select id="chucvunv" name="chucvunv" class="form-control custom-select"
+                                        title="Chức vụ">
+                                    {{#each groups}}
+                                        <option value="{{_id}}">{{groupname}}</option>
+                                    {{/each}}
+                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <div class="form-group has-danger">
+                                <label class="control-label">Email</label>
+                                <input name="email" type="email" id="emailnv" value="{{user.email}}"
+                                       class="form-control form-control-danger" placeholder="Email">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group has-danger">
+                                <label class="control-label">Ngày sinh</label>
+                                <input name="ngaysinhnv" type="date" id="ngaysinhnv" value="{{user.dateofbirth}}"
+                                       class="form-control form-control-danger" placeholder="Ngày sinh">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <!--/span-->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label">Tên đăng nhập</label>
+                                <input name="username" id="username" type="text" value="{{user.username}}"
+                                       class="form-control"
+                                       placeholder="Tên đăng nhập">
+                            </div>
+                        </div>
+                        <!--/span-->
+                    </div>
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;/span&ndash;&gt;-->
+                    <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                    <!--<label class="control-label">Số điện thoại</label>-->
+                    <!--<input name="salary" id="salary" type="number" class="form-control"-->
+                    <!--placeholder="Nhập số điện thoại">-->
+                    <!--</div>-->
+                    <!--</div>-->
+                    <!--&lt;!&ndash;/span&ndash;&gt;-->
+                    <!--</div>-->
+                </div>
+                <h3>Lộ trình di chuyển:</h3>
+                <div>
+                    <label>Từ ngày: </label>
+                    <input style="margin: 10px" name="tungay" type="date" id="tungay"
+                           placeholder="Từ ngày">
+                    <label>Đến ngày: </label>
+                    <input style="margin: 10px" name="denngay" type="date" id="denngay"
+                           placeholder="Từ ngày">
+                    <button style="margin-left: 20px;height: 30px; text-align: center" id="btnSummit" type="submit" class="btn-success">Xem
+
+                </div>
+
+                <div id="map"></div>
+
+            </div>
+            <div style="display: table;margin-left: auto;margin-right: auto;margin-top: 30px">
+                <!--<button style="margin-right: 30px;" id="btnSummit" type="submit" class="btn btn-success">Cập nhật-->
+                <!--</button>-->
+                <button type="button" onclick="cancelClick()" class="btn btn-inverse">Quay lại</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyVm6Ku29H8jLCuwK1xDypxLu3FgQb4Qs&callback=initMap">
+</script>
+<script>
+    var latitude = 21.00993
+    var longitude = 105.80727
+
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: new google.maps.LatLng(latitude, longitude),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+        // Hiển thị vị trí đăng nhập của người dùng web
+        var locationCurrent = {lat: latitude, lng: longitude};
+        var marker = new google.maps.Marker({
+            position: locationCurrent,
+            map: map
+        });
+        // // Hiển thị vị trí, trạng thái của tất cả nhân viên
+        // var infowindow = new google.maps.InfoWindow();
+        //
+        // var marker, i;
+        // console.log(listLocationUser)
+        //
+        // for (i = 0; i < listLocationUser.length; i++) {
+        //     marker = new google.maps.Marker({
+        //         position: new google.maps.LatLng(listLocationUser[i][1], listLocationUser[i][2]),
+        //         map: map,
+        //         icon: 'images/shipper_icon.png'
+        //     });
+        //
+        //     google.maps.event.addListener(marker, 'click', (function (marker, i) {
+        //         return function () {
+        //             infowindow.setContent(listLocationUser[i][0]);
+        //             infowindow.open(map, marker);
+        //         }
+        //     })(marker, i));
+        // }
+    }
+
+</script>
+<script src="js/editEmployee.js"></script>
+

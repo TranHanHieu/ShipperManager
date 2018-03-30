@@ -10,7 +10,10 @@ $(document).ready(function () {
             if (data.status) {
                 let users = data.data
                 for (let i = 0; i < users.length; i++) {
-                    var customMarket = '<div><div><img id="avatar" style="width: 40px;float:left;height: 40px;border-radius:25px " src="'+users[i].avatar+'"/><h4 style="text-align: center;float: left;margin: 10px">' + users[i].fullname + '</h4></div><h5 style="text-align: center">' + users[i].group.groupname + '</h5><div style="margin: auto;display: table"><img style="float: left;width: 30px;height: 30px;border-radius:20px " src="images/shipper_icon.png"/><h5 style="margin: 10px;float: left">' + users[i].trangthai + '</h5></div></div>'
+                    var customMarket = '<div><div><img id="avatar" style="width: 40px;float:left;height: 40px;border-radius:25px " src="'+users[i].avatar+'"/><h4 style="text-align: center;float: left;margin: 10px">' + users[i].fullname + '</h4></div>' +
+                        '<h5 style="text-align: center">' + users[i].group.groupname + '</h5>' +
+                        '<div style="margin: auto;display: table"><img style="float: left;width: 30px;height: 30px;border-radius:20px " src="images/shipper_icon.png"/><h5 style="margin: 10px;float: left">' + users[i].trangthai + '</h5></div>' +
+                        '<div style="display: table;margin: auto"><i class="fa fa-map-marker" style="margin-left: 10px;margin-right: 10px;float: left;font-size:16px;color:red"></i><a style="float: left" href="detailEmployee?id='+users[i]._id+'">Xem lộ trình</a></div></div>'
 
                     listLocationUser.push([customMarket,
                         users[i].longitude, users[i].latitude, users[i].acc])
