@@ -8,9 +8,12 @@
             <div style="margin-bottom: 5%">
 
             </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table">
+        </div>
+
+         <div class="container">
+              <div class="row">
+                  <div class="table-responsive">
+                    <table id="tableOrder" class="table table-striped table-bordered table-hover">
                         <thead>
                         <tr>
                             <th>STT</th>
@@ -19,19 +22,21 @@
                             <th>Ship đến</th>
                             <th>Tiền hàng</th>
                             <th>Tiền ship</th>
+                            <th>Shipper</th>
                             <th>Trạng thái</th>
+                             <th>Ngày tạo</th>
                             <th id="clEdit" style="display:none">Sửa</th>
-                            <th id="clDelete" style="display:none">Xóa</th>
+                            <th id="clDelete" style="display:none">Huỷe</th>
 
                         </tr>
                         </thead>
                         <tbody id="bodyOrderList">
-                            
                         </tbody>
                     </table>
                 </div>
+              </div>
+                
             </div>
-        </div>
     </div>
 </div>
 
@@ -51,6 +56,5 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyVm6Ku29H8jLCuwK1xDypxLu3FgQb4Qs">
 </script>
-
 
 <script src = "js/orderList.js"></script>
