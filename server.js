@@ -11,7 +11,8 @@ const session = require('express-session');
 const userApi = require('./modules/api/users/usersController');
 const groupApi = require('./modules/api/groups/groupsController');
 const orderApi = require('./modules/api/orders/ordersController');
-const {getAllUser} = require('./modules/api/users/usersModel')
+const {getAllUser,deleteEmployee} = require('./modules/api/users/usersModel')
+const {getAllGroup} = require('./modules/api/groups/groupsModel')
 var app = express();
 
 app.use(session({
@@ -120,6 +121,21 @@ app.get('/employeeList',(req,res)=>{
     getAllUser((users,err)=>{
         console.log('lllllllll',users)
         res.render('employeeList',{users});
+
+    })
+
+})
+// Xóa nhân viên
+app.get('/delete', (req, res) => {
+    let id = req.query.id;
+    deleteEmployee(id).then(() => {
+        res.redirect(`/employeeList`)
+    })
+});
+app.get('/addEmployee',(req,res)=>{
+    getAllGroup((groups,err)=>{
+        console.log(groups)
+        res.render('addEmployee',{groups});
 
     })
 

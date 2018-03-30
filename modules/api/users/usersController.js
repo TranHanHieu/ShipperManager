@@ -21,6 +21,7 @@ Router.post('/', async (req, res) => {
             latitude:req.body.latitude,
             acc:req.body.acc,
             trangthai:req.body.trangthai,
+            mamautrangthai:req.body.mamautrangthai,
             status : true,
             group : req.body.group
         };
