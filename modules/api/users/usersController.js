@@ -23,6 +23,7 @@ Router.post('/', async (req, res) => {
             trangthai:req.body.trangthai,
             mamautrangthai:req.body.mamautrangthai,
             status : true,
+            sodienthoai:req.body.sodienthoai,
             group : req.body.group
         };
     
