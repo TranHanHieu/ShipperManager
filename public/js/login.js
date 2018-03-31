@@ -13,6 +13,7 @@ $('#checkRemenberPass').click(function () {
     isRememberPass = !isRememberPass
     $(this).prop('checked',isRememberPass)
 })
+
 $('#btnLogin').click(function (event, err) {
     if(!err) {
         event.preventDefault();
