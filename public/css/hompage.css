@@ -9,7 +9,7 @@ iframe {
     margin-left: 85%;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 769px) {
     .fb-post {
         width: 360px;
     }
