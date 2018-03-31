@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const ordersSchema = require('./ordersSchema');
 let ordersModel = mongoose.model('orders', ordersSchema, 'orders');
 const order_userModel = require('../order_user/order_userModel');
+const ship_historyModel = require('../ship_history/ship_historyModel');
 const userSchema = require('../users/usersSchema');
 let userModel = mongoose.model('users', userSchema);
 const config = require('../../../configString.json');
@@ -39,7 +40,10 @@ const selectOrderNew = async ({}) => {
 const selectOrderById = async (id) => {
     try
     {
-        return await ordersModel.findOne({_id : id}).exec();
+        return await ordersModel.findOne({_id : id}).populate({
+            path : 'user',
+            model: userModel 
+        }).exec();
     }
     catch(err)
     {
@@ -71,8 +75,6 @@ const updateStatusOrder = async(idorder, status) => {
 const updateUserInOrder = async(idOrder, idUser) => {
     try
     {
-        console.log(idOrder);
-        console.log("USER", idUser);
         ordersModel.findById(idOrder).exec((err,order)=>{
             console.log(err);
             if(order){
@@ -195,11 +197,10 @@ const receiveOrder = async (order_user, status, longtitude, latitude, address) =
             let result = await updateUserInOrder(order_user.order, order_user.user);
             if(result != null && result != {})
             {
-                console.log("HAHAHA");
                 return await updateStatusOrder(order_user.order, 1);
             }
         }
-        else if(status === 2 || status === 3)
+        else if(status === 2)
         {
             //Thêm tọa độ tại điểm nhận đơn hoặc kết thúc
            
@@ -210,7 +211,11 @@ const receiveOrder = async (order_user, status, longtitude, latitude, address) =
         }
         else if(status === 4)
         {
-            await ship_historyModel.insertHistory(history);
+            return await ship_historyModel.insertHistory(history);
+        }
+        else if (status === 3)
+        {
+            return await updateStatusOrder(order_user.order, 3);
         }
         else 
         {
@@ -225,6 +230,19 @@ const receiveOrder = async (order_user, status, longtitude, latitude, address) =
     }
 }
 
+const saveListHistory = async(history) => {
+    for(i = 0; i < history.length; i++) { 
+        let order_user = {
+            order : history[i].order,
+            user : null
+        }
+
+        await receiveOrder(order_user, 2, history[i].longtitude, history[i].latitude, history[i].address);
+    }
+
+    return 1;
+}
 module.exports = {
-    selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder, updateUserInOrder, createOrder, selectOrderById, updateOrder, receiveOrder
+    selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder,
+     updateUserInOrder, createOrder, selectOrderById, updateOrder, receiveOrder, saveListHistory
 }

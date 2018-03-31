@@ -26,6 +26,17 @@ const insertHistory = async(history) => {
         return null;
     }
 }
+
+const deleteHistory = async(idOrder) => {
+    try
+    {
+        return await ship_historyModel.remove({order : idOrder}).exec();
+    }
+    catch(err)
+    {
+        return null;
+    }
+}
 module.exports = {
-    selectHistory, insertHistory
+    selectHistory, insertHistory, deleteHistory
 }

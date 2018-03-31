@@ -82,7 +82,6 @@ $(document).ready(function() {
         type: "GET",
         dataType: "json",
         success: function (res) {
-            console.log(res);
             if(res.data.status !== 0)
             {
                 $("#ordername").prop('disabled', true);
@@ -126,7 +125,6 @@ $(document).ready(function() {
 
         },
         error: function (err) {
-            console.log(err);
             window.location.href = "/orderList"
 
             alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
@@ -153,7 +151,6 @@ function getLocationFrom()
         type: "GET",
         dataType: "json",
         success: function (data) {
-            console.log(data);
             if(data.status)
             {
                 latitudeFrom = data.results[0].geometry.location.lat;
@@ -170,7 +167,6 @@ function getLocationFrom()
             }
         },
         error: function (err) {
-            console.log(err);
             window.location.href = "/addOrder"
 
             alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
@@ -200,7 +196,6 @@ function getLocationTo()
             }
         },
         error: function (err) {
-            console.log(err);
             window.location.href = "/addOrder"
 
             alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
