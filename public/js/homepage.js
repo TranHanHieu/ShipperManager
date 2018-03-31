@@ -2,7 +2,31 @@ var listLocationUser = [];
 var latitude = 21.00993
 var longitude = 105.80727
 
+// auto refresh data sau 1 minutes
+setInterval(function() {
+    getAllUser()
+}, 60*1000);
+
 $(document).ready(function () {
+    getAllUser()
+    // Xin quyền truy cập vị trí
+    navigator.permissions.query({'name': 'geolocation'})
+        .then( permission => console.log(permission) )
+
+    // Lấy vị trí hiện tại khi người dùng đăng nhập
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(setPosition);
+    } else {
+        latitude = 21.00993
+        longitude = 105.80727
+
+        alert("GPS không được trình duyệt hỗ trợ.")
+    }
+
+
+})
+
+function getAllUser() {
     $.ajax('/api/user/', {
         type: "GET",
         success: function (data) {
@@ -29,22 +53,7 @@ $(document).ready(function () {
             alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
         }
     });
-    // Xin quyền truy cập vị trí
-    navigator.permissions.query({'name': 'geolocation'})
-        .then( permission => console.log(permission) )
-
-    // Lấy vị trí hiện tại khi người dùng đăng nhập
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(setPosition);
-    } else {
-        latitude = 21.00993
-        longitude = 105.80727
-
-        alert("GPS không được trình duyệt hỗ trợ.")
-    }
-
-
-})
+}
 
 function setPosition(position) {
 
