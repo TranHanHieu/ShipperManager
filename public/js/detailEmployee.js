@@ -6,7 +6,7 @@ var flightPlanCoordinates = []
 
 $('#btnXemLoTrinh').click(function(event, err){
     let date = $('#tungay').val();
-    $.ajax(`/api/user/historylocation?idUser={{user._id}}&date=${date}`, {
+    $.ajax(`/api/user/historylocation?idUser="{{user._id}}"&date=${date}`, {
         type: "get",
         success: function (data) {
             if (data.status) {
