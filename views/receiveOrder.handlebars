@@ -1,0 +1,77 @@
+<div class="row" style="margin : 1%">
+    <h3>Thông tin chi tiết đơn hàng</h3>
+    <div class="col-sm-4">
+        {{!-- Form chỉnh sửa đơn --}}
+        <div class="form-group">
+            <label for="usr">Đơn hàng: </label>
+            <label id="ordername" for="usr"></label>
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">Đi từ:</label>
+            <label id="from" for="usr"></label>
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">Đi đến:</label>
+            <label id="to" for="usr"></label>
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">Giá hàng (VNĐ):</label>
+            <label id="price" for="usr"></label>
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">Giá ship (VNĐ):</label>
+            <label id="priceShip" for="usr"></label>
+        </div>
+
+           <div class="form-group">
+            <label for="pwd">Trạng thái đơn hàng: </label>
+            <label id="statusOrder" for="usr"></label>
+        </div>
+
+        <div class="form-group">
+            <label for="pwd">Shipper:</label>
+            <label id="shipper" for="usr"></label>
+        </div>
+        
+        <div class="form-group">
+            <div class="row">
+                    {{!-- Nút nhận đơn --}}
+                <div>
+                    <button id="btnReceive" type="button" class="btn btn-primary">Nhận đơn</button>
+                
+                    {{!-- Nút thêm lộ trình vận đơn --}}
+                    <button id="btnSaveLatLng" type="button" class="btn btn-success">Lưu lộ trình</button>
+
+                    {{!-- Nút hoàn thành đơn --}}
+                    <button id="btnSuccess" type="button" class="btn btn-info">Hoàn thành</button>
+
+                    {{!-- Nút reset lộ trình--}}
+                    <button id="btnDeleteLatLng" type="button" class="btn btn-danger">Xóa lộ trình</button>
+                </div>
+            </div>
+         
+        </div>
+
+    </div>
+
+        <div class="col-sm-8">
+            <div class="row" style="width:100%; margin:0;">
+                <div class="col-sm-1" style="height: 400px;"></div>
+
+                <div class="col-sm-10" id="mapReceiveOrder" style="height:400px"></div>
+
+                <div class="col-sm-1" style="height: 400px;"></div>
+            </div>
+        </div>
+</div>
+
+
+<script src="js/receiveOrder.js"></script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyVm6Ku29H8jLCuwK1xDypxLu3FgQb4Qs">
+</script>
