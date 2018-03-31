@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const userSchema = require('./usersSchema');
 let usersModel = mongoose.model('users', userSchema);
+let moment = require('moment')
 
 const groupsSchema = require('../groups/groupsSchema');
 let groupsModel = mongoose.model('groups', groupsSchema);
@@ -137,15 +138,19 @@ const getAllUser = (callback) => {
 };
 const getHistoryLocationUserByDate = (idUser,date,callback) => {
      usersModel.findOne({_id:idUser,status : true}).exec((err, user) => {
-        if(!err){
+        if(err){
+            console.log('Loii roi')
             callback(err)
         }else {
-            var data = []
-            var locations = user.historylocations
-            if(locations.length>0) {
-                for (let i = 0; i < locations.length; i++) {
-                    if (locations[i].date == date) {
-                        data.push(locations[i])
+            var data = [];
+            date = moment(date).format('DD/MM/YYYY')
+            var locations = user.historylocations;
+            console.log(user)
+            if(user.historylocations.length>0) {
+                for (let i = 0; i < user.historylocations.length; i++) {
+                    console.log(user.historylocations[i].date,date)
+                    if (user.historylocations[i].date === date) {
+                        data.push(user.historylocations[i])
                     }
                     if (i === locations.length - 1) {
                         callback(err, data);
@@ -158,16 +163,16 @@ const getHistoryLocationUserByDate = (idUser,date,callback) => {
     });
 };
 const addHistoryLocationUser = (idUser,newLocation,callback) => {
-     usersModel.findOne({_id:idUser,status : true}).exec((err, user) => {
-        if(!err){
+     usersModel.findOne({_id:idUser}).exec((err, user) => {
+         console.log(user)
+        if(err){
             callback(err)
         }else {
-            var data = [];
             var locations = user.historylocations;
             locations.push(newLocation);
             user.historylocations.set(locations);
             user.save((err,newUser)=>{
-                if(!err){
+                if(err){
                     callback(err)
                 }else {
                     callback(err,newUser)
@@ -192,5 +197,5 @@ const deleteEmployee = async(idUser) => {
 }
 
 module.exports = {
-    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteEmployee, getUserById, getHistoryLocationUserByDate
+    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteEmployee, getUserById, getHistoryLocationUserByDate, addHistoryLocationUser
 }

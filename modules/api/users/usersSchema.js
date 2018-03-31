@@ -38,17 +38,17 @@ const usersSchema = new Schema(
 
 let usersModel = mongoose.model('users', usersSchema);
 
-usersSchema.pre('save', function(next) {
-    let user = this;
-    usersModel.find({username : user.username}, function (err, docs) {
-        if (!docs.length){
-            next();
-        }else{                
-            //console.log('user exists: ',user.username);
-            next(new Error("User exists!"));
-        }
-    });
-});
+// usersSchema.pre('save', function(next) {
+//     let user = this;
+//     usersModel.find({username : user.username}, function (err, docs) {
+//         if (!docs.length){
+//             next();
+//         }else{
+//             //console.log('user exists: ',user.username);
+//             next(new Error("User exists!"));
+//         }
+//     });
+// });
 
 
 module.exports = usersSchema;
