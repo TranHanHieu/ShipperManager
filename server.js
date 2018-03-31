@@ -13,6 +13,7 @@ const groupApi = require('./modules/api/groups/groupsController');
 const orderApi = require('./modules/api/orders/ordersController');
 const {getAllUser,deleteEmployee,getUserById} = require('./modules/api/users/usersModel')
 const {getAllGroup} = require('./modules/api/groups/groupsModel')
+const orderModel = require('./modules/api/orders/ordersModel')
 var app = express();
 
 app.use(session({
@@ -170,6 +171,10 @@ app.get('/editOrder',(req,res)=>{
 
 app.get('/orderDetail',(req,res)=>{
     res.render('orderDetail');
+})
+
+app.get('/receiveOrder',(req,res)=>{
+    res.render('receiveOrder');
 })
 
 

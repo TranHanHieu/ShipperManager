@@ -6,7 +6,6 @@ $('#btnChangePass').click(function () {
 })
 if (typeof(Storage) !== "undefined") {
     var user = JSON.parse(localStorage.getItem("user"))
-    console.log(user)
     document.getElementById("userNameLb").innerHTML = user.fullname;
     document.getElementById("fullname").innerHTML = user.fullname;
     document.getElementById("email").innerHTML = 'Email: '+ user.email;

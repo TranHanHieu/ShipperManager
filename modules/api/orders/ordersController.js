@@ -56,24 +56,25 @@ Router.get('/select', async(req, res) => {
 Router.post('/receive', async(req, res) => {
     try
     {
-        if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
-        {
-            res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-        }
-        else
-        {
+        //Bỏ token làm cho nhanh
+        // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
             let order_user = {
                 order : req.body.order,
-                user : req.body.idlogin
+                user : req.body.user
             }
 
-            let result = await order_userModel.receiveOrder(order_user, 1, 0, 0, "");
+            let result = await ordersModel.receiveOrder(order_user, 1, 0, 0, "");
 
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
             else 
                 res.send({ status : true, msg : config.THANH_CONG});
-        }
+        //}
     }
     catch(err)
     {
@@ -90,24 +91,24 @@ Router.post('/start', async(req, res) => {
             res.send({status : false, msg : config.CO_LOI_XAY_RA});
         }
 
-        if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
-        {
-            res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-        }
-        else
-        {
+        // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
             let order_user = {
                 order : req.body.order,
                 user : req.body.idlogin
             }
 
-            let result = await order_userModel.receiveOrder(order_user, 2, req.body.longtitude, req.body.latitude, req.body.address);
+            let result = await ordersModel.receiveOrder(order_user, 2, req.body.longtitude, req.body.latitude, req.body.address);
 
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
             else 
                 res.send({ status : true, msg : config.THANH_CONG});
-        }
+        //}
     }
     catch(err)
     {
@@ -124,24 +125,24 @@ Router.post('/shipping', async(req, res) => {
             res.send({status : false, msg : config.CO_LOI_XAY_RA});
         }
 
-        if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
-        {
-            res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-        }
-        else
-        {
+        // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
             let order_user = {
                 order : req.body.order,
                 user : req.body.idlogin
             }
 
-            let result = await order_userModel.receiveOrder(order_user, 4, req.body.longtitude, req.body.latitude, req.body.address);
+            let result = await ordersModel.receiveOrder(order_user, 4, req.body.longtitude, req.body.latitude, req.body.address);
 
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
             else 
                 res.send({ status : true, msg : config.THANH_CONG});
-        }
+        //}
     }
     catch(err)
     {
@@ -158,24 +159,24 @@ Router.post('/complete', async(req, res) => {
             res.send({status : false, msg : config.CO_LOI_XAY_RA});
         }
         
-        if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
-        {
-            res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
-        }
-        else
-        {
+        // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
+        // {
+        //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
+        // }
+        // else
+        // {
             let order_user = {
                 order : req.body.order,
                 user : req.body.idlogin
             }
 
-            let result = await order_userModel.receiveOrder(order_user, 3, req.body.longtitude, req.body.latitude, req.body.address);
+            let result = await ordersModel.receiveOrder(order_user, 3, req.body.longtitude, req.body.latitude, req.body.address);
 
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA});
             else 
                 res.send({ status : true, msg : config.THANH_CONG});
-        }
+        //}
     }
     catch(err)
     {

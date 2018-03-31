@@ -6,7 +6,6 @@ $(document).ready(function () {
     $.ajax('/api/user/', {
         type: "GET",
         success: function (data) {
-            console.log(data.data);
             if (data.status) {
                 let users = data.data
                 for (let i = 0; i < users.length; i++) {
@@ -25,7 +24,6 @@ $(document).ready(function () {
             }
         },
         error: function (err) {
-            console.log(err)
             // window.location.href = "/"
 
             alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
@@ -71,7 +69,7 @@ function initMap() {
     var infowindow = new google.maps.InfoWindow();
 
     var marker, i;
-    console.log(listLocationUser)
+
 
     for (i = 0; i < listLocationUser.length; i++) {
         marker = new google.maps.Marker({

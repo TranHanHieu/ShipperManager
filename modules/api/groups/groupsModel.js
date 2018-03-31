@@ -7,7 +7,6 @@ const findByIdGroup = (idgroup, callback) => {
     {
         groupsModel.findById(id, (err, doc) => {
             if (err) {
-                console.log(err);
                 callback(err);
             } else {
                 callback(null, doc);

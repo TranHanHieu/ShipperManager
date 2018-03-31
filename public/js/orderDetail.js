@@ -18,7 +18,7 @@ $(document).ready(function() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
-
+    //Lấy thông tin đơn hàng
     $.ajax('/api/order/select?idOrder=' + idOrder, {
         type: "GET",
         dataType: "json",
@@ -26,8 +26,8 @@ $(document).ready(function() {
             $("#ordername").text(res.data.order_name);
             $("#from").text(res.data.from);
             $("#to").text(res.data.to);
-            $("#price").text(res.data.price + " VNĐ");
-            $("#priceShip").text(res.data.price_ship + " VNĐ");
+            $("#price").text(res.data.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VNĐ");
+            $("#priceShip").text(res.data.price_ship.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VNĐ");
 
             if(typeof res.data.user !== "undefined")
                 $("#shipper").text(res.data.user.fullname);
@@ -80,7 +80,6 @@ $(document).ready(function() {
 
         },
         error: function (err) {
-            console.log(err);
             window.location.href = "/orderList"
 
             alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
@@ -91,7 +90,6 @@ $(document).ready(function() {
         type: "GET",
         dataType: "json",
         success: function (res) {
-            console.log(res);
             
             $.each(res.data, function( index, value ) {
                 let point = new google.maps.Marker({
@@ -114,15 +112,11 @@ $(document).ready(function() {
             flightPath.setMap(map);
         },
         error: function (err) {
-            console.log(err);
             window.location.href = "/orderList"
 
             alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
         }
     });  
-
-  
-
 
     function getUrlVars()
     {

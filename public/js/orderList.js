@@ -40,6 +40,10 @@ $( document ).ready(function() {
                         $('#btnAddNewOrder').css('float', 'left');
                         $('#btnAddNewOrder').css('display', '');
                     }
+                    else
+                    {
+                        $('#clReceive').css('display', '');
+                    }
 
                     $("#bodyOrderList").html("");
                     $.each(data.data, function( index, value ) {
@@ -49,8 +53,8 @@ $( document ).ready(function() {
                         '<td><span>'+ value.order_name +'</span></td>' +
                         '<td><span>'+ value.from +'</span></td>' +
                         '<td><span>'+ value.to +'</span></td>' +
-                        '<td><span>'+ value.price +'</span></td>' +
-                        '<td><span>'+ value.price_ship +'</span></td>';
+                        '<td><span>'+ value.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") +'</span></td>' +
+                        '<td><span>'+ value.price_ship.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") +'</span></td>';
                         
                         if(value.status == 0 || value.status == -1)
                             html += '<td><span>Chưa nhận đơn</span></td>';
@@ -96,6 +100,16 @@ $( document ).ready(function() {
                             '</td>' +
                             '<td><a onclick="deleteOrder(\'' + value._id + '\', \'' + value.status + '\')"><img ' +
                                     'height="16" width="16" src="images/delete.png"></a></td>' +
+                            '</tr>'
+                        }
+                        else
+                        {
+                            html +=
+                            '<td>' +
+                                '<a href="/receiveOrder?idOrder='+ value._id +'">' +
+                                    '<img height="16" width="16" src="images/receive.png">' +
+                                '</a>' +
+                            '</td>' +
                             '</tr>'
                         }
                         

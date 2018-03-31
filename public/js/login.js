@@ -30,7 +30,6 @@ $('#btnLogin').click(function (event, err) {
                 },
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
                     if (data.status) {
                         if(isRememberPass){
                             localStorage.setItem('rememberpass', JSON.stringify({"username":username,"password":password}));
@@ -45,7 +44,6 @@ $('#btnLogin').click(function (event, err) {
                     }
                 },
                 error: function (err) {
-                    console.log(err)
                     window.location.href = "/"
 
                     alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)

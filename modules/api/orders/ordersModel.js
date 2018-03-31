@@ -50,7 +50,17 @@ const selectOrderById = async (id) => {
 const updateStatusOrder = async(idorder, status) => {
     try
     {
-        return await ordersModel.findOneAndUpdate(idorder, {status : status}).exec();
+        ordersModel.findById(idorder).exec((err,order)=>{
+            console.log(err);
+            if(order){
+                order.status = status;
+                order.save(err=>{
+                    console.log(err);
+                })
+            }
+        });
+
+        return 1;
     }
     catch(err)
     {
@@ -61,7 +71,19 @@ const updateStatusOrder = async(idorder, status) => {
 const updateUserInOrder = async(idOrder, idUser) => {
     try
     {
-        return await ordersModel.findOneAndUpdate(idOrder, {user : idUser}).exec();
+        console.log(idOrder);
+        console.log("USER", idUser);
+        ordersModel.findById(idOrder).exec((err,order)=>{
+            console.log(err);
+            if(order){
+                order.user = idUser;
+                order.save(err=>{
+                    console.log(err);
+                })
+            }
+        });
+
+        return 1;
     }
     catch(err)
     {
@@ -74,19 +96,24 @@ const updateOrder = async(order) => {
     try
     {
         let idOrder = order.idOrder;
-        let queryUpdate = {
-            order_name : order.order_name,
-            from : order.from,
-            to : order.to,
-            price : order.price,
-            price_ship : order.price_ship,
-            longtitude_from : order.longtitude_from,
-            latitude_from : order.latitude_from,
-            longtitude_to : order.longtitude_to,
-            latitude_to : order.latitude_to
-        }
 
-        return await ordersModel.findOneAndUpdate(idOrder, queryUpdate).exec();
+        ordersModel.findById(idOrder).exec((err, ord)=>{
+            if(ord){
+                ord.order_name = order.order_name;
+                ord.from = order.from;
+                ord.to = order.to;
+                ord.price = order.price;
+                ord.price_ship = order.price_ship;
+                ord.longtitude_from = order.longtitude_from;
+                ord.latitude_from = order.latitude_from;
+                ord.longtitude_to = order.longtitude_to;
+                ord.latitude_to = order.latitude_to;
+
+                ord.save(err=>{
+                    console.log(err);
+                })
+            }
+        });
     }
     catch(err)
     {
@@ -106,16 +133,11 @@ const selectAllOrder = async(idUser, isAdmin) => {
                 model: userModel 
             }).sort({createAt: 'desc'}).exec();
 
-            // return await result.forEach(async(i, idx, array) => {
-            //     let date = moment(i.createdAt);
-            //     i.createAt = date.tz('Asia/Ho_Chi_Minh').format('dd/MM/yyyy');
-            // });
-
             return result;
         }
         else
         {
-            return await ordersModel.find({user : idUser}).populate({
+            return await ordersModel.find({$or: [ {status : 0}, {user : idUser}]}).populate({
                 path: 'user',
                 model: userModel 
             }).sort({createAt: 'desc'}).exec();
@@ -129,6 +151,7 @@ const selectAllOrder = async(idUser, isAdmin) => {
 };
 
 const deleteOrder = async(idOrder, status) => {
+    console.log(idOrder);
     try
     {
         if(status !== 0)
@@ -137,7 +160,15 @@ const deleteOrder = async(idOrder, status) => {
         }
         else
         {
-            await ordersModel.findOneAndUpdate(idOrder, {status : -1}).exec();
+            ordersModel.findById(idOrder).exec((err,order)=>{
+                if(order){
+                    order.status=-1;
+                    order.save(err=>{
+                        console.log(err);
+                    })
+                }
+
+            })
             return config.THANH_CONG;
         }
     }
@@ -148,6 +179,52 @@ const deleteOrder = async(idOrder, status) => {
     }
 }
 
+const receiveOrder = async (order_user, status, longtitude, latitude, address) => {
+    try
+    {
+        var history = {
+            order : order_user.order,
+            address : address,
+            longtitude : longtitude,
+            latitude : latitude
+        }
+
+        //Nhận đơn
+        if(status === 1)
+        {
+            let result = await updateUserInOrder(order_user.order, order_user.user);
+            if(result != null && result != {})
+            {
+                console.log("HAHAHA");
+                return await updateStatusOrder(order_user.order, 1);
+            }
+        }
+        else if(status === 2 || status === 3)
+        {
+            //Thêm tọa độ tại điểm nhận đơn hoặc kết thúc
+           
+            await ship_historyModel.insertHistory(history);
+            
+            //Update trạng thái thành 2, 3
+            return await updateStatusOrder(order_user.order, status);
+        }
+        else if(status === 4)
+        {
+            await ship_historyModel.insertHistory(history);
+        }
+        else 
+        {
+            //đơn hàng Bị hủy
+            return await updateStatusOrder(order_user.order, -1);
+        }
+    }
+    catch(err)
+    {
+        console.log(err);
+        return null;
+    }
+}
+
 module.exports = {
-    selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder, updateUserInOrder, createOrder, selectOrderById, updateOrder
+    selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder, updateUserInOrder, createOrder, selectOrderById, updateOrder, receiveOrder
 }

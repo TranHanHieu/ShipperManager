@@ -54,6 +54,7 @@ const receiveOrder = async (order_user, status, longtitude, latitude, address) =
     }
     catch(err)
     {
+        console.log(err);
         return null;
     }
 }

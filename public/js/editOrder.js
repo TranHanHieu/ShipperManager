@@ -96,8 +96,8 @@ $(document).ready(function() {
             $("#ordername").val(res.data.order_name);
             $("#from").val(res.data.from);
             $("#to").val(res.data.to);
-            $("#price").val(res.data.price);
-            $("#priceShip").val(res.data.price_ship);
+            $("#price").val(res.data.price.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
+            $("#priceShip").val(res.data.price_ship.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,"));
             
             longtitudeFrom = res.data.longtitude_from;
             latitudeFrom = res.data.latitude_from;
