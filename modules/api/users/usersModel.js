@@ -135,6 +135,47 @@ const getAllUser = (callback) => {
         callback(users, err);
     });
 };
+const getHistoryLocationUserByDate = (idUser,date,callback) => {
+     usersModel.findOne({_id:idUser,status : true}).exec((err, user) => {
+        if(!err){
+            callback(err)
+        }else {
+            var data = []
+            var locations = user.historylocations
+            if(locations.length>0) {
+                for (let i = 0; i < locations.length; i++) {
+                    if (locations[i].date == date) {
+                        data.push(locations[i])
+                    }
+                    if (i === locations.length - 1) {
+                        callback(err, data);
+                    }
+                }
+            }else {
+                callback(err, data);
+            }
+        }
+    });
+};
+const addHistoryLocationUser = (idUser,newLocation,callback) => {
+     usersModel.findOne({_id:idUser,status : true}).exec((err, user) => {
+        if(!err){
+            callback(err)
+        }else {
+            var data = [];
+            var locations = user.historylocations;
+            locations.push(newLocation);
+            user.historylocations.set(locations);
+            user.save((err,newUser)=>{
+                if(!err){
+                    callback(err)
+                }else {
+                    callback(err,newUser)
+                }
+            })
+        }
+    });
+};
 
 const getUserById = (id,callback) => {
     usersModel.findOne({_id : id}).populate({
@@ -151,5 +192,5 @@ const deleteEmployee = async(idUser) => {
 }
 
 module.exports = {
-    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteEmployee, getUserById
+    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteEmployee, getUserById, getHistoryLocationUserByDate
 }

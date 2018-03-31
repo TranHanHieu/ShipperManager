@@ -16,6 +16,7 @@
                             <th>Chức vụ</th>
                             <th>Trạng thái</th>
                             <th>Số điện thoại</th>
+                            <th>Lộ trình</th>
                             <th>Sửa</th>
                             <th>Xóa</th>
 
@@ -53,7 +54,12 @@
                                     <!--{{/if }}-->
                                 </td>
                                 <td><span style="text-decoration: underline">{{sodienthoai}}</span></td>
-
+                                <td>
+                                    <div>
+                                        <i class="fa fa-map-marker" style="font-size:16px;color:red"></i>
+                                        <a href="detailEmployee?id={{_id}}">Xem lộ trình</a>
+                                    </div>
+                                </td>
                                 <td>
                                     <a href="edit?id={{_id}}">
                                         <img height="16" width="16" src="images/edit.png">

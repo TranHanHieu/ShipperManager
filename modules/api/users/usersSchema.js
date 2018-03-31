@@ -2,6 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 const config = require('../../../configString')
+const locationSchema = new Schema(
+    {
+        date:{type:String,require:true},
+        longtitude : {type : Number, require : true},
+        latitude : {type : Number, require : true},
+        acc : {type : Number, require : true}
+    }, {timestamps : {createAt : 'created_at', updateAt : 'updated_at'}}
+);
 
 
 const usersSchema = new Schema(
@@ -20,7 +28,11 @@ const usersSchema = new Schema(
         sodienthoai:{type:String,default:'01669886430'},
         trangthai:{type:String,default:config.MAT_TIN_HIEU},
         mamautrangthai:{type:String,default:'red'},
-        status : {type : Boolean}
+        historylocations:{
+            type:[locationSchema],
+            default:[]
+        },
+        status : {type : Boolean}//false vô hiệu hóa tài khoản
     }, {timestamps : {createAt : 'created_at', updateAt : 'updated_at'}}
 );
 
