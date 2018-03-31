@@ -23,8 +23,6 @@ $(document).ready(function() {
         type: "GET",
         dataType: "json",
         success: function (res) {
-            console.log(res);
-            
             $("#ordername").text(res.data.order_name);
             $("#from").text(res.data.from);
             $("#to").text(res.data.to);
@@ -104,6 +102,16 @@ $(document).ready(function() {
 
                 flightPlanCoordinates.push({lat: value.latitude, lng: value.longtitude});
             });
+
+            var flightPath = new google.maps.Polyline({
+                path: flightPlanCoordinates,
+                geodesic: true,
+                strokeColor: '#FF0000',
+                strokeOpacity: 1.0,
+                strokeWeight: 2
+              });
+        
+            flightPath.setMap(map);
         },
         error: function (err) {
             console.log(err);
@@ -113,16 +121,7 @@ $(document).ready(function() {
         }
     });  
 
-    console.log(flightPlanCoordinates);
-    var flightPath = new google.maps.Polyline({
-        path: flightPlanCoordinates,
-        geodesic: true,
-        strokeColor: '#FF0000',
-        strokeOpacity: 1.0,
-        strokeWeight: 2
-      });
-
-    flightPath.setMap(map);
+  
 
 
     function getUrlVars()
