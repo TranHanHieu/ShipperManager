@@ -2,7 +2,6 @@ document.title = "Danh sách đơn hàng - ShipperManager"
 var load = null;
 function deleteOrder(id, status)
 {
-    console.log(id + "status" + status);
     if(confirm("Bạn có chắc chắn muốn xóa đơn hàng này?"))
     {
         $.ajax('/api/order/deleteOrder?idOrder=' + id + "&status=" + status, {
@@ -13,7 +12,6 @@ function deleteOrder(id, status)
                 load();
             },
             error: function (err) {
-                console.log(err);
                 window.location.href = "/orderList"
 
                 alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
@@ -32,7 +30,6 @@ $( document ).ready(function() {
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
-                    console.log(data);
                     if(user.group.isadmin)
                     {
                         $("#clEdit").css('display', '');
@@ -119,7 +116,6 @@ $( document ).ready(function() {
                       });
                 },
                 error: function (err) {
-                    console.log(err);
                     window.location.href = "/orderList"
 
                     alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)

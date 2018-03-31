@@ -11,10 +11,10 @@ var flightPlanCoordinates = [];
 $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     idOrder = getUrlVars()["idOrder"];
-
+    
     map = new google.maps.Map(document.getElementById('mapOrderDetail'), {
         zoom: 12,
-        center: new google.maps.LatLng(user.latitude, user.longitude),
+        center: new google.maps.LatLng(user.latitude, user.longtitude),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
@@ -72,12 +72,8 @@ $(document).ready(function() {
                 label : 'B',
                 position: new google.maps.LatLng(latitudeTo, longtitudeTo),
                 title:  $("#to").text()
+
             });
-
-
-            flightPlanCoordinates.push({lat: latitudeFrom, lng: longtitudeFrom});
-            flightPlanCoordinates.push({lat: latitudeTo, lng: longtitudeTo});
-
         },
         error: function (err) {
             window.location.href = "/orderList"
