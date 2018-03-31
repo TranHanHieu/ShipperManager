@@ -17,6 +17,7 @@ const usersSchema = new Schema(
         longitude: {type:Number,default:0.0},
         latitude: {type:Number,default:0.0},
         acc: {type:Number,default:0.0},
+        sodienthoai:{type:String,default:'01669886430'},
         trangthai:{type:String,default:config.MAT_TIN_HIEU},
         mamautrangthai:{type:String,default:'red'},
         status : {type : Boolean}
