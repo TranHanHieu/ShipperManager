@@ -17,7 +17,7 @@ const usersSchema = new Schema(
         username : {type : String, require : true},
         password : {type : String, require : true},
         fullname : {type : String, require : true},
-        dateofbirth : {type : String},
+        dateofbirth : {type : String},//Định dang YYYY/MM/DD
         tokenfirebase : {type: String},
         group : {type : ObjectId},
         avatar : {type: String},

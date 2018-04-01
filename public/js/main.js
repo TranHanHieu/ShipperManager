@@ -12,7 +12,7 @@ if (typeof(Storage) !== "undefined") {
     document.getElementById("chucvu").innerHTML = 'Chức vụ: '+ user.group.groupname;
     document.getElementById("avatarUser").src = user.avatar
     document.getElementById("avatar").src = user.avatar
-    document.getElementById("ngaysinh").innerHTML = 'Ngày sinh: '+ user.dateofbirth
+    document.getElementById("ngaysinh").innerHTML = 'Ngày sinh: '+ moment(user.dateofbirth).format('DD/MM/YYYY')
 } else {
     alert('Lỗi! Trình duyệt của bạn không hỗ trợ Web Storage')
 }

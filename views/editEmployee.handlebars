@@ -1,95 +1,146 @@
-<form action="/api/user/" method="post">
-    <div class="container" style="width:100%;background: white;padding: 50px">
+<div class="container" style="width:100%;background: white;padding: 50px">
 
-        <div class="card-body">
-            <div class="form-body">
-                <h3 class="card-title m-t-15">Thông tin nhân viên</h3>
-                <hr>
+    <div class="card-body">
+        <div class="form-body">
+            <h3 class="card-title m-t-15">Thông tin nhân viên</h3>
+            <hr>
 
-                <div class="form-group has-danger">
-                    <!--<form id="form1" runat="server">-->
-                    <h4 style="text-align: center">Ảnh đại diện</h4>
-                    <img style="margin: auto;width: 130px;height: 130px;border-radius: 130px;display:none "
-                         id="avatarnv" src=""/>
+            <div class="form-group has-danger">
+                <!--<form id="form1" runat="server">-->
+                <h4 style="text-align: center">Ảnh đại diện</h4>
+                {{#if user.avatar}}
+                    <img style="margin: auto;width: 130px;height: 130px;border-radius: 130px;display: block"
+                         id="avatarnv" src="{{user.avatar}}"/>
+                {{else}}
+                    <div style="
+                            background:{{getBGColor fullname}} ;
+                            width: 130px;
+                            height: 130px;
+                            margin: auto;
+                            border-radius: 130px;
+                            color: #fff;
+                            padding:35px 0;
+                            font-size: 40px;
+                            text-align: center">{{getSortName user.fullname}}</div>
+                {{/if}}
 
-                    <input style="margin: auto;display: block" type='file' id="imgInp"/>
-                    <!--</form>-->
 
-                </div>
-                <div class="row p-t-20">
-                    <div class="col-md-6">
-                        <div class="form-group has-danger">
-                            <label class="control-label">Tên nhân viên</label>
-                            <input name="fullname" type="text" id="fullnamenv" value="{{user.fullname}}"
-                                   class="form-control form-control-danger" placeholder="Tên nhân viên">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group has-success">
-                            <label class="control-label">Chức vụ</label>
-                            <select id="chucvunv" name="chucvunv" class="form-control custom-select" title="Chức vụ">
-                                {{#each groups}}
-                                    <option value="{{_id}}">{{groupname}}</option>
-                                {{/each}}
-                            </select>
+                <input style="margin: 10px auto;display: block" type='file' id="imgInp"/>
+                <!--</form>-->
 
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-
-                    <div class="col-md-6">
-                        <div class="form-group has-danger">
-                            <label class="control-label">Email</label>
-                            <input name="email" type="email" id="emailnv" value="{{user.email}}"
-                                   class="form-control form-control-danger" placeholder="Email">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group has-danger">
-                            <label class="control-label">Ngày sinh</label>
-                            <input name="ngaysinhnv" type="date" id="ngaysinhnv" value="{{user.dateofbirth}}"
-                                   class="form-control form-control-danger" placeholder="Ngày sinh">
-                        </div>
+            </div>
+            <div class="row p-t-20">
+                <div class="col-md-6">
+                    <div class="form-group has-danger">
+                        <label class="control-label">Tên nhân viên</label>
+                        <input name="fullname" type="text" id="fullnamenv" value="{{user.fullname}}"
+                               class="form-control form-control-danger" placeholder="Tên nhân viên">
                     </div>
                 </div>
-                <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group has-success">
+                        <label class="control-label">Chức vụ</label>
+                        <select id="chucvunv" name="chucvunv" class="form-control custom-select" title="Chức vụ">
+                            {{#each groups}}
+                                <option value="{{_id}}">{{groupname}}</option>
+                            {{/each}}
+                        </select>
 
-                    <!--/span-->
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="control-label">Tên đăng nhập</label>
-                            <input name="username" id="username" type="text" value="{{user.username}}" class="form-control"
-                                   placeholder="Tên đăng nhập">
-                        </div>
                     </div>
-                    <!--/span-->
                 </div>
-                <!--</div>-->
-                <!--</div>-->
+            </div>
+            <div class="row">
+
+                <div class="col-md-6">
+                    <div class="form-group has-danger">
+                        <label class="control-label">Email</label>
+                        <input name="email" type="email" id="emailnv" value="{{user.email}}"
+                               class="form-control form-control-danger" placeholder="Email">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group has-danger">
+                        <label class="control-label">Ngày sinh</label>
+                        <input name="ngaysinhnv" type="date" id="ngaysinhnv" value="{{user.dateofbirth}}"
+                               class="form-control form-control-danger" placeholder="Ngày sinh">
+                    </div>
+                </div>
+            </div>
+            <!--<div class="row">-->
+
                 <!--&lt;!&ndash;/span&ndash;&gt;-->
                 <!--<div class="col-md-6">-->
-                <!--<div class="form-group">-->
-                <!--<label class="control-label">Số điện thoại</label>-->
-                <!--<input name="salary" id="salary" type="number" class="form-control"-->
-                <!--placeholder="Nhập số điện thoại">-->
-                <!--</div>-->
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-label">Tên đăng nhập</label>-->
+                        <!--<input name="username" id="username" type="text" value="{{user.username}}" class="form-control"-->
+                               <!--placeholder="Tên đăng nhập">-->
+                    <!--</div>-->
                 <!--</div>-->
                 <!--&lt;!&ndash;/span&ndash;&gt;-->
-                <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;/span&ndash;&gt;-->
+            <!--<div class="col-md-6">-->
+            <!--<div class="form-group">-->
+            <!--<label class="control-label">Số điện thoại</label>-->
+            <!--<input name="salary" id="salary" type="number" class="form-control"-->
+            <!--placeholder="Nhập số điện thoại">-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;/span&ndash;&gt;-->
+            <!--</div>-->
 
-            </div>
-            <div style="display: table;margin-left: auto;margin-right: auto;margin-top: 30px">
-                <button style="margin-right: 30px;" id="btnSummit" type="submit" class="btn btn-success">Cập nhật
-                </button>
-                <button type="button" onclick="cancelClick()" class="btn btn-inverse">Quay lại</button>
-            </div>
+        </div>
+        <div style="display: table;margin-left: auto;margin-right: auto;margin-top: 30px">
+            <button style="margin-right: 30px;" id="btnEdit" type="submit" class="btn btn-success">Cập nhật
+            </button>
+            <button type="button" onclick="cancelClick()" class="btn btn-inverse">Quay lại</button>
         </div>
     </div>
-</form>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
 
+    $("#btnEdit").click(function (event, err) {
+        let group = $('#chucvunv').val()
+        // let username = $('#username').val();
+        let email = $('#emailnv').val();
+        let fullname = $('#fullnamenv').val();
+        let dateofbirth = $('#ngaysinhnv').val();
+        let avatar=''
+        let _id = '{{user._id}}'
+        console.log(group)
+
+        if (email != "" && fullname != "" && dateofbirth != '') {
+            $.ajax('/api/user/', {
+                type: "PUT",
+                data: {
+                    _id,email, fullname, dateofbirth, group
+                },
+                dataType: "json",
+                success: function (data) {
+                    console.log(data);
+                    if (data.status) {
+                        window.location.href = "/employeeList"
+                    } else {
+                        alert(data.msg)
+
+                    }
+                },
+                error: function (err) {
+                    console.log(err)
+
+                    alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
+                }
+            });
+        } else {
+            alert("Vui lòng nhập đầy đủ thông tin nhân viên hoặc mật khẩu xác nhận không đúng!")
+        }
+    });
+
+</script>
 <script src="js/editEmployee.js"></script>
 
