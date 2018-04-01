@@ -133,7 +133,7 @@ const selectAllOrder = async(idUser, isAdmin) => {
             let result = await ordersModel.find({}).populate({
                 path: 'user',
                 model: userModel 
-            }).sort({createAt: 'desc'}).exec();
+            }).sort('-createAt').exec();
          
             return result;
         }
@@ -142,7 +142,7 @@ const selectAllOrder = async(idUser, isAdmin) => {
             return await ordersModel.find({$or: [ {status : 0}, {user : idUser}]}).populate({
                 path: 'user',
                 model: userModel 
-            }).sort({createAt: 'desc'}).exec();
+            }).sort('-createAt').exec();
         }
     }
     catch(err)

@@ -123,13 +123,12 @@ $( document ).ready(function() {
             });
         }
 
-       
-
-        
         load();
-        // setInterval(function(){
-        //     loadDataOrder();
-        // }, 5000);
+
+        setInterval(function(){
+            console.log("Vào NÈ");
+            load();
+        }, 10000);
 
         //$('#tableOrder').DataTable();
         
