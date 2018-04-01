@@ -71,24 +71,45 @@ $(document).ready(function() {
                 $("#priceShip").text(res.data.price_ship.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + " VNĐ");
                 
                 if(typeof res.data.user !== "undefined")
+                {
                     $("#shipper").text(res.data.user.fullname);
+                    $("#shipper").attr("class","label label-primary");
+                }
                 else
+                {
                     $("#shipper").text("Chưa nhận đơn");
+                    $("#shipper").attr("class","label label-warning");
+                }
                 
                 if(res.data.status == -1)
+                {
                     $("#statusOrder").text("Đơn bị hủy");
+                    $("#statusOrder").attr("class","label label-danger");
+                }
 
                 if(res.data.status == 0) 
+                {
                     $("#statusOrder").text("Đơn hàng mới");
+                    $("#statusOrder").attr("class","label label-default");
+                }
 
                 if(res.data.status == 1)
+                {
                     $("#statusOrder").text("Shipper nhận đơn");
+                    $("#statusOrder").attr("class","label label-info");
+                }
 
-                if(res.data.status == 2 || res.data.status == 4)
+                if(res.data.status == 2)
+                {
                     $("#statusOrder").text("Đang giao");
+                    $("#statusOrder").attr("class","label label-warning");
+                }
 
                 if(res.data.status == 3)
+                {
                     $("#statusOrder").text("Hoàn thành");
+                    $("#statusOrder").attr("class","label label-success");
+                }
 
                 longtitudeFrom = res.data.longtitude_from;
                 latitudeFrom = res.data.latitude_from;
