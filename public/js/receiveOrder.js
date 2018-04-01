@@ -11,6 +11,8 @@ var loadData = null;
 var listMaker = [];
 var path = null;
 
+document.title = "Nhận đơn hàng - ShipperManager";
+
 $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     idOrder = getUrlVars()["idOrder"];

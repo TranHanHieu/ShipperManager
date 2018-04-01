@@ -7,6 +7,8 @@ var pointA = null;
 var pointB = null;
 var idOrder = null;
 
+document.title = "Chỉnh sửa đơn hàng - ShipperManager";
+
 $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     idOrder = getUrlVars()["idOrder"];

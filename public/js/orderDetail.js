@@ -8,6 +8,9 @@ var pointB = null;
 var idOrder = null;
 var flightPlanCoordinates = [];
 var load = null;
+
+document.title = "Thông tin chi tiết đơn hàng - ShipperManager";
+
 $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     idOrder = getUrlVars()["idOrder"];

@@ -6,6 +6,8 @@ var map = null;
 var pointA = null;
 var pointB = null;
 
+document.title = "Tạo đơn hàng - ShipperManager";
+
 $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     map = new google.maps.Map(document.getElementById('map3'), {
