@@ -66,7 +66,12 @@ app.engine('handlebars', handlebars({
                 return i && c !== "." && ((a.length - i) % 3 === 0) ? ',' + c : c;
             });
             return `${result} đ`
-
+        },
+        equals: (conditonA, conditonB )=>{
+            if(conditonA == conditonB){
+                return true
+            }
+            return false
         }
     }
 }));
