@@ -26,7 +26,7 @@ const usersSchema = new Schema(
         latitude: {type:Number,default:0.0},
         acc: {type:Number,default:0.0},
         sodienthoai:{type:String,default:'01669886430'},
-        trangthai:{type:String,default:config.MAT_TIN_HIEU},
+        trangthai:{type:Number,default:config.MAT_TIN_HIEU},
         mamautrangthai:{type:String,default:'red'},
         historylocations:{
             type:[locationSchema],

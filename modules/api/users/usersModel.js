@@ -65,11 +65,11 @@ const selectUser = async(user) => {
             username : user.username,
             password : user.password,
         }
-    
+
         return await usersModel.findOne(queryFind).populate({
             path: 'group',
-            model: groupsModel 
-          }).exec();
+            model: groupsModel
+        }).exec();
     }
     catch(err)
     {
@@ -83,8 +83,8 @@ const selectUserForScheme = async(iduser) => {
     {
         return await usersModel.findOne({_id : iduser}).populate({
             path: 'group',
-            model: groupsModel 
-          }).exec();
+            model: groupsModel
+        }).exec();
     }
     catch(err)
     {
@@ -96,7 +96,7 @@ const selectUserForScheme = async(iduser) => {
 const updateTokenFirebaseUser = async (iduser, tokenfirebase) => {
     try
     {
-       return await usersModel.findOneAndUpdate(iduser, {tokenfirebase : tokenfirebase}).exec();
+        return await usersModel.findOneAndUpdate(iduser, {tokenfirebase : tokenfirebase}).exec();
     }
     catch(err)
     {
@@ -108,16 +108,16 @@ const updateTokenFirebaseUser = async (iduser, tokenfirebase) => {
 const changePassword = async(user) => {
     try
     {
-       let userOld = await usersModel.findOne({username : user.username, password : user.password}).exec();
-       if(userOld === null || typeof userOld === 'undefined')
-       //Sai tài khoản hoặc mật khẩu
+        let userOld = await usersModel.findOne({username : user.username, password : user.password}).exec();
+        if(userOld === null || typeof userOld === 'undefined')
+        //Sai tài khoản hoặc mật khẩu
             return 0;
-       else
+        else
         {
             let newUser = await usersModel.findOneAndUpdate({username : user.username,password : user.password}, {password : user.newpassword}).exec();
             if(newUser === null || typeof newUser === 'undefined')
                 return 0;
-            else 
+            else
                 return 1;
         }
     }
@@ -133,8 +133,8 @@ const selectAllUser = async() => {
     {
         return await usersModel.find({status : true}).populate({
             path: 'group',
-            model: groupsModel 
-          }).exec();
+            model: groupsModel
+        }).exec();
     }
     catch(err)
     {
@@ -151,8 +151,17 @@ const getAllUser = (callback) => {
         callback(users, err);
     });
 };
+const getAllUserByTrangThai = (trangthai,callback) => {
+    usersModel.find({status : true,trangthai:trangthai}).populate({
+        path: 'group',
+        model: groupsModel
+    }).exec(function (err, users) {
+
+        callback(err,users);
+    });
+};
 const getHistoryLocationUserByDate = (idUser,date,callback) => {
-     usersModel.findOne({_id:idUser,status : true}).exec((err, user) => {
+    usersModel.findOne({_id:idUser,status : true}).exec((err, user) => {
         if(err){
             console.log('Loii roi')
             callback(err)
@@ -177,8 +186,8 @@ const getHistoryLocationUserByDate = (idUser,date,callback) => {
     });
 };
 const addHistoryLocationUser = (idUser,newLocation,callback) => {
-     usersModel.findOne({_id:idUser}).exec((err, user) => {
-         console.log(user)
+    usersModel.findOne({_id:idUser}).exec((err, user) => {
+        console.log(user)
         if(err){
             callback(err)
         }else {
@@ -211,5 +220,5 @@ const deleteEmployee = async(idUser) => {
 }
 
 module.exports = {
-    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteEmployee, getUserById, getHistoryLocationUserByDate, addHistoryLocationUser
+    createUser, updateUser, selectUser, updateTokenFirebaseUser, changePassword, selectUserForScheme, selectAllUser, getAllUser, deleteEmployee, getUserById, getHistoryLocationUserByDate, addHistoryLocationUser, getAllUserByTrangThai
 }

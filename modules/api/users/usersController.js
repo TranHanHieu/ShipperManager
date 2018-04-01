@@ -229,6 +229,15 @@ Router.get('/historylocation', (req, res) => {
 });
 
 
+Router.get('/count', (req, res) => {
+    usersModel.getAllUserByTrangThai(req.query.trangthai, (err, users) => {
+        if (err) {
+            res.send({status: false, msg: config.KHONG_THANH_CONG, data: 0});
+        } else {
+            res.send({status: true, msg: config.THANH_CONG, data: users.length});
+        }
+    });
+});
 //Đổi mật khẩu tài khoản
 Router.post('/changepassword', async (req, res) => {
     try {

@@ -36,13 +36,23 @@ const selectOrderNew = async ({}) => {
         return null;
     }
 }
+const getAllOrderByStatus = async ({status}) => {
+    try
+    {
+        return await ordersModel.find({status : status}).exec();
+    }
+    catch(err)
+    {
+        return null;
+    }
+}
 
 const selectOrderById = async (id) => {
     try
     {
         return await ordersModel.findOne({_id : id}).populate({
             path : 'user',
-            model: userModel 
+            model: userModel
         }).exec();
     }
     catch(err)
@@ -132,16 +142,16 @@ const selectAllOrder = async(idUser, isAdmin) => {
         {
             let result = await ordersModel.find({}).populate({
                 path: 'user',
-                model: userModel 
+                model: userModel
             }).sort('-createAt').exec();
-         
+
             return result;
         }
         else
         {
             return await ordersModel.find({$or: [ {status : 0}, {user : idUser}]}).populate({
                 path: 'user',
-                model: userModel 
+                model: userModel
             }).sort('-createAt').exec();
         }
     }
@@ -203,9 +213,9 @@ const receiveOrder = async (order_user, status, longtitude, latitude, address) =
         else if(status === 2)
         {
             //Thêm tọa độ tại điểm nhận đơn hoặc kết thúc
-           
+
             await ship_historyModel.insertHistory(history);
-            
+
             //Update trạng thái thành 2, 3
             return await updateStatusOrder(order_user.order, status);
         }
@@ -217,7 +227,7 @@ const receiveOrder = async (order_user, status, longtitude, latitude, address) =
         {
             return await updateStatusOrder(order_user.order, 3);
         }
-        else 
+        else
         {
             //đơn hàng Bị hủy
             return await updateStatusOrder(order_user.order, -1);
@@ -231,7 +241,7 @@ const receiveOrder = async (order_user, status, longtitude, latitude, address) =
 }
 
 const saveListHistory = async(history) => {
-    for(i = 0; i < history.length; i++) { 
+    for(i = 0; i < history.length; i++) {
         let order_user = {
             order : history[i].order,
             user : null
@@ -244,5 +254,5 @@ const saveListHistory = async(history) => {
 }
 module.exports = {
     selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder,
-     updateUserInOrder, createOrder, selectOrderById, updateOrder, receiveOrder, saveListHistory
+    updateUserInOrder, createOrder, selectOrderById, updateOrder, receiveOrder, saveListHistory, getAllOrderByStatus
 }

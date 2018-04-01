@@ -19,13 +19,26 @@ Router.get('/', async(req, res) => {
             let result = await ordersModel.selectOrderNew({});
             if(result === null)
                 res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
-            else 
+            else
                 res.send({ status : true, msg : config.THANH_CONG, data : result});
         }
     }
     catch(err)
     {
         res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
+    }
+});
+Router.get('/count', async(req, res) => {
+    try {
+        let result = await ordersModel.getAllOrderByStatus({status:req.query.trangthai});
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA, data : 0});
+        else
+            res.send({ status : true, msg : config.THANH_CONG, data : result.length});
+    }
+    catch(err)
+    {
+        res.send({status : false, msg : config.CO_LOI_XAY_RA, data : 0});
     }
 });
 
@@ -39,11 +52,11 @@ Router.get('/select', async(req, res) => {
         // }
         // else
         // {
-            let result = await ordersModel.selectOrderById(req.query.idOrder);
-            if(result === null)
-                res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
-            else 
-                res.send({ status : true, msg : config.THANH_CONG, data : result});
+        let result = await ordersModel.selectOrderById(req.query.idOrder);
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
+        else
+            res.send({ status : true, msg : config.THANH_CONG, data : result});
         //}
     }
     catch(err)
@@ -63,17 +76,17 @@ Router.post('/receive', async(req, res) => {
         // }
         // else
         // {
-            let order_user = {
-                order : req.body.order,
-                user : req.body.user
-            }
+        let order_user = {
+            order : req.body.order,
+            user : req.body.user
+        }
 
-            let result = await ordersModel.receiveOrder(order_user, 1, 0, 0, "");
+        let result = await ordersModel.receiveOrder(order_user, 1, 0, 0, "");
 
-            if(result === null)
-                res.send({status : false, msg : config.CO_LOI_XAY_RA});
-            else 
-                res.send({ status : true, msg : config.THANH_CONG});
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA});
+        else
+            res.send({ status : true, msg : config.THANH_CONG});
         //}
     }
     catch(err)
@@ -97,17 +110,17 @@ Router.post('/start', async(req, res) => {
         // }
         // else
         // {
-            let order_user = {
-                order : req.body.order,
-                user : req.body.idlogin
-            }
+        let order_user = {
+            order : req.body.order,
+            user : req.body.idlogin
+        }
 
-            let result = await ordersModel.receiveOrder(order_user, 2, req.body.longtitude, req.body.latitude, req.body.address);
+        let result = await ordersModel.receiveOrder(order_user, 2, req.body.longtitude, req.body.latitude, req.body.address);
 
-            if(result === null)
-                res.send({status : false, msg : config.CO_LOI_XAY_RA});
-            else 
-                res.send({ status : true, msg : config.THANH_CONG});
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA});
+        else
+            res.send({ status : true, msg : config.THANH_CONG});
         //}
     }
     catch(err)
@@ -131,18 +144,18 @@ Router.post('/shipping', async(req, res) => {
         // }
         // else
         // {
-            let history = req.body.listHistory;
+        let history = req.body.listHistory;
 
-            for(i = 0; i < history.length; i++) { 
-                let order_user = {
-                    order : history[i].order,
-                    user : null
-                }
-
-                await ordersModel.receiveOrder(order_user, 2, history[i].longtitude, history[i].latitude, history[i].address);
+        for(i = 0; i < history.length; i++) {
+            let order_user = {
+                order : history[i].order,
+                user : null
             }
 
-            res.send({status : true, msg : config.THANH_CONG});
+            await ordersModel.receiveOrder(order_user, 2, history[i].longtitude, history[i].latitude, history[i].address);
+        }
+
+        res.send({status : true, msg : config.THANH_CONG});
     }
     catch(err)
     {
@@ -159,21 +172,21 @@ Router.post('/complete', async(req, res) => {
         {
             res.send({status : false, msg : config.CO_LOI_XAY_RA});
         }
-        
+
         // if(!Utils.verifyLogin(req.body.idlogin, req.headers['token']))
         // {
         //     res.send({status : false, msg : config.MA_TOKEN_KHONG_DUNG});
         // }
         // else
         // {
-            let order_user = {
-                order : req.body.order,
-                user : req.body.idlogin
-            }
+        let order_user = {
+            order : req.body.order,
+            user : req.body.idlogin
+        }
 
-            await ordersModel.receiveOrder(order_user, 3, 0, 0, "");
+        await ordersModel.receiveOrder(order_user, 3, 0, 0, "");
 
-            res.send({ status : true, msg : config.THANH_CONG});
+        res.send({ status : true, msg : config.THANH_CONG});
         //}
     }
     catch(err)
@@ -193,11 +206,11 @@ Router.get('/all', async(req, res) => {
         // }
         // else
         // {
-            let result = await ordersModel.selectAllOrder(req.query.idlogin, req.query.isadmin);
-            if(result === null)
-                res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
-            else 
-                res.send({ status : true, msg : config.THANH_CONG, data : result});
+        let result = await ordersModel.selectAllOrder(req.query.idlogin, req.query.isadmin);
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
+        else
+            res.send({ status : true, msg : config.THANH_CONG, data : result});
         //}
     }
     catch(err)
@@ -216,11 +229,11 @@ Router.get('/deleteOrder', async(req, res) => {
         // }
         // else
         // {
-            let result = await ordersModel.deleteOrder(req.query.idOrder, parseInt(req.query.status));
-            if(result === null)
-                res.send({status : false, msg : config.CO_LOI_XAY_RA});
-            else 
-                res.send({ status : true, msg : result});
+        let result = await ordersModel.deleteOrder(req.query.idOrder, parseInt(req.query.status));
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA});
+        else
+            res.send({ status : true, msg : result});
         //}
     }
     catch(err)
@@ -229,7 +242,6 @@ Router.get('/deleteOrder', async(req, res) => {
     }
 });
 
-//Thêm đơn hàng
 Router.post('/addOrder', async(req, res)=> {
     try
     {
@@ -244,21 +256,20 @@ Router.post('/addOrder', async(req, res)=> {
             longtitude_to : req.body.longtitude_to,
             latitude_to : req.body.latitude_to
         };
-    
+
         let result = await ordersModel.createOrder(newOrder);
         if(result === null)
             res.send({status : false, msg : config.CO_LOI_XAY_RA});
-        else 
+        else
             res.send({ status : true, msg : config.THANH_CONG});
     }
     catch(err)
     {
         res.send({status : false, msg : config.CO_LOI_XAY_RA});
     }
-    
+
 });
 
-//Sửa đơn hàng
 Router.put('/editOrder', async(req, res)=> {
     try
     {
@@ -274,21 +285,20 @@ Router.put('/editOrder', async(req, res)=> {
             longtitude_to : req.body.longtitude_to,
             latitude_to : req.body.latitude_to
         };
-    
+
         let result = await ordersModel.updateOrder(order);
         if(result === null)
             res.send({status : false, msg : config.CO_LOI_XAY_RA});
-        else 
+        else
             res.send({ status : true, msg : config.THANH_CONG});
     }
     catch(err)
     {
         res.send({status : false, msg : config.CO_LOI_XAY_RA});
     }
-    
+
 });
 
-//Xem lịch sử
 Router.get('/history', async(req, res) => {
     try
     {
@@ -298,11 +308,11 @@ Router.get('/history', async(req, res) => {
         // }
         // else
         // {
-            let result = await orderHistoryModel.selectHistory(req.query.idOrder);
-            if(result === null)
-                res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
-            else 
-                res.send({ status : true, msg : config.THANH_CONG, data : result});
+        let result = await orderHistoryModel.selectHistory(req.query.idOrder);
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA, data : null});
+        else
+            res.send({ status : true, msg : config.THANH_CONG, data : result});
         //}
     }
     catch(err)
@@ -311,7 +321,6 @@ Router.get('/history', async(req, res) => {
     }
 });
 
-//Xóa lịch sử đơn hàng
 Router.delete('/deleteHistory', async(req, res) => {
     try
     {
@@ -321,11 +330,11 @@ Router.delete('/deleteHistory', async(req, res) => {
         // }
         // else
         // {
-            let result = await orderHistoryModel.deleteHistory(req.query.idOrder);
-            if(result === null)
-                res.send({status : false, msg : config.CO_LOI_XAY_RA});
-            else 
-                res.send({ status : true, msg : config.THANH_CONG});
+        let result = await orderHistoryModel.deleteHistory(req.query.idOrder);
+        if(result === null)
+            res.send({status : false, msg : config.CO_LOI_XAY_RA});
+        else
+            res.send({ status : true, msg : config.THANH_CONG});
         //}
     }
     catch(err)

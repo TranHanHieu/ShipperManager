@@ -11,10 +11,19 @@ if(!user.group.isadmin)
 // auto refresh data sau 1 minutes
 setInterval(function() {
     getAllUser()
+    getCountUserTrangThai(3)
+    getCountUserTrangThai(4)
+    getCountOrderTrangThai(0)
+    getCountOrderTrangThai(-1)
 }, 60*1000);
 
 $(document).ready(function () {
     getAllUser()
+    getCountUserTrangThai(3)
+    getCountUserTrangThai(4)
+    getCountOrderTrangThai(0)
+    getCountOrderTrangThai(-1)
+
     // Xin quyền truy cập vị trí
     navigator.permissions.query({'name': 'geolocation'})
         .then( permission => console.log(permission) )
@@ -31,6 +40,53 @@ $(document).ready(function () {
 
 
 })
+
+function getCountUserTrangThai(trangthai) {
+    $.ajax(`/api/user/count?trangthai=${trangthai}`, {
+        type: "GET",
+        success: function (data) {
+            if (data.status) {
+                if(trangthai==3){
+                    $('#tvShipping').html(data.data)
+                }else if(trangthai ==4){
+                    $('#tvDangRanh').html(data.data)
+                }
+
+            } else {
+                alert(data.msg)
+
+            }
+        },
+        error: function (err) {
+            // window.location.href = "/"
+
+            alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
+        }
+    });
+}
+function getCountOrderTrangThai(trangthai) {
+    $.ajax(`/api/order/count?trangthai=${trangthai}`, {
+        type: "GET",
+        success: function (data) {
+            if (data.status) {
+                if(trangthai == 0){
+                    $('#tvDonHangMoi').html(data.data)
+                }else if(trangthai == -1){
+                    $('#tvDonHangBiHuy').html(data.data)
+                }
+
+            } else {
+                alert(data.msg)
+
+            }
+        },
+        error: function (err) {
+            // window.location.href = "/"
+
+            alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
+        }
+    });
+}
 
 function getAllUser() {
     $.ajax('/api/user/', {
