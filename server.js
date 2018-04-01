@@ -102,6 +102,7 @@ mongoose.connect(config.connectionString, (err) => {
     console.log('Connect to db success');
   }
 })
+
 app.get('/',(req,res)=>{
     if (req.session.token) {
         res.render('home')

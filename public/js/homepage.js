@@ -2,6 +2,12 @@ var listLocationUser = [];
 var latitude = 21.00993
 var longitude = 105.80727
 
+var user = JSON.parse(localStorage.getItem("user"));
+if(!user.group.isadmin)
+{
+    $("#homeContent").html('<p> Bạn không có quyền truy cập. Nhấn<a  href="/orderList"> vào đây </a>quay lại!</p>');
+}
+
 // auto refresh data sau 1 minutes
 setInterval(function() {
     getAllUser()
@@ -43,14 +49,14 @@ function getAllUser() {
                 }
                 initMap()
             } else {
-                alert(data.msg)
+                //alert(data.msg)
 
             }
         },
         error: function (err) {
             // window.location.href = "/"
 
-            alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
+            //alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
         }
     });
 }
