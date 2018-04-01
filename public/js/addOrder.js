@@ -10,7 +10,7 @@ $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     map = new google.maps.Map(document.getElementById('map3'), {
         zoom: 12,
-        center: new google.maps.LatLng(user.latitude, user.longitude),
+        center: new google.maps.LatLng(user.latitude, user.longtitude),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
@@ -82,7 +82,6 @@ function getLocationFrom()
         type: "GET",
         dataType: "json",
         success: function (data) {
-            console.log(data);
             if(data.status)
             {
                 latitudeFrom = data.results[0].geometry.location.lat;
@@ -97,11 +96,9 @@ function getLocationFrom()
                     title:  $("#from").val()
                   });
 
-                console.log(pointA);
             }
         },
         error: function (err) {
-            console.log(err);
             window.location.href = "/addOrder"
 
             alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
@@ -132,7 +129,6 @@ function getLocationTo()
             }
         },
         error: function (err) {
-            console.log(err);
             window.location.href = "/addOrder"
 
             alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)

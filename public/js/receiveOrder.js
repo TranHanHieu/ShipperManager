@@ -15,7 +15,7 @@ $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     idOrder = getUrlVars()["idOrder"];
 
-      //Khai báo map
+    //Khai báo map
     map = new google.maps.Map(document.getElementById('mapReceiveOrder'), {
         zoom: 12,
         center: new google.maps.LatLng(user.latitude, user.longtitude),
@@ -321,4 +321,3 @@ $(document).ready(function() {
         return vars;
     }
 });
-

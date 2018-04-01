@@ -54,9 +54,9 @@ $( document ).ready(function() {
                         '<td><span>'+ value.price_ship.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") +'</span></td>';
                         
                         if(value.status == 0 || value.status == -1)
-                            html += '<td><span>Chưa nhận đơn</span></td>';
+                            html += '<td style="text-align : center"><span class="label label-warning">Chưa nhận đơn</span></td>';
                         else
-                            html += '<td><span>'+ value.user.fullname +'</span></td>';
+                            html += '<td style="text-align : center"><span class="label label-primary">'+ value.user.fullname +'</span></td>';
                         //status : 
                         // -1: Đơn bị hủy
                         // 0: Đơn hàng mới
@@ -65,21 +65,21 @@ $( document ).ready(function() {
                         // 3: Hoàn thành
 
                         if(value.status === -1)
-                            html += '<td><span>Đơn bị hủy</span></td>';
+                            html += '<td style="text-align : center"><span class="label label-danger">Đơn bị hủy</span></td>';
 
                         if(value.status === 0)
-                            html += '<td><span>Đơn hàng mới</span></td>';
+                            html += '<td style="text-align : center"><span class="label label-default">Đơn hàng mới</span></td>';
 
                         if(value.status === 1)
-                            html += '<td><span>Shipper nhận đơn</span></td>';
+                            html += '<td style="text-align : center"><span class="label label-info">Shipper nhận đơn</span></td>';
 
-                        if(value.status === 2 || value.status === 4)
-                            html += '<td><span>Đang giao</span></td>';
+                        if(value.status === 2)
+                            html += '<td style="text-align : center"><span class="label label-warning">Đang giao</span></td>';
 
                         if(value.status === 3)
-                            html += '<td><span>Hoàn thành</span></td>';
+                            html += '<td style="text-align : center"><span class="label label-success">Hoàn thành</span></td>';
 
-                        html += '<td><span>'+ value.createdAt +'</span></td>';
+                        html += '<td><span>'+ moment(moment.utc(moment.utc().format(value.createdAt)).toDate()).local().format('HH:mm:ss DD-MM-YYYY') +'</span></td>';
 
                         html += '<td>' +
                                     '<a href="/orderDetail?idOrder='+ value._id +'">' +
@@ -131,6 +131,7 @@ $( document ).ready(function() {
         //     loadDataOrder();
         // }, 5000);
 
+        //$('#tableOrder').DataTable();
         
     }
 

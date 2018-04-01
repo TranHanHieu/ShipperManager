@@ -11,7 +11,7 @@ var flightPlanCoordinates = [];
 $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     idOrder = getUrlVars()["idOrder"];
-    
+
     map = new google.maps.Map(document.getElementById('mapOrderDetail'), {
         zoom: 12,
         center: new google.maps.LatLng(user.latitude, user.longtitude),
@@ -23,6 +23,7 @@ $(document).ready(function() {
         type: "GET",
         dataType: "json",
         success: function (res) {
+
             $("#ordername").text(res.data.order_name);
             $("#from").text(res.data.from);
             $("#to").text(res.data.to);
@@ -127,4 +128,3 @@ $(document).ready(function() {
         return vars;
     }
 });
-

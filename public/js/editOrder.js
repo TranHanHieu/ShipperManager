@@ -10,11 +10,6 @@ var idOrder = null;
 $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     idOrder = getUrlVars()["idOrder"];
-    map = new google.maps.Map(document.getElementById('mapEditOrder'), {
-        zoom: 12,
-        center: new google.maps.LatLng(user.latitude, user.longitude),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    });
 
     $("#price").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
@@ -82,6 +77,13 @@ $(document).ready(function() {
         type: "GET",
         dataType: "json",
         success: function (res) {
+
+            map = new google.maps.Map(document.getElementById('mapEditOrder'), {
+                zoom: 12,
+                center: new google.maps.LatLng(res.data.latitude_from,  res.data.longtitude_from),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+
             if(res.data.status !== 0)
             {
                 $("#ordername").prop('disabled', true);

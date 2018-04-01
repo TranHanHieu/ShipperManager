@@ -1,7 +1,11 @@
-# ShipperManager_CSE485
+﻿# ShipperManager_CSE485
 Bài tập lớn môn Công nghệ Web
+Website: shipper-manager.herokuapp.com
 
-Account demo : 
-    tài khoản: hieuth52,
-    mật khẩu: hieuth52
-Deploy : shipper-manager.herokuapp.com
+Account admin : 
+    tài khoản: admin
+    mật khẩu: admin
+
+Account shipper: 
+    tài khoản: ducthangwru	
+    mật khẩu: ducthangwru	

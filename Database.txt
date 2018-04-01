@@ -1,0 +1,3 @@
+﻿
+- Database: MongoDB (NoSQL).
+- Chuỗi kết nối: mongodb://admin:admin@ds213199.mlab.com:13199/shippermanager
