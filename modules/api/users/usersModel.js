@@ -22,7 +22,10 @@ const updateUser = (newUser, callback) => {
             console.log(err);
             callback(err);
         } else {
-            doc.set(newUser);
+            doc.email = newUser.email;
+            doc.dateofbirth = newUser.dateofbirth
+            doc.fullname = newUser.fullname
+            // doc.set(newUser);
             doc.save((err, doc) => {
                 callback(err, doc);
             })

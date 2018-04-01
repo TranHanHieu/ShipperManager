@@ -8,10 +8,24 @@
             <div class="form-group has-danger">
                 <!--<form id="form1" runat="server">-->
                 <h4 style="text-align: center">Ảnh đại diện</h4>
-                <img style="margin: auto;width: 130px;height: 130px;border-radius: 130px;display:none "
-                     id="avatarnv" src=""/>
+                {{#if user.avatar}}
+                    <img style="margin: auto;width: 130px;height: 130px;border-radius: 130px;display: block"
+                         id="avatarnv" src="{{user.avatar}}"/>
+                {{else}}
+                    <div style="
+                            background:{{getBGColor fullname}} ;
+                            width: 130px;
+                            height: 130px;
+                            margin: auto;
+                            border-radius: 130px;
+                            color: #fff;
+                            padding:35px 0;
+                            font-size: 40px;
+                            text-align: center">{{getSortName user.fullname}}</div>
+                {{/if}}
 
-                <input style="margin: auto;display: block" type='file' id="imgInp"/>
+
+                <input style="margin: 10px auto;display: block" type='file' id="imgInp"/>
                 <!--</form>-->
 
             </div>
@@ -52,18 +66,18 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <!--<div class="row">-->
 
-                <!--/span-->
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label class="control-label">Tên đăng nhập</label>
-                        <input name="username" id="username" type="text" value="{{user.username}}" class="form-control"
-                               placeholder="Tên đăng nhập">
-                    </div>
-                </div>
-                <!--/span-->
-            </div>
+                <!--&lt;!&ndash;/span&ndash;&gt;-->
+                <!--<div class="col-md-6">-->
+                    <!--<div class="form-group">-->
+                        <!--<label class="control-label">Tên đăng nhập</label>-->
+                        <!--<input name="username" id="username" type="text" value="{{user.username}}" class="form-control"-->
+                               <!--placeholder="Tên đăng nhập">-->
+                    <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;/span&ndash;&gt;-->
+            <!--</div>-->
             <!--</div>-->
             <!--</div>-->
             <!--&lt;!&ndash;/span&ndash;&gt;-->
