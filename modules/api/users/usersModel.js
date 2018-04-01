@@ -16,32 +16,44 @@ const createUser = async(user) => {
         return null;
     }
 }
-
-const updateUser = async(user) => {
-    try
-    {
-        var id = user._id;
-        var queryUpdate = {
-            email : user.email,
-            fullname : user.fullname,
-            dateofbirth : user.dateofbirth,
-            tokenfirebase : user.tokenfirebase,
-            avatar : user.avatar,
-            password : user.password,
-            email : user.email,
-            longitude: user.longitude,
-            latitude: user.latitude,
-            acc: user.acc,
-            group : user.group
+const updateUser = (newUser, callback) => {
+    usersModel.findById(newUser._id).exec((err, doc) => {
+        if (err) {
+            console.log(err);
+            callback(err);
+        } else {
+            doc.set(newUser);
+            doc.save((err, doc) => {
+                callback(err, doc);
+            })
         }
-    
-        return await usersModel.findOneAndUpdate(id, queryUpdate).exec();
-    }
-    catch(err)
-    {
-        return null;
-    }
-}
+    })
+};
+// const updateUser = async(user) => {
+//     try
+//     {
+//         var id = user._id;
+//         var queryUpdate = {
+//             email : user.email,
+//             fullname : user.fullname,
+//             dateofbirth : user.dateofbirth,
+//             tokenfirebase : user.tokenfirebase,
+//             avatar : user.avatar,
+//             password : user.password,
+//             email : user.email,
+//             longitude: user.longitude,
+//             latitude: user.latitude,
+//             acc: user.acc,
+//             group : user.group
+//         }
+//
+//         return await usersModel.findOneAndUpdate(id, queryUpdate).exec();
+//     }
+//     catch(err)
+//     {
+//         return null;
+//     }
+// }
 
 const selectUser = async(user) => {
     try
@@ -143,7 +155,6 @@ const getHistoryLocationUserByDate = (idUser,date,callback) => {
             callback(err)
         }else {
             var data = [];
-            date = moment(date).format('DD/MM/YYYY')
             var locations = user.historylocations;
             console.log(user)
             if(user.historylocations.length>0) {
@@ -157,7 +168,7 @@ const getHistoryLocationUserByDate = (idUser,date,callback) => {
                     }
                 }
             }else {
-                callback(err, data);
+                callback('404 Notfound', data);
             }
         }
     });

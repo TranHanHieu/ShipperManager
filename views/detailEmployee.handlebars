@@ -10,8 +10,21 @@
                 <div class="form-group has-danger">
                     <!--<form id="form1" runat="server">-->
                     <h4 style="text-align: center">Ảnh đại diện</h4>
-                    <img style="margin: auto;width: 130px;height: 130px;border-radius: 130px;display:block "
-                         id="avatarnv" src="{{user.avatar}}"/>
+                    {{#if user.avatar}}
+                        <img style="margin: auto;width: 130px;height: 130px;border-radius: 130px;display:block "
+                             id="avatarnv" src="{{user.avatar}}"/>
+                    {{else}}
+                        <div style="
+                                background:{{getBGColor fullname}} ;
+                                width: 130px;
+                                height: 130px;
+                                margin: auto;
+                                border-radius: 130px;
+                                color: #fff;
+                                padding:35px 0;
+                                font-size: 40px;
+                                text-align: center">{{getSortName user.fullname}}</div>
+                    {{/if}}
 
 
                 </div>
@@ -28,9 +41,7 @@
                             <label class="control-label">Chức vụ</label>
                             <select id="chucvunv" name="chucvunv" class="form-control custom-select"
                                     title="Chức vụ">
-                                {{#each groups}}
-                                    <option value="{{_id}}">{{groupname}}</option>
-                                {{/each}}
+                                    <option>{{user.group.groupname}}</option>
                             </select>
 
                         </div>
@@ -82,8 +93,8 @@
             <h3>Lộ trình di chuyển:</h3>
             <div>
                 <label>Từ ngày: </label>
-                <input style="margin: 10px" name="tungay" type="date" id="tungay"
-                       placeholder="Từ ngày">
+                <input style="margin: 10px;text-align: center" name="tungay" type="date" id="tungay"
+                       placeholder="Chọn ngày">
                 <!--<label>Đến ngày: </label>-->
                 <!--<input style="margin: 10px" name="denngay" type="date" id="denngay"-->
                 <!--placeholder="Từ ngày">-->
@@ -110,9 +121,9 @@
 <script>
     var latitude = 21.00993
     var longitude = 105.80727;
-    // var user = user._id
-    // console.log(user)
     var flightPlanCoordinates = []
+    var today = moment().format('YYYY-MM-DD');
+    document.getElementById("tungay").value = today;
 
     $('#btnXemLoTrinh').click(function(event, err){
         let date = $('#tungay').val();
@@ -132,7 +143,7 @@
                     }
                     initMap()
                 } else {
-                    alert(data.msg)
+                    alert(`Ngày ${moment(date).format('DD/MM/YYYY')}, {{user.fullname}} không có lộ trình nào! `)
 
                 }
             },
@@ -148,20 +159,37 @@
             center: new google.maps.LatLng(latitude, longitude),
             mapTypeId: google.maps.MapTypeId.ROADMAP
         });
+        if(flightPlanCoordinates.length>2) {
+            var locationStart = {lat: flightPlanCoordinates[0].lat, lng: flightPlanCoordinates[0].lng};
+            var markerStart = new google.maps.Marker({
+                position: locationStart,
+                icon:'https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png',
+                map: map
+            });
+            var locationEnd = {
+                lat: flightPlanCoordinates[flightPlanCoordinates.length - 1].lat,
+                lng: flightPlanCoordinates[flightPlanCoordinates.length - 1].lng
+            };
+            var markerEnd = new google.maps.Marker({
+                position: locationEnd,
+                icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png',
+                map: map
+            });
 
-        // Hiển thị vị trí đăng nhập của người dùng web
-        var locationCurrent = {lat: latitude, lng: longitude};
-        var marker = new google.maps.Marker({
-            position: locationCurrent,
-            map: map
-        });
+        }else {
+            var marker = new google.maps.Marker({
+                position: {lat:latitude,lng:longitude},
+                map: map
+            });
+
+        }
         //vẽ đường đi
         var flightPath = new google.maps.Polyline({
             path: flightPlanCoordinates,
             geodesic: true,
             strokeColor: '#FF0000',
             strokeOpacity: 1.0,
-            strokeWeight: 2
+            strokeWeight: 3
         });
 
         flightPath.setMap(map);

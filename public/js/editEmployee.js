@@ -1,5 +1,9 @@
 document.title = "Chỉnh sửa thông tin nhân viên"
 
+$("#imgInp").change(function () {
+    readURL(this);
+});
+
 function cancelClick() {
     window.location.href = "/employeeList";
 }
@@ -19,7 +23,3 @@ function readURL(input) {
 
     }
 }
-
-$("#imgInp").change(function () {
-    readURL(this);
-});

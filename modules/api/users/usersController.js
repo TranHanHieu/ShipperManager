@@ -3,6 +3,7 @@ const Router = express.Router();
 const usersModel = require('./usersModel');
 const config = require('../../../configString.json');
 const Utils = require('../../../utils/Utils');
+let moment = require('moment')
 
 //Tạo tài khoản mới mặc định là tài khoản nhân viên
 Router.post('/', async (req, res) => {
@@ -48,7 +49,7 @@ Router.post('/', async (req, res) => {
 Router.post('/historylocation', async (req, res) => {
     try {
         let newlocation = {
-            date:'31/03/2018',
+            date:'',
             longtitude: req.body.longtitude,
             latitude: req.body.latitude,
             acc: req.body.acc,
@@ -78,36 +79,57 @@ Router.post('/historylocation', async (req, res) => {
     }
 });
 
-//Chỉnh sửa thông tin tài khoản
-Router.put('/', async (req, res) => {
-    try {
-        let newUser = {
-            idlogin: req.body.idlogin,
-            id: req.body._id,
-            password: req.body.password,
+Router.put('/', (req, res) => {
+    let newUser = {
+            // idlogin: req.body.idlogin,
+            _id: req.body._id,
+            // password: req.body.password,
             email: req.body.email,
             avatar: req.body.avatar,
-            tokenfirebase: req.body.tokenfirebase,
+            // tokenfirebase: req.body.tokenfirebase,
             fullname: req.body.fullname,
             dateofbirth: req.body.dateofbirth,
             group: req.body.group
         };
-        if (!Utils.verifyLogin(req.body.idlogin, req.headers['token'])) {
-            res.send({status: false, msg: config.MA_TOKEN_KHONG_DUNG});
+    usersModel.updateUser(newUser, (err, doc) => {
+        if (err) {
+            res.send(err.errmsg);
+        } else {
+            res.send(doc);
         }
-        else {
-            let doc = await usersModel.updateUser(newUser);
-            if (doc === null) {
-                res.send({status: false, msg: config.KHONG_THANH_CONG});
-            } else {
-                res.send({status: true, msg: config.THANH_CONG});
-            }
-        }
-    }
-    catch (err) {
-        res.send({status: false, msg: config.CO_LOI_XAY_RA});
-    }
+    });
 });
+
+//Chỉnh sửa thông tin tài khoản
+// Router.put('/', async (req, res) => {
+//     try {
+//         let newUser = {
+//             // idlogin: req.body.idlogin,
+//             id: req.body._id,
+//             password: req.body.password,
+//             email: req.body.email,
+//             avatar: req.body.avatar,
+//             tokenfirebase: req.body.tokenfirebase,
+//             fullname: req.body.fullname,
+//             dateofbirth: moment(req.body.dateofbirth).format('DD/MM/YYYY'),
+//             group: req.body.group
+//         };
+//         // if (!Utils.verifyLogin(req.body.idlogin, req.headers['token'])) {
+//         //     res.send({status: false, msg: config.MA_TOKEN_KHONG_DUNG});
+//         // }
+//         // else {
+//             let doc = await usersModel.updateUser(newUser);
+//             if (doc === null) {
+//                 res.send({status: false, msg: config.KHONG_THANH_CONG});
+//             } else {
+//                 res.send({status: true, msg: config.THANH_CONG});
+//             }
+//         // }
+//     }
+//     catch (err) {
+//         res.send({status: false, msg: config.CO_LOI_XAY_RA});
+//     }
+// });
 
 //API Đăng nhập cho app vào web
 
