@@ -5,7 +5,16 @@ $('#btnChangePass').click(function () {
     window.location.href = '/changepass'
 })
 if (typeof(Storage) !== "undefined") {
-    var user = JSON.parse(localStorage.getItem("user"))
+    var user = JSON.parse(localStorage.getItem("user"));
+    console.log(!user.group.isadmin);
+    if(!user.group.isadmin)
+    {
+        $("#homeIcon").attr("href", "/orderList");
+        $("#employeeListIcon").attr("href", "/orderList");
+        $("#orderListIcon").attr("class", "active");
+        $("#homeIcon").attr("class", "");
+    }
+
     document.getElementById("userNameLb").innerHTML = user.fullname;
     document.getElementById("fullname").innerHTML = user.fullname;
     document.getElementById("email").innerHTML = 'Email: '+ user.email;
@@ -16,3 +25,4 @@ if (typeof(Storage) !== "undefined") {
 } else {
     alert('Lỗi! Trình duyệt của bạn không hỗ trợ Web Storage')
 }
+

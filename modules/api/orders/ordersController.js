@@ -229,6 +229,7 @@ Router.get('/deleteOrder', async(req, res) => {
     }
 });
 
+//Thêm đơn hàng
 Router.post('/addOrder', async(req, res)=> {
     try
     {
@@ -257,6 +258,7 @@ Router.post('/addOrder', async(req, res)=> {
     
 });
 
+//Sửa đơn hàng
 Router.put('/editOrder', async(req, res)=> {
     try
     {
@@ -286,6 +288,7 @@ Router.put('/editOrder', async(req, res)=> {
     
 });
 
+//Xem lịch sử
 Router.get('/history', async(req, res) => {
     try
     {
@@ -308,6 +311,7 @@ Router.get('/history', async(req, res) => {
     }
 });
 
+//Xóa lịch sử đơn hàng
 Router.delete('/deleteHistory', async(req, res) => {
     try
     {

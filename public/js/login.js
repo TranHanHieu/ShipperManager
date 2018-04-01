@@ -31,6 +31,7 @@ $('#btnLogin').click(function (event, err) {
                 },
                 dataType: "json",
                 success: function (data) {
+                    console.log(data);
                     if (data.status) {
                         if(isRememberPass){
                             localStorage.setItem('rememberpass', JSON.stringify({"username":username,"password":password}));
@@ -38,7 +39,11 @@ $('#btnLogin').click(function (event, err) {
                             localStorage.removeItem('rememberpass')
                         }
                         localStorage.setItem('user', JSON.stringify(data.data));
-                        window.location.href = "/"
+
+                        if(data.data.group.isadmin)
+                            window.location.href = "/";
+                        else
+                            window.location.href = "/orderList";
                     } else {
                         alert(data.msg)
 
