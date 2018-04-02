@@ -176,7 +176,11 @@ const getHistoryLocationUserByDate = (idUser,date,callback) => {
                         data.push(user.historylocations[i])
                     }
                     if (i === locations.length - 1) {
-                        callback(err, data);
+                        if(data.length>0) {
+                            callback(err, data);
+                        }else {
+                            callback('404 Notfound', data);
+                        }
                     }
                 }
             }else {
