@@ -55,8 +55,10 @@ $( document ).ready(function() {
                         
                         if(value.status == 0 || value.status == -1)
                             html += '<td style="text-align : center"><span class="label label-warning">Chưa nhận đơn</span></td>';
-                        else
+                        else if(typeof value.user != 'undefined')
                             html += '<td style="text-align : center"><span class="label label-primary">'+ value.user.fullname +'</span></td>';
+                        else if(typeof value.user != 'undefined')
+                            html += '<td style="text-align : center"><span class="label label-primary">Không rõ thông tin</span></td>';
                         //status : 
                         // -1: Đơn bị hủy
                         // 0: Đơn hàng mới

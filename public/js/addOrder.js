@@ -12,9 +12,10 @@ $(document).ready(function() {
     var user = JSON.parse(localStorage.getItem("user"));
     map = new google.maps.Map(document.getElementById('map3'), {
         zoom: 12,
-        center: new google.maps.LatLng(user.latitude, user.longtitude),
+        center: new google.maps.LatLng(user.latitude, user.longitude),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
+    
 
     $("#price").keydown(function (e) {
         // Allow: backspace, delete, tab, escape, enter and .
