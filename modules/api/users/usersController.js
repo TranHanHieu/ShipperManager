@@ -232,8 +232,8 @@ Router.get('/:id', async (req, res) => {
         res.send({status: false, msg: config.CO_LOI_XAY_RA, data: null});
     }
 });
-Router.get('/historylocation', (req, res) => {
-    usersModel.getHistoryLocationUserByDate(req.query.idUser, req.query.date, (err, locations) => {
+Router.get('/location/history', (req, res) => {
+    usersModel.getHistoryLocationUserByDate(req.query.id, req.query.date, (err, locations) => {
         if (err) {
             res.send({status: false, msg: config.KHONG_THANH_CONG, data: []});
         } else {
