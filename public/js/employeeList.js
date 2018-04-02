@@ -3,7 +3,7 @@ document.title = "Danh sách nhân viên - ShipperManager"
 var user = JSON.parse(localStorage.getItem("user"));
 
 $(document).ready(function () {
-    //phân quyền cho tài khoản,
+    //phân quyền cho tài khoản, do k chỉ load 1 lần nên k dùng ajax
     if (user.group.isadmin) {
         $('#tbBodyNoAdmin').css('display', 'none')
     }else {
