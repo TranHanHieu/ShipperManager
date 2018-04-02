@@ -10,9 +10,8 @@ if (typeof(Storage) !== "undefined") {
     if(!user.group.isadmin)
     {
         $("#homeIcon").attr("href", "/orderList");
-        $("#employeeListIcon").attr("href", "/orderList");
         $("#orderListIcon").attr("class", "active");
-        $("#homeIcon").attr("class", "");
+        $("#homeIcon").css("display", "none");
     }
 
     document.getElementById("userNameLb").innerHTML = user.fullname;
