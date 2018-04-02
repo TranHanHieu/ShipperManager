@@ -252,7 +252,54 @@ const saveListHistory = async(history) => {
 
     return 1;
 }
+
+const dataChartOrder = async() => {
+    let d = new Date();
+    let month = d.getMonth() + 1;
+    let year = d.getFullYear();
+    try
+    {
+        return await ordersModel.aggregate(
+            [
+                {
+                    $group: {
+                      _id: {
+                        year: { $year: "$createdAt" },
+                        month: { $month: "$createdAt" },
+                        day: { $dayOfMonth: "$createdAt" },
+                        status: "$status"
+                      },
+                      count: { $sum: 1 }
+                    }
+                },
+                {
+                    $group: {
+                        _id: {
+                        year: "$_id.year",
+                        month: "$_id.month",
+                        day: "$_id.day"
+                        },
+                        count: { $sum: "$count" },
+                        //statuses: { $push: { key: { $concat: ["status", {$substr:["$_id.status", 0, -1]}] }, value: "$count" } } 
+                        statuses: { $push: { key: '$_id.status', value: "$count" } }   
+                    }
+                },
+                {
+                    $match : {
+                        "_id.month" : month, "_id.year" : year
+                    }
+                }
+            ]
+         ).exec();
+    }
+    catch(err)
+    {
+        console.log(err);
+        return [];
+    }
+}
+
 module.exports = {
     selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder,
-    updateUserInOrder, createOrder, selectOrderById, updateOrder, receiveOrder, saveListHistory, getAllOrderByStatus
+    updateUserInOrder, createOrder, selectOrderById, updateOrder, receiveOrder, saveListHistory, getAllOrderByStatus, dataChartOrder
 }

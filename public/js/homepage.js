@@ -178,20 +178,56 @@ google.charts.load('current', {'packages': ['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
-    var data = google.visualization.arrayToDataTable([
-        ['Year', 'Đơn hàng đã nhận', "Đơn hàng bị hủy", 'Nhân viên'],
-        ['2013', 1000, 400, 500],
-        ['2014', 1170, 460, 300],
-        ['2015', 660, 1120, 700],
-        ['2016', 1030, 540, 890]
-    ]);
+    var listData = [];
+    var orderCancel = 0;
+    var orderNew = 0;
+    var orderReceive = 0;
+    
+    listData.push(['Ngày', 'Tất cả đơn hàng', "Đơn hàng bị hủy", "Đơn hàng chưa nhận", 'Đơn hàng đã nhận']);
 
-    var options = {
-        title: 'Đơn vị (VNĐ)',
-        hAxis: {title: 'Biểu đồ thống kê hoạt động trong tháng', titleTextStyle: {color: '#333'}},
-        vAxis: {minValue: 0}
-    };
+    //Lấy dữ liệu biểu đồ nè
+    $.ajax('/api/order/chart', {
+        type: "GET",
+        success: function (res) {
+            $.each(res.data, function(index, value) {
+                let date = new Date(value._id.year, value._id.month - 1, value._id.day);
 
-    var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
-    chart.draw(data, options);
+                //Lấy số lượng ở các trạng thái
+                $.each(value.statuses, function(i, v) {
+                 
+                    //Đơn hàng bị hủy
+                    if(v.key == -1)
+                    {
+                        orderCancel += v.value;
+                    }
+                    //Đơn hàng chưa nhận
+                    else if(v.key == 0)
+                    {
+                        orderNew += v.value;
+                    }
+
+                    //Đơn hàng đã nhận
+                    else
+                    {
+                        orderReceive += v.value;
+                    }
+                });
+
+                listData.push([moment(date).format('DD/MM/YYYY'), value.count, orderCancel, orderNew, orderReceive]);
+              });
+
+              var data = google.visualization.arrayToDataTable(listData);
+
+              var options = {
+                  title: 'Đơn vị (Số lượng)',
+                  hAxis: {title: 'Biểu đồ thống kê hoạt động trong tháng', titleTextStyle: {color: '#333'}},
+                  vAxis: {minValue: 0}
+              };
+          
+              var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+              chart.draw(data, options);
+        },
+        error: function (err) {
+        }
+    });
 }
