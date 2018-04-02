@@ -148,7 +148,7 @@ app.get('/delete', (req, res) => {
 app.get('/edit', (req, res) => {
     let id = req.query.id;
     getAllGroup((groups,err)=> {
-        getUserById(id, (user, err) => {
+        getUserById(id, ( err,user) => {
             res.render('editEmployee', {user,groups})
         })
     })

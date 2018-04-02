@@ -162,7 +162,7 @@ const getAllUserByTrangThai = (trangthai,callback) => {
 };
 const getHistoryLocationUserByDate = (idUser,date,callback) => {
     usersModel.findOne({_id:idUser,status : true}).exec((err, user) => {
-        console.log(user,'llll')
+        console.log(err,'llll')
         if(err){
             console.log('Loii roi')
             callback(err)
