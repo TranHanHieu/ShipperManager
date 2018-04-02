@@ -104,8 +104,6 @@ $(document).ready(function() {
             },
             error: function (err) {
                 window.location.href = "/orderList"
-
-                alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
             }
         });   
         
@@ -136,8 +134,6 @@ $(document).ready(function() {
             },
             error: function (err) {
                 window.location.href = "/orderList"
-
-                alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
             }
         });  
     }
