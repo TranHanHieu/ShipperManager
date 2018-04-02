@@ -41,7 +41,7 @@
                             <label class="control-label">Chức vụ</label>
                             <select id="chucvunv" name="chucvunv" class="form-control custom-select"
                                     title="Chức vụ">
-                                    <option>{{user.group.groupname}}</option>
+                                    <option id="chucvuNv">{{user.group.groupname}}</option>
                             </select>
 
                         </div>
@@ -118,83 +118,5 @@
 <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyVm6Ku29H8jLCuwK1xDypxLu3FgQb4Qs&callback=initMap">
 </script>
-<script>
-    var latitude = 21.00993
-    var longitude = 105.80727;
-    var flightPlanCoordinates = []
-    var today = moment().format('YYYY-MM-DD');
-    document.getElementById("tungay").value = today;
-
-    $('#btnXemLoTrinh').click(function(event, err){
-        let date = $('#tungay').val();
-        $.ajax(`/api/user/historylocation?idUser={{user._id}}&date=${date}`, {
-            type: "get",
-            success: function (data) {
-                if (data.status) {
-                    flightPlanCoordinates = []
-                    for(let i =0 ;i<data.data.length;i++){
-                        //21.00975,105.83116,
-                        flightPlanCoordinates.push(
-                                {
-                                    lat: data.data[i].longtitude, lng: data.data[i].latitude
-                                }
-                        )
-
-                    }
-                    initMap()
-                } else {
-                    alert(`Ngày ${moment(date).format('DD/MM/YYYY')}, {{user.fullname}} không có lộ trình nào! `)
-
-                }
-            },
-            error: function (err) {
-                alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
-            }
-        });
-    })
-
-    function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
-            center: new google.maps.LatLng(latitude, longitude),
-            mapTypeId: google.maps.MapTypeId.ROADMAP
-        });
-        if(flightPlanCoordinates.length>2) {
-            var locationStart = {lat: flightPlanCoordinates[0].lat, lng: flightPlanCoordinates[0].lng};
-            var markerStart = new google.maps.Marker({
-                position: locationStart,
-                icon:'https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png',
-                map: map
-            });
-            var locationEnd = {
-                lat: flightPlanCoordinates[flightPlanCoordinates.length - 1].lat,
-                lng: flightPlanCoordinates[flightPlanCoordinates.length - 1].lng
-            };
-            var markerEnd = new google.maps.Marker({
-                position: locationEnd,
-                icon:'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png',
-                map: map
-            });
-
-        }else {
-            var marker = new google.maps.Marker({
-                position: {lat:latitude,lng:longitude},
-                map: map
-            });
-
-        }
-        //vẽ đường đi
-        var flightPath = new google.maps.Polyline({
-            path: flightPlanCoordinates,
-            geodesic: true,
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 3
-        });
-
-        flightPath.setMap(map);
-
-    }
-</script>
-<!--<script src="js/detailEmployee.js"></script>-->
+<script src="js/detailEmployee.js"></script>
 

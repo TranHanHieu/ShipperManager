@@ -135,7 +135,7 @@ app.get('/employeeList',(req,res)=>{
 // Xóa nhân viên
 app.get('/detailEmployee', (req, res) => {
     let id = req.query.id;
-    getUserById(id, (user, err) => {
+    getUserById(id, (err, user) => {
         res.render('detailEmployee',{user})
     })
 });
