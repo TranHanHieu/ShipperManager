@@ -69,8 +69,6 @@ $(document).ready(function() {
             },
             error: function (err) {
                 window.location.href = "/orderList"
-
-                alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
             }
         });
     });
@@ -130,8 +128,6 @@ $(document).ready(function() {
         },
         error: function (err) {
             window.location.href = "/orderList"
-
-            alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
         }
     });    
 
@@ -172,8 +168,6 @@ function getLocationFrom()
         },
         error: function (err) {
             window.location.href = "/addOrder"
-
-            alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
         }
     });    
 }
@@ -201,8 +195,6 @@ function getLocationTo()
         },
         error: function (err) {
             window.location.href = "/addOrder"
-
-            alert('Lỗi! Không có kết nối, vui lòng thử lại sau.' + err)
         }
     });    
 }

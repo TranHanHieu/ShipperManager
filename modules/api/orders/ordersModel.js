@@ -255,7 +255,7 @@ const saveListHistory = async(history) => {
 
 const dataChartOrder = async() => {
     let d = new Date();
-    let month = d.getMonth() + 1;
+    let month = d.getMonth() +  1;
     let year = d.getFullYear();
     try
     {
@@ -263,13 +263,13 @@ const dataChartOrder = async() => {
             [
                 {
                     $group: {
-                      _id: {
+                    _id: {
                         year: { $year: "$createdAt" },
                         month: { $month: "$createdAt" },
                         day: { $dayOfMonth: "$createdAt" },
                         status: "$status"
-                      },
-                      count: { $sum: 1 }
+                    },
+                    count: { $sum: 1 }
                     }
                 },
                 {
@@ -286,16 +286,16 @@ const dataChartOrder = async() => {
                 },
                 {
                     $match : {
-                        "_id.month" : month, "_id.year" : year, "_id.status" : 3 //Trạng thái hoàn thành
+                        "_id.month" : month, "_id.year" : year
                     }
                 },
-                { 
+                {
                     $sort : {
                         "_id.day" : 1
                     }
                 }
             ]
-         ).exec();
+        ).exec();
     }
     catch(err)
     {
