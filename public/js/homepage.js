@@ -194,7 +194,6 @@ function drawChart() {
 
                 //Lấy số lượng ở các trạng thái
                 $.each(value.statuses, function(i, v) {
-                 
                     //Đơn hàng bị hủy
                     if(v.key == -1)
                     {
@@ -214,7 +213,6 @@ function drawChart() {
 
                 });
 
-                console.log(orderReceive + "- " + date);
                 listData.push([moment(date).format('DD/MM/YYYY'), value.count, orderCancel, orderNew, orderReceive]);
                 
                 orderCancel = 0;
