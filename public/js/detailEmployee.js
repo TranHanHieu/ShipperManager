@@ -12,7 +12,7 @@ $('#btnXemLoTrinh').click(function(event, err){
     let date = $('#tungay').val();
     let user_id = new URL(window.location.href).searchParams.get('id');
 
-    $.ajax(`/api/user/location/history?id=${user_id}&date=${date}`, {
+    $.ajax(`/api/history/historylocation?id=${user_id}&date=${date}`, {
         type: "get",
         success: function (data) {
             if (data.status) {
@@ -22,7 +22,7 @@ $('#btnXemLoTrinh').click(function(event, err){
                     //21.00975,105.83116,
                     flightPlanCoordinates.push(
                         {
-                            lat: data.data[i].longtitude, lng: data.data[i].latitude
+                            lat: data.data[i]._id.longtitude, lng: data.data[i]._id.latitude
                         }
                     )
 
