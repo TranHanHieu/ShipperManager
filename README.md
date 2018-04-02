@@ -1,6 +1,6 @@
 ﻿# ShipperManager_CSE485
 Bài tập lớn môn Công nghệ Web
-Website: shipper-manager.herokuapp.com
+Website: https://shipper-manager.herokuapp.com
 
 Account admin : 
     tài khoản: admin

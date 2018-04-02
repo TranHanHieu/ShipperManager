@@ -20,7 +20,7 @@ $(document).ready(function() {
     //Khai báo map
     map = new google.maps.Map(document.getElementById('mapReceiveOrder'), {
         zoom: 12,
-        center: new google.maps.LatLng(user.latitude, user.longtitude),
+        center: new google.maps.LatLng(user.latitude, user.longitude),
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
