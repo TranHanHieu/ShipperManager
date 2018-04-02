@@ -286,7 +286,7 @@ const dataChartOrder = async() => {
                 },
                 {
                     $match : {
-                        "_id.month" : month, "_id.year" : year
+                        "_id.month" : month, "_id.year" : year, "_id.status" : 3 //Trạng thái hoàn thành
                     }
                 },
                 { 
@@ -317,6 +317,7 @@ const dataChartOrderRevenue = async() => {
                       _id: {
                         year: { $year: "$createdAt" },
                         month: { $month: "$createdAt" },
+                        status : "$status"
                       },
                       total: {$sum : "$price"}
                     }
