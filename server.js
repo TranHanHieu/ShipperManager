@@ -11,6 +11,7 @@ const session = require('express-session');
 const userApi = require('./modules/api/users/usersController');
 const groupApi = require('./modules/api/groups/groupsController');
 const orderApi = require('./modules/api/orders/ordersController');
+const historyLocationApi = require('./modules/api/history_locations/historyLocationController');
 const {getAllUser,deleteEmployee,getUserById} = require('./modules/api/users/usersModel')
 const {getAllGroup} = require('./modules/api/groups/groupsModel')
 const orderModel = require('./modules/api/orders/ordersModel')
@@ -80,6 +81,7 @@ app.set('view engine', 'handlebars');
 app.use('/api/user', userApi);
 app.use('/api/group', groupApi);
 app.use('/api/order', orderApi);
+app.use('/api/history/historylocation', historyLocationApi);
 
 // app.use(express.static(__dirname + '/public'));
 
