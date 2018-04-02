@@ -97,18 +97,23 @@ function getAllUser() {
                 for (let i = 0; i < users.length; i++) {
                     var trangthai = '';
                     var mautrangthai = '';
+                    var iconmarket= ''
                     if(users[i].trangthai == 1){
                         trangthai = 'Mất tín hiệu'
                         mautrangthai = 'red'
+                        iconmarket = 'images/shipper_icon_red.png'
                     }else if(users[i].trangthai == 2){
                         trangthai = 'Đang trực tuyến'
                         mautrangthai = 'hotpink'
+                        iconmarket = 'images/shipper_icon_pink.png'
                     }else if(users[i].trangthai == 3){
                         trangthai = 'Đang giao hàng'
                         mautrangthai = 'blue'
+                        iconmarket = 'images/shipper_icon_blue.png'
                     }else {
                         trangthai = 'Đang rảnh'
                         mautrangthai = 'green'
+                        iconmarket = 'images/shipper_icon.png'
                     }
                     var customMarket = '<div><div><img id="avatar" style="width: 40px;float:left;height: 40px;border-radius:25px " src="'+users[i].avatar+'"/><h4 style="text-align: center;float: left;margin: 10px">' + users[i].fullname + '</h4></div>' +
                         '<h5 style="text-align: center">' + users[i].group.groupname + '</h5>' +
@@ -116,7 +121,7 @@ function getAllUser() {
                         '<div style="display: table;margin: auto"><i class="fa fa-map-marker" style="margin-left: 10px;margin-right: 10px;float: left;font-size:16px;color:red"></i><a style="float: left" href="detailEmployee?id='+users[i]._id+'">Xem lộ trình</a></div></div>'
 
                     listLocationUser.push([customMarket,
-                        users[i].longitude, users[i].latitude, users[i].acc])
+                        users[i].longitude, users[i].latitude, users[i].acc,iconmarket])
                 }
                 initMap()
             } else {
@@ -161,7 +166,7 @@ function initMap() {
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(listLocationUser[i][1], listLocationUser[i][2]),
             map: map,
-            icon: 'images/shipper_icon.png'
+            icon: listLocationUser[i][4]
         });
 
         google.maps.event.addListener(marker, 'click', (function (marker, i) {
