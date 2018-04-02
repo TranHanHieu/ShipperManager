@@ -7,7 +7,9 @@ var pointA = null;
 var pointB = null;
 var idOrder = null;
 var flightPlanCoordinates = [];
+var listMaker = [];
 var load = null;
+var flightPath = null;
 
 document.title = "Thông tin chi tiết đơn hàng - ShipperManager";
 
@@ -27,7 +29,6 @@ $(document).ready(function() {
             type: "GET",
             dataType: "json",
             success: function (res) {
-
                 $("#ordername").text(res.data.order_name);
                 $("#from").text(res.data.from);
                 $("#to").text(res.data.to);
@@ -81,7 +82,7 @@ $(document).ready(function() {
                 latitudeTo = res.data.latitude_to;
 
                 if(pointA != null)
-                pointA.setMap(null);
+                    pointA.setMap(null);
 
                 pointA = new google.maps.Marker({
                     map: map,
@@ -108,22 +109,22 @@ $(document).ready(function() {
             }
         });   
         
+        //Lấy lộ trình
         $.ajax('/api/order/history?idOrder=' + idOrder, {
             type: "GET",
             dataType: "json",
             success: function (res) {
-                
                 $.each(res.data, function( index, value ) {
-                    let point = new google.maps.Marker({
+                    listMaker.push(new google.maps.Marker({
                         map: map,
                         position: new google.maps.LatLng(value.latitude, value.longtitude),
                         title:  value.address
-                    });
+                    }));
 
                     flightPlanCoordinates.push({lat: value.latitude, lng: value.longtitude});
                 });
 
-                var flightPath = new google.maps.Polyline({
+                flightPath = new google.maps.Polyline({
                     path: flightPlanCoordinates,
                     geodesic: true,
                     strokeColor: '#FF0000',
@@ -143,7 +144,20 @@ $(document).ready(function() {
     
     load();
 
+      // Xóa hết maker nè
+    function deleteMarkers() {
+        for (var i = 0; i < listMaker.length; i++) {
+            listMaker[i].setMap(null);
+        }
+
+        flightPath.setPath([]);
+        flightPlanCoordinates = [];
+        listMaker = [];
+    }
+
+
     setInterval(function(){
+        deleteMarkers();
         load();
     }, 10000);
 

@@ -24,6 +24,9 @@ $(document).ready(function() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
+    //Sự kiện click vào bản đồ
+    map.addListener('click', addLatLng);
+
       //Khai báo đường kẻ
     poly = new google.maps.Polyline({
         strokeColor: '#FF0000',
@@ -58,8 +61,6 @@ $(document).ready(function() {
                 //Nếu đang trong giao hàng
                 else
                 {
-                    //Sự kiện click vào bản đồ
-                    map.addListener('click', addLatLng);
                     $("#btnReceive").prop('disabled', true);
                     $("#btnSaveLatLng").prop('disabled', false);
                     $("#btnSuccess").prop('disabled', false);
@@ -230,6 +231,19 @@ $(document).ready(function() {
 
     //Xử lý nút lưu lộ trình
     $("#btnSaveLatLng").click(function() {
+        console.log(listHistory);
+        //xóa lộ trình trước đã
+        $.ajax({
+            url:"/api/order/deleteHistory?idOrder=" + idOrder,
+            method:"DELETE",
+            success:function(res) {
+                //Không làm gì cả
+            },
+            error:function(err){
+                alert("Có lỗi xảy ra!");
+            }
+        });
+
         $.ajax({
             url:"/api/order/shipping",
             method:"POST", 
@@ -239,7 +253,7 @@ $(document).ready(function() {
 
             success:function(res) {
                 alert("Lưu lộ trình thành công!");
-                loadData();
+                //loadData();
            },
            error:function(){
             alert("error");
@@ -297,7 +311,6 @@ $(document).ready(function() {
     function addLatLng(event) {
         //Lấy địa chỉ nè
         var address ="";
-        poly.setMap(map);
         path = poly.getPath();
         path.push(event.latLng);
 
