@@ -304,7 +304,52 @@ const dataChartOrder = async() => {
     }
 }
 
+const dataChartOrderRevenue = async() => {
+    let d = new Date();
+    let year = d.getFullYear();
+    let result = [];
+
+    for (i = 1; i <= 12; i++) { 
+        let element = await ordersModel.aggregate(
+            [
+                {
+                    $group: {
+                      _id: {
+                        year: { $year: "$createdAt" },
+                        month: { $month: "$createdAt" },
+                      },
+                      total: {$sum : "$price"}
+                    }
+                },
+                {
+                    $match : {
+                        "_id.month" : i, "_id.year" : year
+                    }
+                },
+                { 
+                    $sort : {
+                        "_id.month" : 1
+                    }
+                }
+            ]
+        ).exec();
+
+        if(element.length != 0)
+            result.push({
+                month : ((element[0]._id.month < 10) ? ("0" + element[0]._id.month) : element[0]._id.month) + "/" + year,
+                total : element[0].total
+            });
+        else
+            result.push({
+                month : ((i < 10) ? ("0" + i) : i) + "/" + year,
+                total : 0
+            });
+    }
+
+    return result;
+}
+
 module.exports = {
     selectOrderNew, updateStatusOrder, selectAllOrder, deleteOrder,
-    updateUserInOrder, createOrder, selectOrderById, updateOrder, receiveOrder, saveListHistory, getAllOrderByStatus, dataChartOrder
+    updateUserInOrder, createOrder, selectOrderById, updateOrder, receiveOrder, saveListHistory, getAllOrderByStatus, dataChartOrder, dataChartOrderRevenue
 }
