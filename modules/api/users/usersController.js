@@ -217,6 +217,21 @@ Router.get('/', async (req, res) => {
         res.send({status: false, msg: config.CO_LOI_XAY_RA, data: null});
     }
 });
+Router.get('/:id', async (req, res) => {
+    try {
+        usersModel.getUserById(req.params.id,(err,user)=>{
+            if (err) {
+                res.send({status: false, msg: config.KHONG_THANH_CONG, data: null});
+            } else {
+                res.send({status: true, msg: config.THANH_CONG, data: user});
+            }
+        });
+    }
+    catch (err) {
+        console.log(err);
+        res.send({status: false, msg: config.CO_LOI_XAY_RA, data: null});
+    }
+});
 Router.get('/historylocation', (req, res) => {
     usersModel.getHistoryLocationUserByDate(req.query.idUser, req.query.date, (err, locations) => {
         if (err) {
@@ -229,8 +244,8 @@ Router.get('/historylocation', (req, res) => {
 });
 
 
-Router.get('/count', (req, res) => {
-    usersModel.getAllUserByTrangThai(req.query.trangthai, (err, users) => {
+Router.get('/count/:trangthai', (req, res) => {
+    usersModel.getAllUserByTrangThai(req.params.trangthai, (err, users) => {
         if (err) {
             res.send({status: false, msg: config.KHONG_THANH_CONG, data: 0});
         } else {

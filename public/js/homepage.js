@@ -42,7 +42,7 @@ $(document).ready(function () {
 })
 
 function getCountUserTrangThai(trangthai) {
-    $.ajax(`/api/user/count?trangthai=${trangthai}`, {
+    $.ajax(`/api/user/count/${trangthai}`, {
         type: "GET",
         success: function (data) {
             if (data.status) {
