@@ -182,7 +182,7 @@ function drawChart() {
     var orderCancel = 0;
     var orderNew = 0;
     var orderReceive = 0;
-    
+
     listData.push(['Ngày', 'Tất cả đơn hàng', "Đơn hàng bị hủy", "Đơn hàng chưa nhận", 'Đơn hàng đã nhận']);
 
     //Lấy dữ liệu biểu đồ nè
@@ -211,9 +211,15 @@ function drawChart() {
                     {
                         orderReceive += v.value;
                     }
+
                 });
 
+                console.log(orderReceive + "- " + date);
                 listData.push([moment(date).format('DD/MM/YYYY'), value.count, orderCancel, orderNew, orderReceive]);
+                
+                orderCancel = 0;
+                orderNew = 0;
+                orderReceive = 0;
               });
 
               var data = google.visualization.arrayToDataTable(listData);

@@ -288,6 +288,11 @@ const dataChartOrder = async() => {
                     $match : {
                         "_id.month" : month, "_id.year" : year
                     }
+                },
+                { 
+                    $sort : {
+                        "_id.day" : 1
+                    }
                 }
             ]
          ).exec();
