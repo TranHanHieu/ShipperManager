@@ -48,7 +48,7 @@ const getHistoryLocationByUser = async (iduser, date)=>{
             {
                 $match : {
                     "_id.date" : date,
-                    "_id.user" :iduser
+                    "_id.iduser" :iduser
                 }
             }
         ]
