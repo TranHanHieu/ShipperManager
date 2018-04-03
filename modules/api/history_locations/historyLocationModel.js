@@ -32,12 +32,6 @@ const createOrUpdateLocation = async (location) => {
     }
 }
 const getHistoryLocationByUser = async (iduser, date)=>{
-    let formatdate = new Date(date);
-    let year = formatdate.getFullYear();
-    let month = formatdate.getMonth();
-    let day = formatdate.getDay()
-    let result = [];
-
     return await historyLocationModel.aggregate(
         [
             {

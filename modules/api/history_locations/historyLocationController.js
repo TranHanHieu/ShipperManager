@@ -26,7 +26,7 @@ Router.get('/', async(req,res)=>{
 
     let result = await historyLocationModel.getHistoryLocationByUser(iduser, req.query.date);
     console.log(result)
-    if(result === null)
+    if(result.length==0)
         res.send({status : false, msg : config.CO_LOI_XAY_RA, data:[]});
     else
         res.send({ status : true, msg : config.THANH_CONG, data:result});
