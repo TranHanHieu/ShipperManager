@@ -17,7 +17,7 @@ $("#btnEdit").click(function (event, err) {
         $.ajax('/api/user/', {
             type: "PUT",
             data: {
-                _id,email, fullname, dateofbirth, group,avatar
+                _id,email, fullname, dateofbirth, group
             },
             dataType: "json",
             success: function (data) {
